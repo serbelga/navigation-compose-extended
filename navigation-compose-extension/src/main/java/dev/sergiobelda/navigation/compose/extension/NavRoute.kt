@@ -7,7 +7,7 @@ package dev.sergiobelda.navigation.compose.extension
  * @param destination Navigation destination.
  * @param arguments List of arguments passed in this route.
  */
-abstract class NavRoute(val destination: NavDestination, private vararg val arguments: Any) {
+abstract class NavRoute(val destination: NavDestination, private vararg val arguments: Any?) {
 
     /**
      * Navigation route. It consists of [destination] id and the [arguments] values.
@@ -17,11 +17,12 @@ abstract class NavRoute(val destination: NavDestination, private vararg val argu
 
     private fun String.addArgumentParams(): String =
         this + arguments.joinToString(
-            prefix = ARG_SEPARATOR,
             separator = ARG_SEPARATOR
-        ) { it.toString() }
+        ) { argument ->
+            "/$argument"
+        }
 
     companion object {
-        private const val ARG_SEPARATOR = "/"
+        private const val ARG_SEPARATOR = ""
     }
 }

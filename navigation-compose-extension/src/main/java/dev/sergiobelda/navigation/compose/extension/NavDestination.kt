@@ -20,9 +20,10 @@ abstract class NavDestination {
     private val argumentsRoute: String
         get() = if (arguments.isNotEmpty()) {
             arguments.joinToString(
-                prefix = ARG_SEPARATOR,
                 separator = ARG_SEPARATOR
-            ) { "{${it.name}}" }
+            ) {
+                "/{${it.name}}"
+            }
         } else {
             ""
         }
@@ -33,7 +34,7 @@ abstract class NavDestination {
     val route get() = destinationId + argumentsRoute
 
     companion object {
-        private const val ARG_SEPARATOR = "/"
+        private const val ARG_SEPARATOR = ""
     }
 }
 
