@@ -5,27 +5,6 @@ import androidx.navigation.NamedNavArgument
 /**
  * Represents some Destination in the Navigation graph. It's defined by a
  * [destinationId] and a list of [arguments].
- *
- * ```kotlin
- *  // Without arguments:
- *  object ArtistsNavDestination : NavDestination() {
- *      override val destinationId: String = "artists"
- *  }
- * ```
- *
- * ```kotlin
- *  object ArtistDetailsNavDestination : NavDestination() {
- *      override val destinationId: String = "artistdetails"
- *
- *      override val arguments: List<NamedNavArgument> = listOf(
- *          navArgument("artistId") { type = NavType.StringType }
- *      )
- *
- *      fun navArgArtistId(navBackStackEntry: NavBackStackEntry): String =
- *          navBackStackEntry.arguments?.getString("artistId") ?: ""
- *      }
- *  }
- * ```
  */
 abstract class NavDestination {
     /**
