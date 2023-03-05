@@ -1,0 +1,12 @@
+[versions]
+androidGradlePlugin = "7.4.1"
+navigation = "2.5.3"
+kotlin = "1.8.0"
+
+[libraries]
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+androidLibrary = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

@@ -1,0 +1,38 @@
+package dev.sergiobelda.navigation.compose.extension
+
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
+import androidx.navigation.Navigator
+import androidx.navigation.navOptions
+
+class Action(private val navController: NavHostController) {
+
+    fun navigate(
+        navRoute: NavRoute,
+        navOptions: NavOptions? = null,
+        navigatorExtras: Navigator.Extras? = null
+    ) {
+        if (navRoute.destination is TopLevelNavDestination) {
+            navController.navigate(
+                route = navRoute.route,
+                navOptions = navOptions {
+                    // Pop up to the start destination of the graph to
+                    // avoid building up a large stack of destinations
+                    // on the back stack as users select items
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
+                    // Avoid multiple copies of the same destination when
+                    // reselecting the same item
+                    launchSingleTop = true
+                    // Restore state when reselecting a previously selected item
+                    restoreState = true
+                },
+                navigatorExtras = navigatorExtras
+            )
+        } else {
+            navController.navigate(navRoute.route, navOptions, navigatorExtras)
+        }
+    }
+}
