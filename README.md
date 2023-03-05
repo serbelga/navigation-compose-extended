@@ -5,7 +5,7 @@
 ### Without arguments
 
 ```kotlin
-    object ArtistsNavDestination : NavDestination() {
+object ArtistsNavDestination : NavDestination() {
     override val destinationId: String = "artists"
 }
 
@@ -13,6 +13,7 @@ NavHost(startDestination = ArtistsNavDestination.route) {
     composable(route = ArtistsNavDestination.route) { ... }
 }
 
+// Navigate to Artists screen
 object ArtistsNavRoute : NavRoute(ArtistsNavDestination)
 
 action.navigate(ArtistsNavRoute)
@@ -21,7 +22,7 @@ action.navigate(ArtistsNavRoute)
 ### Defining arguments
 
 ```kotlin
-    object ArtistDetailsNavDestination : NavDestination() {
+object ArtistDetailsNavDestination : NavDestination() {
     override val destinationId: String = "artistdetails"
 
     override val arguments: List<NamedNavArgument> = listOf(
@@ -39,6 +40,7 @@ NavHost {
     ) { ... }
 }
 
+// Navigate to Artists details screen
 class ArtistDetailsNavRoute(artistId: Int) : NavRoute(ArtistDetailsNavDestination, artistId)
 
 action.navigate(ArtistDetailsNavRoute(1))
