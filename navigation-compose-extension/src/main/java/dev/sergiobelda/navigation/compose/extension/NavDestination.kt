@@ -1,6 +1,7 @@
 package dev.sergiobelda.navigation.compose.extension
 
 import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavDeepLink
 
 /**
  * Represents some Destination in the Navigation graph. It's defined by a
@@ -16,6 +17,11 @@ abstract class NavDestination {
      * List of [NamedNavArgument] to associate with destination.
      */
     open val arguments: List<NamedNavArgument> = emptyList()
+
+    /**
+     * List of [NavDeepLink] to associate with destination.
+     */
+    open val deepLinks: List<NavDeepLink> = emptyList()
 
     private val argumentsRoute: String
         get() = if (arguments.isNotEmpty()) {

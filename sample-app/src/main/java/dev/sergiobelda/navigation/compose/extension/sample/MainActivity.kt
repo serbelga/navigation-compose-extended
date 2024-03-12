@@ -11,8 +11,8 @@ import dev.sergiobelda.navigation.compose.extension.Action
 import dev.sergiobelda.navigation.compose.extension.sample.ui.albums.AlbumsNavDestination
 import dev.sergiobelda.navigation.compose.extension.sample.ui.albums.AlbumsScreen
 import dev.sergiobelda.navigation.compose.extension.sample.ui.artistdetails.ArtistDetailsNavDestination
+import dev.sergiobelda.navigation.compose.extension.sample.ui.artistdetails.ArtistDetailsNavRoute
 import dev.sergiobelda.navigation.compose.extension.sample.ui.artistdetails.ArtistDetailsScreen
-import dev.sergiobelda.navigation.compose.extension.sample.ui.artistdetails.navToArtistDetails
 import dev.sergiobelda.navigation.compose.extension.sample.ui.artists.ArtistsNavDestination
 import dev.sergiobelda.navigation.compose.extension.sample.ui.artists.ArtistsScreen
 import dev.sergiobelda.navigation.compose.extension.sample.ui.theme.SampleTheme
@@ -33,7 +33,9 @@ class MainActivity : ComponentActivity() {
                     }
                     composable(route = ArtistsNavDestination.route) {
                         ArtistsScreen(
-                            navigateToArtistDetails = action.navToArtistDetails
+                            navigateToArtistDetails = { artistId ->
+                                action.navigate(ArtistDetailsNavRoute(artistId, "World"))
+                            }
                         )
                     }
                     composable(
@@ -42,7 +44,9 @@ class MainActivity : ComponentActivity() {
                     ) { navBackStackEntry ->
                         val artistId: String =
                             ArtistDetailsNavDestination.navArgArtistId(navBackStackEntry)
-                        ArtistDetailsScreen(artistId)
+                        val artistName: String =
+                            ArtistDetailsNavDestination.navArgArtistName(navBackStackEntry)
+                        ArtistDetailsScreen(artistId, artistName)
                     }
                 }
             }
