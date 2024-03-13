@@ -8,6 +8,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
 import androidx.navigation.navOptions
 
+// TODO: Documentation
 @Composable
 fun rememberAction(
     navController: NavHostController
@@ -15,6 +16,7 @@ fun rememberAction(
     Action(navController)
 }
 
+// TODO: Documentation
 class Action(private val navController: NavHostController) {
 
     fun <K : NavArgumentKey> navigate(

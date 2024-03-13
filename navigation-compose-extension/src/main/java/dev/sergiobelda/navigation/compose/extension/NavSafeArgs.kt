@@ -6,6 +6,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavType.Companion.IntType
 import androidx.navigation.NavType.Companion.StringType
 
+// TODO: Documentation
 @Composable
 fun <K : NavArgumentKey> rememberNavSafeArgs(
     destination: NavDestination<K>,
@@ -15,6 +16,7 @@ fun <K : NavArgumentKey> rememberNavSafeArgs(
         NavSafeArgs(destination, navBackStackEntry)
     }
 
+// TODO: Documentation
 class NavSafeArgs<K>(
     private val destination: NavDestination<K>,
     private val navBackStackEntry: NavBackStackEntry,
