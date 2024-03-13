@@ -8,7 +8,7 @@ import androidx.navigation.NavDeepLink
  * Represents some Destination in the Navigation graph. It's defined by a
  * [destinationId] and a list of [arguments].
  */
-abstract class NavDestination<K : NavArgumentKey> {
+abstract class NavDestination<K> where K : NavArgumentKey {
     /**
      * Identifier of Destination.
      */
@@ -47,12 +47,6 @@ abstract class NavDestination<K : NavArgumentKey> {
      */
     val route get() = destinationId + argumentsRoute
 
-    companion object {
-        private const val PARAM_SEPARATOR = "/"
-        private const val QUERY_PARAM_PREFIX = "?"
-        private const val QUERY_PARAM_SEPARATOR = "&"
-    }
-
     fun navArgs(navBackStackEntry: NavBackStackEntry, navArgumentKey: K): String =
         navBackStackEntry.arguments?.getString(navArgumentKey.key).orEmpty()
 }
@@ -60,4 +54,4 @@ abstract class NavDestination<K : NavArgumentKey> {
 /**
  * Represents a TopLevel [NavDestination].
  */
-abstract class TopLevelNavDestination<K : NavArgumentKey> : NavDestination<K>()
+abstract class TopLevelNavDestination<K> : NavDestination<K>() where K : NavArgumentKey

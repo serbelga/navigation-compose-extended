@@ -9,32 +9,46 @@ package dev.sergiobelda.navigation.compose.extension
  */
 abstract class NavRoute<K>(
     val destination: NavDestination<K>,
-    private val arguments: Map<String, Any?> = emptyMap()
+    private val arguments: Map<K, Any?> = emptyMap()
 ) where K : NavArgumentKey {
 
     /**
      * Navigation route. It consists of [destination] id and the [arguments] values.
      */
     internal val route: String =
-        destination.destinationId.addArgumentParams()
+        destination.destinationId.addArgumentsValues()
 
-    private fun String.addArgumentParams(): String {
-        val parameters = buildList {
-            destination.arguments.forEach {
-                if (arguments.keys.contains(it.name)) {
-                    add(arguments[it.name].toString())
-                } else {
-                    // TODO
-                }
+    private fun String.addArgumentsValues(): String {
+        val parameters = destination.arguments.filter {
+            !it.argument.isDefaultValuePresent && !it.argument.isNullable
+        }
+        val optionalParameters = destination.arguments.filter {
+            it.argument.isDefaultValuePresent || it.argument.isNullable
+        }
+        val keyArgumentsMap = arguments.mapKeys { it.key.key }
+
+        return this + buildString {
+            parameters.forEach { namedNavArgument ->
+                if (keyArgumentsMap.containsKey(namedNavArgument.name)) {
+                    append(PARAM_SEPARATOR)
+                    append(keyArgumentsMap[namedNavArgument.name].toString())
+                } else throw Exception("Not present in arguments")
+            }
+            optionalParameters.takeIf { it.isNotEmpty() }?.let { list ->
+                append(
+                    list.joinToString(
+                        prefix = QUERY_PARAM_PREFIX,
+                        separator = QUERY_PARAM_SEPARATOR
+                    ) { namedNavArgument ->
+                        if (keyArgumentsMap.containsKey(namedNavArgument.name)) {
+                            val value = keyArgumentsMap[namedNavArgument.name]
+                            if (value != null) {
+                                "${namedNavArgument.name}=${keyArgumentsMap[namedNavArgument.name]}"
+                            } else ""
+                        } else "${namedNavArgument.name}="
+                    }
+                )
             }
         }
-        return this + parameters.joinToString(
-            prefix = ARG_SEPARATOR,
-            separator = ARG_SEPARATOR
-        ) { it }
-    }
-
-    companion object {
-        private const val ARG_SEPARATOR = "/"
     }
 }
