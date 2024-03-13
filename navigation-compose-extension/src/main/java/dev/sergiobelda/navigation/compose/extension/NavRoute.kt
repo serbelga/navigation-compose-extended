@@ -3,7 +3,7 @@ package dev.sergiobelda.navigation.compose.extension
 import androidx.navigation.NamedNavArgument
 
 /**
- * Represents the navigation route to reach some destination. [Action.navigate] receives a
+ * Represents the navigation route to reach some destination. [NavAction.navigate] receives a
  * [NavRoute] object.
  *
  * @param destination Navigation destination.

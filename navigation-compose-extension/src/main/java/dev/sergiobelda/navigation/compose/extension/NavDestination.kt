@@ -23,15 +23,19 @@ abstract class NavDestination<K> where K : NavArgumentKey {
     /**
      * List of [NamedNavArgument] associated with destination.
      */
-    val arguments: List<NamedNavArgument> get() = navArguments.map {
-        navArgument(it.key.argumentKey, it.value)
-    }
+    val arguments: List<NamedNavArgument>
+        get() = navArguments.map {
+            navArgument(it.key.argumentKey, it.value)
+        }
 
     /**
      * List of [NavDeepLink] associated with destination.
      */
     open val navDeepLinks: List<NavDeepLink> = emptyList()
 
+    /**
+     * Get the arguments route template for this destination.
+     */
     private val argumentsRoute: String
         get() {
             val parameters =
@@ -51,7 +55,7 @@ abstract class NavDestination<K> where K : NavArgumentKey {
         }
 
     /**
-     * Route for the destination. It consists of [destinationId] and [arguments].
+     * Route to this destination. It consists of [destinationId] and [arguments].
      */
     val route get() = destinationId + argumentsRoute
 }

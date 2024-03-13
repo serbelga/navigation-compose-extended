@@ -12,7 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dev.sergiobelda.navigation.compose.extension.NavSafeArgs
-import dev.sergiobelda.navigation.compose.extension.rememberAction
+import dev.sergiobelda.navigation.compose.extension.rememberNavAction
 import dev.sergiobelda.navigation.compose.extension.sample.ui.search.SearchNavDestination
 import dev.sergiobelda.navigation.compose.extension.sample.ui.search.SearchScreen
 import dev.sergiobelda.navigation.compose.extension.sample.ui.searchresult.SearchResultNavArgumentKeys
@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
-    val action = rememberAction(navController)
+    val navAction = rememberNavAction(navController)
     Scaffold(
         bottomBar = {
             BottomAppBar {
@@ -53,7 +53,7 @@ fun MainScreen() {
             ) {
                 SearchScreen(
                     navigateToSearchResults = { search, category ->
-                        action.navigate(SearchResultNavRoute(search))
+                        navAction.navigate(SearchResultNavRoute(search))
                     }
                 )
             }

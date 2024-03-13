@@ -1,6 +1,8 @@
 package dev.sergiobelda.navigation.compose.extension
 
-// TODO: Documentation
+/**
+ * Represents a key for a navigation argument.
+ */
 interface NavArgumentKey {
     val argumentKey: String
 }

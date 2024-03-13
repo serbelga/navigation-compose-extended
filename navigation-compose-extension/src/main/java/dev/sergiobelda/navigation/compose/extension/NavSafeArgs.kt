@@ -4,7 +4,9 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavType.Companion.IntType
 import androidx.navigation.NavType.Companion.StringType
 
-// TODO: Documentation
+/**
+ * It resolves the argument values for given a [navBackStackEntry] for the [destination].
+ */
 class NavSafeArgs<K>(
     private val destination: NavDestination<K>,
     private val navBackStackEntry: NavBackStackEntry,
@@ -26,6 +28,9 @@ class NavSafeArgs<K>(
         return map
     }
 
+    /**
+     * Get the [String] value of the argument the given its [key].
+     */
     fun getString(key: K): String? =
         argumentValues.getValue(key.argumentKey) as? String
 }

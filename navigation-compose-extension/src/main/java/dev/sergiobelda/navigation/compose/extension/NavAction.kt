@@ -8,17 +8,33 @@ import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
 import androidx.navigation.navOptions
 
-// TODO: Documentation
+/**
+ * Creates a [NavAction] that is remembered across compositions.
+ *
+ * @param navController the [NavHostController] to use for navigation.
+ */
 @Composable
-fun rememberAction(
+fun rememberNavAction(
     navController: NavHostController
-): Action = remember(navController) {
-    Action(navController)
+): NavAction = remember(navController) {
+    NavAction(navController)
 }
 
-// TODO: Documentation
-class Action(private val navController: NavHostController) {
+/**
+ * Handles the navigation actions.
+ */
+class NavAction(private val navController: NavHostController) {
 
+    /**
+     * Navigates to the given [navRoute] in the current NavGraph. If an invalid route is given, an
+     * [IllegalArgumentException] will be thrown.
+     *
+     * @param navRoute route to the destination.
+     * @param navOptions special options for this navigation operation.
+     * @param navigatorExtras extras to pass to the [Navigator].
+     *
+     * @throws IllegalArgumentException if the given route is invalid
+     */
     fun <K : NavArgumentKey> navigate(
         navRoute: NavRoute<K>,
         navOptions: NavOptions? = null,
