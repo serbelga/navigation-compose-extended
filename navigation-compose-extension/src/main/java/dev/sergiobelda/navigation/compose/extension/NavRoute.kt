@@ -38,16 +38,28 @@ abstract class NavRoute<K>(
         }
 
         return this + buildString {
-            // Add required parameters separated by "/".
-            parameters.takeIf { it.isNotEmpty() }?.forEach { namedNavArgument ->
-                if (argumentsKeyStringMap.containsKey(namedNavArgument.name)) {
-                    append(PARAM_SEPARATOR)
-                    append(argumentsKeyStringMap[namedNavArgument.name].toString())
-                } else throw Exception("Not present in arguments")
-            } ?: append(PARAM_SEPARATOR)
+            appendRequiredParameters(parameters)
             optionalParameters.takeIf { it.isNotEmpty() }?.let { list ->
                 appendOptionalParameters(list)
             }
+        }
+    }
+
+    /**
+     * Generate the string from the list of required parameters and append if required parameters
+     * have been added. For example:
+     * - Given no required parameters, the result will be a single '/'.
+     * - Given one required parameter, `param1`, the result will be: /value1.
+     * - Given multiple required parameters, `param1` and `param2`, the result will be: /value1/value2.
+     *
+     * @throws IllegalArgumentException if an argument with a key is not present in the arguments.
+     */
+    private fun StringBuilder.appendRequiredParameters(parameters: List<NamedNavArgument>) {
+        parameters.forEach { namedNavArgument ->
+            if (argumentsKeyStringMap.containsKey(namedNavArgument.name)) {
+                append(PARAM_SEPARATOR)
+                append(argumentsKeyStringMap[namedNavArgument.name].toString())
+            } else throw IllegalArgumentException("Not present in arguments")
         }
     }
 
@@ -60,9 +72,9 @@ abstract class NavRoute<K>(
      *
      * @throws IllegalArgumentException if an argument with a key is not nullable and its value is null.
      */
-    private fun StringBuilder.appendOptionalParameters(list: List<NamedNavArgument>) {
+    private fun StringBuilder.appendOptionalParameters(optionalParameters: List<NamedNavArgument>) {
         append(
-            list.joinToString(
+            optionalParameters.joinToString(
                 prefix = QUERY_PARAM_PREFIX,
                 separator = QUERY_PARAM_SEPARATOR
             ) { namedNavArgument ->
