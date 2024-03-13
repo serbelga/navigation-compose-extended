@@ -4,10 +4,7 @@ import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavArgumentBuilder
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
-import androidx.navigation.NavType.Companion.IntType
-import androidx.navigation.NavType.Companion.StringType
 import androidx.navigation.navArgument
-import kotlin.reflect.KClass
 
 /**
  * Represents some Destination in the Navigation graph. It's defined by a
