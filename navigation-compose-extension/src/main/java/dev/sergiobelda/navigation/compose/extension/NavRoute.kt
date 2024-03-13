@@ -20,15 +20,16 @@ abstract class NavRoute<K>(
     internal val route: String =
         destination.destinationId.addArgumentsValues()
 
-    private val argumentsKeyStringMap: Map<String, Any?> get() =
-        arguments.mapKeys { it.key.argumentKey }
+    private val argumentsKeyStringMap: Map<String, Any?>
+        get() =
+            arguments.mapKeys { it.key.argumentKey }
 
     private fun String.addArgumentsValues(): String {
-        val parameters = destination.arguments.filter {
-            !it.argument.isDefaultValuePresent && !it.argument.isNullable
-        }
         val optionalParameters = destination.arguments.filter {
             it.argument.isDefaultValuePresent || it.argument.isNullable
+        }
+        val parameters = destination.arguments.filter {
+            !it.argument.isDefaultValuePresent && !it.argument.isNullable
         }
 
         return this + buildString {
@@ -56,10 +57,11 @@ abstract class NavRoute<K>(
                         value != null -> {
                             "${namedNavArgument.name}=${argumentsKeyStringMap[namedNavArgument.name]}"
                         }
+
                         !namedNavArgument.argument.isNullable -> {
-                            // TODO:
-                            throw Exception()
+                            throw IllegalArgumentException("Argument with key ${namedNavArgument.name} is not nullable.")
                         }
+
                         else -> ""
                     }
                 } else {
@@ -68,14 +70,15 @@ abstract class NavRoute<K>(
                         defaultValue != null -> {
                             "${namedNavArgument.name}=${namedNavArgument.argument.defaultValue}"
                         }
+
                         !namedNavArgument.argument.isNullable -> {
-                            // TODO:
-                            throw Exception()
+                            throw IllegalArgumentException("Argument with key ${namedNavArgument.name} is not nullable.")
                         }
+
                         else -> ""
                     }
                 }
-            }
+            }.takeIf { it.length > 1 }.orEmpty()
         )
     }
 }
