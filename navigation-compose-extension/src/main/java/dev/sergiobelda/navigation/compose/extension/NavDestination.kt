@@ -2,7 +2,6 @@ package dev.sergiobelda.navigation.compose.extension
 
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavArgumentBuilder
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
 import androidx.navigation.navArgument
 
@@ -56,11 +55,14 @@ abstract class NavDestination<K> where K : NavArgumentKey {
      */
     val route get() = destinationId + argumentsRoute
 
+    /*
     fun getString(navBackStackEntry: NavBackStackEntry, key: K): String? =
         navBackStackEntry.arguments?.getString(key.argumentKey)
 
     fun getInt(navBackStackEntry: NavBackStackEntry, key: K): Int? =
         navBackStackEntry.arguments?.getInt(key.argumentKey)
+
+     */
 
     /*
     fun navArgs(navBackStackEntry: NavBackStackEntry): Map<String, Any?> {
