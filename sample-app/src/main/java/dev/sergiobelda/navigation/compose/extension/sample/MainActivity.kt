@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dev.sergiobelda.navigation.compose.extension.Action
 import dev.sergiobelda.navigation.compose.extension.sample.ui.albums.AlbumsNavDestination
+import dev.sergiobelda.navigation.compose.extension.sample.ui.albums.AlbumsNavDestination.getArgumentValue
 import dev.sergiobelda.navigation.compose.extension.sample.ui.albums.AlbumsScreen
 import dev.sergiobelda.navigation.compose.extension.sample.ui.artistdetails.ArtistDetailsNavArgumentKeys
 import dev.sergiobelda.navigation.compose.extension.sample.ui.artistdetails.ArtistDetailsNavDestination
@@ -35,7 +36,7 @@ class MainActivity : ComponentActivity() {
                     composable(route = ArtistsNavDestination.route) {
                         ArtistsScreen(
                             navigateToArtistDetails = { artistId ->
-                                action.navigate(ArtistDetailsNavRoute(artistId))
+                                action.navigate(ArtistDetailsNavRoute(artistId, "World"))
                             }
                         )
                     }
@@ -43,14 +44,17 @@ class MainActivity : ComponentActivity() {
                         route = ArtistDetailsNavDestination.route,
                         arguments = ArtistsNavDestination.arguments
                     ) { navBackStackEntry ->
-                        val artistId: String = ArtistDetailsNavDestination.navArgs(
+                        /*val artistId: String = ArtistDetailsNavDestination.getNavArgumentValue<String>(
                             navBackStackEntry,
                             ArtistDetailsNavArgumentKeys.ArtistIdNavArgumentKey
-                        )
-                        val artistName: String = ArtistDetailsNavDestination.navArgs(
+                        ).orEmpty()*/
+                        /*val artistName: String = ArtistDetailsNavDestination.getNavArgumentValue<String>(
                             navBackStackEntry,
                             ArtistDetailsNavArgumentKeys.ArtistNameNavArgumentKey
-                        )
+                        ).orEmpty()*/
+                        val navArgs = ArtistDetailsNavDestination.navArgs(navBackStackEntry)
+                        val artistId = navArgs.getArgumentValue<String>(ArtistDetailsNavArgumentKeys.ArtistIdNavArgumentKey).orEmpty()
+                        val artistName = navArgs.getArgumentValue<String>(ArtistDetailsNavArgumentKeys.ArtistNameNavArgumentKey).orEmpty()
                         ArtistDetailsScreen(artistId, artistName)
                     }
                 }

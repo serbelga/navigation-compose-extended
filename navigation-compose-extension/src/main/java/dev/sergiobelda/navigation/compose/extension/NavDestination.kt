@@ -1,8 +1,12 @@
 package dev.sergiobelda.navigation.compose.extension
 
 import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavArgumentBuilder
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
+import androidx.navigation.NavType.Companion.IntType
+import androidx.navigation.NavType.Companion.StringType
+import androidx.navigation.navArgument
 
 /**
  * Represents some Destination in the Navigation graph. It's defined by a
@@ -15,14 +19,21 @@ abstract class NavDestination<K> where K : NavArgumentKey {
     abstract val destinationId: String
 
     /**
-     * List of [NamedNavArgument] to associate with destination.
+     * Define the navigation arguments to this destination.
      */
-    open val arguments: List<NamedNavArgument> = emptyList()
+    open val navArguments: Map<K, NavArgumentBuilder.() -> Unit> = emptyMap()
 
     /**
-     * List of [NavDeepLink] to associate with destination.
+     * List of [NamedNavArgument] associated with destination.
      */
-    open val deepLinks: List<NavDeepLink> = emptyList()
+    val arguments: List<NamedNavArgument> get() = navArguments.map {
+        navArgument(it.key.argumentKey, it.value)
+    }
+
+    /**
+     * List of [NavDeepLink] associated with destination.
+     */
+    open val navDeepLinks: List<NavDeepLink> = emptyList()
 
     private val argumentsRoute: String
         get() {
@@ -47,8 +58,23 @@ abstract class NavDestination<K> where K : NavArgumentKey {
      */
     val route get() = destinationId + argumentsRoute
 
-    fun navArgs(navBackStackEntry: NavBackStackEntry, navArgumentKey: K): String =
-        navBackStackEntry.arguments?.getString(navArgumentKey.key).orEmpty()
+    fun navArgs(navBackStackEntry: NavBackStackEntry): Map<String, Any?> {
+        val map = mutableMapOf<String, Any?>()
+        navBackStackEntry.arguments?.apply {
+            arguments.forEach { namedNavArgument ->
+                map[namedNavArgument.name] = when (namedNavArgument.argument.type) {
+                    StringType -> getString(namedNavArgument.name)
+                    IntType -> getInt(namedNavArgument.name)
+                    else -> null
+                }
+            }
+        }
+        return map
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T : Any> Map<String, Any?>.getArgumentValue(key: K): T? =
+        this.getValue(key.argumentKey) as? T
 }
 
 /**

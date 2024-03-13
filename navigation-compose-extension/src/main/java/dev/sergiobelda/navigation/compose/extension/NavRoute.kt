@@ -21,7 +21,7 @@ abstract class NavRoute<K>(
         destination.destinationId.addArgumentsValues()
 
     private val argumentsKeyStringMap: Map<String, Any?> get() =
-        arguments.mapKeys { it.key.key }
+        arguments.mapKeys { it.key.argumentKey }
 
     private fun String.addArgumentsValues(): String {
         val parameters = destination.arguments.filter {
@@ -57,6 +57,7 @@ abstract class NavRoute<K>(
                             "${namedNavArgument.name}=${argumentsKeyStringMap[namedNavArgument.name]}"
                         }
                         !namedNavArgument.argument.isNullable -> {
+                            // TODO:
                             throw Exception()
                         }
                         else -> ""
@@ -68,11 +69,10 @@ abstract class NavRoute<K>(
                             "${namedNavArgument.name}=${namedNavArgument.argument.defaultValue}"
                         }
                         !namedNavArgument.argument.isNullable -> {
+                            // TODO:
                             throw Exception()
                         }
-                        else -> {
-                            ""
-                        }
+                        else -> ""
                     }
                 }
             }
