@@ -1,10 +1,19 @@
 package dev.sergiobelda.navigation.compose.extension
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
 import androidx.navigation.navOptions
+
+@Composable
+fun rememberAction(
+    navController: NavHostController
+): Action = remember(navController) {
+    Action(navController)
+}
 
 class Action(private val navController: NavHostController) {
 
