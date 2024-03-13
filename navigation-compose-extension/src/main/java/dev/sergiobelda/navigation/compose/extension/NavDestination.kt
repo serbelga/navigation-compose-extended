@@ -1,13 +1,18 @@
 package dev.sergiobelda.navigation.compose.extension
 
 import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
+
+interface NavArgumentKey {
+    val key: String
+}
 
 /**
  * Represents some Destination in the Navigation graph. It's defined by a
  * [destinationId] and a list of [arguments].
  */
-abstract class NavDestination {
+abstract class NavDestination<K : NavArgumentKey> {
     /**
      * Identifier of Destination.
      */
@@ -24,13 +29,21 @@ abstract class NavDestination {
     open val deepLinks: List<NavDeepLink> = emptyList()
 
     private val argumentsRoute: String
-        get() = if (arguments.isNotEmpty()) {
-            arguments.joinToString(
-                prefix = ARG_SEPARATOR,
-                separator = ARG_SEPARATOR
-            ) { "{${it.name}}" }
-        } else {
-            ""
+        get() {
+            val parameters =
+                arguments.filter { !it.argument.isDefaultValuePresent && !it.argument.isNullable }
+            val optionalParameters =
+                arguments.filter { it.argument.isDefaultValuePresent || it.argument.isNullable }
+
+            return parameters.joinToString(
+                prefix = PARAM_SEPARATOR,
+                separator = PARAM_SEPARATOR
+            ) {
+                "{${it.name}}"
+            } + optionalParameters.takeIf { it.isNotEmpty() }?.joinToString(
+                prefix = QUERY_PARAM_PREFIX,
+                separator = QUERY_PARAM_SEPARATOR
+            ) { "${it.name}={${it.name}}" }.orEmpty()
         }
 
     /**
@@ -39,11 +52,17 @@ abstract class NavDestination {
     val route get() = destinationId + argumentsRoute
 
     companion object {
-        private const val ARG_SEPARATOR = "/"
+        private const val PARAM_SEPARATOR = "/"
+        private const val QUERY_PARAM_PREFIX = "?"
+        private const val QUERY_PARAM_SEPARATOR = "&"
     }
+
+
+    fun navArgs(navBackStackEntry: NavBackStackEntry, navArgumentKey: K): String =
+        navBackStackEntry.arguments?.getString(navArgumentKey.key).orEmpty()
 }
 
 /**
  * Represents a TopLevel [NavDestination].
  */
-abstract class TopLevelNavDestination : NavDestination()
+abstract class TopLevelNavDestination<K : NavArgumentKey> : NavDestination<K>()

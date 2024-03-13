@@ -1,37 +1,34 @@
 package dev.sergiobelda.navigation.compose.extension.sample.ui.artistdetails
 
 import androidx.navigation.NamedNavArgument
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import dev.sergiobelda.navigation.compose.extension.NavArgumentKey
 import dev.sergiobelda.navigation.compose.extension.NavDestination
 import dev.sergiobelda.navigation.compose.extension.NavRoute
 
-object ArtistDetailsNavDestination : NavDestination() {
+enum class ArtistDetailsNavArgKeys(override val key: String) : NavArgumentKey {
+    ArtistIdNavArgumentKey("artistId"),
+    ArtistNameNavArgumentKey("artistName")
+}
+
+object ArtistDetailsNavDestination : NavDestination<ArtistDetailsNavArgKeys>() {
     override val destinationId: String = "artistdetails"
 
     override val arguments: List<NamedNavArgument> = listOf(
-        navArgument(ArtistIdArgKey) {
+        navArgument(ArtistDetailsNavArgKeys.ArtistIdNavArgumentKey.key) {
             type = NavType.StringType
+            defaultValue = true
         },
-        navArgument(ArtistNameArgKey) {},
+        navArgument(ArtistDetailsNavArgKeys.ArtistNameNavArgumentKey.key) {},
     )
-
-    fun navArgArtistId(navBackStackEntry: NavBackStackEntry): String =
-        navBackStackEntry.arguments?.getString(ArtistIdArgKey).orEmpty()
-
-    fun navArgArtistName(navBackStackEntry: NavBackStackEntry): String =
-        navBackStackEntry.arguments?.getString(ArtistNameArgKey).orEmpty()
 }
 
 class ArtistDetailsNavRoute(artistId: String, artistName: String) :
-    NavRoute(
+    NavRoute<ArtistDetailsNavArgKeys>(
         destination = ArtistDetailsNavDestination,
         arguments = mapOf(
-            ArtistIdArgKey to artistId,
-            ArtistNameArgKey to artistName
+            ArtistDetailsNavArgKeys.ArtistIdNavArgumentKey.key to artistId,
+            ArtistDetailsNavArgKeys.ArtistNameNavArgumentKey.key to artistName
         )
     )
-
-private const val ArtistIdArgKey: String = "artistId"
-private const val ArtistNameArgKey: String = "artistName"

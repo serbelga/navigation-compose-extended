@@ -7,10 +7,10 @@ package dev.sergiobelda.navigation.compose.extension
  * @param destination Navigation destination.
  * @param arguments List of arguments passed in this route.
  */
-abstract class NavRoute(
-    val destination: NavDestination,
+abstract class NavRoute<K>(
+    val destination: NavDestination<K>,
     private val arguments: Map<String, Any?> = emptyMap()
-) {
+) where K : NavArgumentKey {
 
     /**
      * Navigation route. It consists of [destination] id and the [arguments] values.

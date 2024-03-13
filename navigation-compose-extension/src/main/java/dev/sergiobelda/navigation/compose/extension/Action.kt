@@ -8,8 +8,8 @@ import androidx.navigation.navOptions
 
 class Action(private val navController: NavHostController) {
 
-    fun navigate(
-        navRoute: NavRoute,
+    fun <K : NavArgumentKey> navigate(
+        navRoute: NavRoute<K>,
         navOptions: NavOptions? = null,
         navigatorExtras: Navigator.Extras? = null
     ) {
