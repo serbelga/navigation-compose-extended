@@ -7,28 +7,28 @@ import dev.sergiobelda.navigation.compose.extension.NavArgumentKey
 import dev.sergiobelda.navigation.compose.extension.NavDestination
 import dev.sergiobelda.navigation.compose.extension.NavRoute
 
-enum class ArtistDetailsNavArgKeys(override val key: String) : NavArgumentKey {
+enum class ArtistDetailsNavArgumentKeys(override val key: String) : NavArgumentKey {
     ArtistIdNavArgumentKey("artistId"),
     ArtistNameNavArgumentKey("artistName")
 }
 
-object ArtistDetailsNavDestination : NavDestination<ArtistDetailsNavArgKeys>() {
+object ArtistDetailsNavDestination : NavDestination<ArtistDetailsNavArgumentKeys>() {
     override val destinationId: String = "artistdetails"
 
     override val arguments: List<NamedNavArgument> = listOf(
-        navArgument(ArtistDetailsNavArgKeys.ArtistIdNavArgumentKey.key) {
+        navArgument(ArtistDetailsNavArgumentKeys.ArtistIdNavArgumentKey.key) {
             type = NavType.StringType
             defaultValue = true
         },
-        navArgument(ArtistDetailsNavArgKeys.ArtistNameNavArgumentKey.key) {},
+        navArgument(ArtistDetailsNavArgumentKeys.ArtistNameNavArgumentKey.key) {},
     )
 }
 
 class ArtistDetailsNavRoute(artistId: String, artistName: String) :
-    NavRoute<ArtistDetailsNavArgKeys>(
+    NavRoute<ArtistDetailsNavArgumentKeys>(
         destination = ArtistDetailsNavDestination,
         arguments = mapOf(
-            ArtistDetailsNavArgKeys.ArtistIdNavArgumentKey.key to artistId,
-            ArtistDetailsNavArgKeys.ArtistNameNavArgumentKey.key to artistName
+            ArtistDetailsNavArgumentKeys.ArtistIdNavArgumentKey.key to artistId,
+            ArtistDetailsNavArgumentKeys.ArtistNameNavArgumentKey.key to artistName
         )
     )

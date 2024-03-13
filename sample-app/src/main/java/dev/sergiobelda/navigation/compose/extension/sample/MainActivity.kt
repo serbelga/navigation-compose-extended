@@ -10,7 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import dev.sergiobelda.navigation.compose.extension.Action
 import dev.sergiobelda.navigation.compose.extension.sample.ui.albums.AlbumsNavDestination
 import dev.sergiobelda.navigation.compose.extension.sample.ui.albums.AlbumsScreen
-import dev.sergiobelda.navigation.compose.extension.sample.ui.artistdetails.ArtistDetailsNavArgKeys
+import dev.sergiobelda.navigation.compose.extension.sample.ui.artistdetails.ArtistDetailsNavArgumentKeys
 import dev.sergiobelda.navigation.compose.extension.sample.ui.artistdetails.ArtistDetailsNavDestination
 import dev.sergiobelda.navigation.compose.extension.sample.ui.artistdetails.ArtistDetailsNavRoute
 import dev.sergiobelda.navigation.compose.extension.sample.ui.artistdetails.ArtistDetailsScreen
@@ -44,13 +44,13 @@ class MainActivity : ComponentActivity() {
                         arguments = ArtistsNavDestination.arguments
                     ) { navBackStackEntry ->
                         val artistId: String = ArtistDetailsNavDestination.navArgs(
-                                navBackStackEntry,
-                                ArtistDetailsNavArgKeys.ArtistIdNavArgumentKey
-                            )
+                            navBackStackEntry,
+                            ArtistDetailsNavArgumentKeys.ArtistIdNavArgumentKey
+                        )
                         val artistName: String = ArtistDetailsNavDestination.navArgs(
-                                navBackStackEntry,
-                                ArtistDetailsNavArgKeys.ArtistNameNavArgumentKey
-                            )
+                            navBackStackEntry,
+                            ArtistDetailsNavArgumentKeys.ArtistNameNavArgumentKey
+                        )
                         ArtistDetailsScreen(artistId, artistName)
                     }
                 }

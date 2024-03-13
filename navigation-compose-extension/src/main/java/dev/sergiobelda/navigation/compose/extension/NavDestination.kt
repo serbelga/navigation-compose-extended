@@ -4,10 +4,6 @@ import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
 
-interface NavArgumentKey {
-    val key: String
-}
-
 /**
  * Represents some Destination in the Navigation graph. It's defined by a
  * [destinationId] and a list of [arguments].
@@ -56,7 +52,6 @@ abstract class NavDestination<K : NavArgumentKey> {
         private const val QUERY_PARAM_PREFIX = "?"
         private const val QUERY_PARAM_SEPARATOR = "&"
     }
-
 
     fun navArgs(navBackStackEntry: NavBackStackEntry, navArgumentKey: K): String =
         navBackStackEntry.arguments?.getString(navArgumentKey.key).orEmpty()
