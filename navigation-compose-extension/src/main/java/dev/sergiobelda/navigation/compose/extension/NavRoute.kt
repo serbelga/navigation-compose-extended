@@ -1,5 +1,7 @@
 package dev.sergiobelda.navigation.compose.extension
 
+import androidx.navigation.NamedNavArgument
+
 /**
  * Represents the navigation route to reach some destination. [Action.navigate] receives a
  * [NavRoute] object.
@@ -18,6 +20,9 @@ abstract class NavRoute<K>(
     internal val route: String =
         destination.destinationId.addArgumentsValues()
 
+    private val argumentsKeyStringMap: Map<String, Any?> get() =
+        arguments.mapKeys { it.key.key }
+
     private fun String.addArgumentsValues(): String {
         val parameters = destination.arguments.filter {
             !it.argument.isDefaultValuePresent && !it.argument.isNullable
@@ -25,30 +30,52 @@ abstract class NavRoute<K>(
         val optionalParameters = destination.arguments.filter {
             it.argument.isDefaultValuePresent || it.argument.isNullable
         }
-        val keyArgumentsMap = arguments.mapKeys { it.key.key }
 
         return this + buildString {
             parameters.forEach { namedNavArgument ->
-                if (keyArgumentsMap.containsKey(namedNavArgument.name)) {
+                if (argumentsKeyStringMap.containsKey(namedNavArgument.name)) {
                     append(PARAM_SEPARATOR)
-                    append(keyArgumentsMap[namedNavArgument.name].toString())
+                    append(argumentsKeyStringMap[namedNavArgument.name].toString())
                 } else throw Exception("Not present in arguments")
             }
             optionalParameters.takeIf { it.isNotEmpty() }?.let { list ->
-                append(
-                    list.joinToString(
-                        prefix = QUERY_PARAM_PREFIX,
-                        separator = QUERY_PARAM_SEPARATOR
-                    ) { namedNavArgument ->
-                        if (keyArgumentsMap.containsKey(namedNavArgument.name)) {
-                            val value = keyArgumentsMap[namedNavArgument.name]
-                            if (value != null) {
-                                "${namedNavArgument.name}=${keyArgumentsMap[namedNavArgument.name]}"
-                            } else ""
-                        } else "${namedNavArgument.name}="
-                    }
-                )
+                appendOptionalParameters(list)
             }
         }
+    }
+
+    private fun StringBuilder.appendOptionalParameters(list: List<NamedNavArgument>) {
+        append(
+            list.joinToString(
+                prefix = QUERY_PARAM_PREFIX,
+                separator = QUERY_PARAM_SEPARATOR
+            ) { namedNavArgument ->
+                if (argumentsKeyStringMap.containsKey(namedNavArgument.name)) {
+                    val value = argumentsKeyStringMap[namedNavArgument.name]
+                    when {
+                        value != null -> {
+                            "${namedNavArgument.name}=${argumentsKeyStringMap[namedNavArgument.name]}"
+                        }
+                        !namedNavArgument.argument.isNullable -> {
+                            throw Exception()
+                        }
+                        else -> ""
+                    }
+                } else {
+                    val defaultValue = namedNavArgument.argument.defaultValue
+                    when {
+                        defaultValue != null -> {
+                            "${namedNavArgument.name}=${namedNavArgument.argument.defaultValue}"
+                        }
+                        !namedNavArgument.argument.isNullable -> {
+                            throw Exception()
+                        }
+                        else -> {
+                            ""
+                        }
+                    }
+                }
+            }
+        )
     }
 }

@@ -18,17 +18,20 @@ object ArtistDetailsNavDestination : NavDestination<ArtistDetailsNavArgumentKeys
     override val arguments: List<NamedNavArgument> = listOf(
         navArgument(ArtistDetailsNavArgumentKeys.ArtistIdNavArgumentKey.key) {
             type = NavType.StringType
-            defaultValue = true
         },
-        navArgument(ArtistDetailsNavArgumentKeys.ArtistNameNavArgumentKey.key) {},
+        navArgument(ArtistDetailsNavArgumentKeys.ArtistNameNavArgumentKey.key) {
+            type = NavType.StringType
+            defaultValue = "artistName"
+            nullable = false
+        },
     )
 }
 
-class ArtistDetailsNavRoute(artistId: String, artistName: String) :
+class ArtistDetailsNavRoute(artistId: String) :
     NavRoute<ArtistDetailsNavArgumentKeys>(
         destination = ArtistDetailsNavDestination,
         arguments = mapOf(
-            ArtistDetailsNavArgumentKeys.ArtistIdNavArgumentKey.key to artistId,
-            ArtistDetailsNavArgumentKeys.ArtistNameNavArgumentKey.key to artistName
+            ArtistDetailsNavArgumentKeys.ArtistIdNavArgumentKey to artistId,
+            // ArtistDetailsNavArgumentKeys.ArtistNameNavArgumentKey to artistName
         )
     )

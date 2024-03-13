@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
                     composable(route = ArtistsNavDestination.route) {
                         ArtistsScreen(
                             navigateToArtistDetails = { artistId ->
-                                action.navigate(ArtistDetailsNavRoute(artistId, "World"))
+                                action.navigate(ArtistDetailsNavRoute(artistId))
                             }
                         )
                     }
