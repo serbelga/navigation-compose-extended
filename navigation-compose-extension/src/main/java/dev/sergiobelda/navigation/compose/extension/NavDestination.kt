@@ -7,6 +7,7 @@ import androidx.navigation.NavDeepLink
 import androidx.navigation.NavType.Companion.IntType
 import androidx.navigation.NavType.Companion.StringType
 import androidx.navigation.navArgument
+import kotlin.reflect.KClass
 
 /**
  * Represents some Destination in the Navigation graph. It's defined by a
@@ -58,6 +59,13 @@ abstract class NavDestination<K> where K : NavArgumentKey {
      */
     val route get() = destinationId + argumentsRoute
 
+    fun getString(navBackStackEntry: NavBackStackEntry, key: K): String? =
+        navBackStackEntry.arguments?.getString(key.argumentKey)
+
+    fun getInt(navBackStackEntry: NavBackStackEntry, key: K): Int? =
+        navBackStackEntry.arguments?.getInt(key.argumentKey)
+
+    /*
     fun navArgs(navBackStackEntry: NavBackStackEntry): Map<String, Any?> {
         val map = mutableMapOf<String, Any?>()
         navBackStackEntry.arguments?.apply {
@@ -75,6 +83,7 @@ abstract class NavDestination<K> where K : NavArgumentKey {
     @Suppress("UNCHECKED_CAST")
     fun <T : Any> Map<String, Any?>.getArgumentValue(key: K): T? =
         this.getValue(key.argumentKey) as? T
+     */
 }
 
 /**
