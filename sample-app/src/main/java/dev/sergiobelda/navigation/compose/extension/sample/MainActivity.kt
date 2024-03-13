@@ -52,18 +52,6 @@ private fun NavGraphBuilder.addArtistDetails() {
         route = ArtistDetailsNavDestination.route,
         arguments = ArtistsNavDestination.arguments
     ) { navBackStackEntry ->
-        //val navArgs = ArtistDetailsNavDestination.navArgs(navBackStackEntry)
-        //val artistId = navArgs.getArgumentValue<String>(ArtistDetailsNavArgumentKeys.ArtistIdNavArgumentKey).orEmpty()
-        //val artistName = navArgs.getArgumentValue<String>(ArtistDetailsNavArgumentKeys.ArtistNameNavArgumentKey).orEmpty()
-        /*val artistId = ArtistDetailsNavDestination.getString(
-            navBackStackEntry,
-            ArtistDetailsNavArgumentKeys.ArtistIdNavArgumentKey
-        ).orEmpty()
-        val artistName = ArtistDetailsNavDestination.getString(
-            navBackStackEntry,
-            ArtistDetailsNavArgumentKeys.ArtistNameNavArgumentKey
-        ).orEmpty()*/
-
         val navSafeArgs = rememberNavSafeArgs(ArtistDetailsNavDestination, navBackStackEntry)
         val artistId =
             navSafeArgs.getString(ArtistDetailsNavArgumentKeys.ArtistIdNavArgumentKey).orEmpty()
