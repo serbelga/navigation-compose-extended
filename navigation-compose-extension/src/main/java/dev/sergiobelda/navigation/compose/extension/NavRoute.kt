@@ -39,9 +39,7 @@ abstract class NavRoute<K>(
 
         return this + buildString {
             appendRequiredParameters(parameters)
-            optionalParameters.takeIf { it.isNotEmpty() }?.let { list ->
-                appendOptionalParameters(list)
-            }
+            appendOptionalParameters(optionalParameters)
         }
     }
 
@@ -55,12 +53,12 @@ abstract class NavRoute<K>(
      * @throws IllegalArgumentException if an argument with a key is not present in the arguments.
      */
     private fun StringBuilder.appendRequiredParameters(parameters: List<NamedNavArgument>) {
-        parameters.forEach { namedNavArgument ->
+        parameters.takeIf { it.isNotEmpty() }?.forEach { namedNavArgument ->
             if (argumentsKeyStringMap.containsKey(namedNavArgument.name)) {
                 append(PARAM_SEPARATOR)
                 append(argumentsKeyStringMap[namedNavArgument.name].toString())
-            } else throw IllegalArgumentException("Not present in arguments")
-        }
+            } else throw Exception("Not present in arguments")
+        } ?: append(PARAM_SEPARATOR)
     }
 
     /**
@@ -73,40 +71,42 @@ abstract class NavRoute<K>(
      * @throws IllegalArgumentException if an argument with a key is not nullable and its value is null.
      */
     private fun StringBuilder.appendOptionalParameters(optionalParameters: List<NamedNavArgument>) {
-        append(
-            optionalParameters.joinToString(
-                prefix = QUERY_PARAM_PREFIX,
-                separator = QUERY_PARAM_SEPARATOR
-            ) { namedNavArgument ->
-                // Check if the argument is present in the arguments map, if not, check if it has a default value.
-                if (argumentsKeyStringMap.containsKey(namedNavArgument.name)) {
-                    val value = argumentsKeyStringMap[namedNavArgument.name]
-                    when {
-                        value != null -> {
-                            "${namedNavArgument.name}=${argumentsKeyStringMap[namedNavArgument.name]}"
-                        }
+        optionalParameters.takeIf { it.isNotEmpty() }?.let { list ->
+            append(
+                list.joinToString(
+                    prefix = QUERY_PARAM_PREFIX,
+                    separator = QUERY_PARAM_SEPARATOR
+                ) { namedNavArgument ->
+                    // Check if the argument is present in the arguments map, if not, check if it has a default value.
+                    if (argumentsKeyStringMap.containsKey(namedNavArgument.name)) {
+                        val value = argumentsKeyStringMap[namedNavArgument.name]
+                        when {
+                            value != null -> {
+                                "${namedNavArgument.name}=${argumentsKeyStringMap[namedNavArgument.name]}"
+                            }
 
-                        !namedNavArgument.argument.isNullable -> {
-                            throw IllegalArgumentException("Argument with key ${namedNavArgument.name} is not nullable.")
-                        }
+                            !namedNavArgument.argument.isNullable -> {
+                                throw IllegalArgumentException("Argument with key ${namedNavArgument.name} is not nullable.")
+                            }
 
-                        else -> ""
+                            else -> ""
+                        }
+                    } else {
+                        val defaultValue = namedNavArgument.argument.defaultValue
+                        when {
+                            defaultValue != null -> {
+                                "${namedNavArgument.name}=${namedNavArgument.argument.defaultValue}"
+                            }
+
+                            !namedNavArgument.argument.isNullable -> {
+                                throw IllegalArgumentException("Argument with key ${namedNavArgument.name} is not nullable.")
+                            }
+
+                            else -> ""
+                        }
                     }
-                } else {
-                    val defaultValue = namedNavArgument.argument.defaultValue
-                    when {
-                        defaultValue != null -> {
-                            "${namedNavArgument.name}=${namedNavArgument.argument.defaultValue}"
-                        }
-
-                        !namedNavArgument.argument.isNullable -> {
-                            throw IllegalArgumentException("Argument with key ${namedNavArgument.name} is not nullable.")
-                        }
-
-                        else -> ""
-                    }
-                }
-            }.takeIf { it != QUERY_PARAM_PREFIX }.orEmpty()
-        )
+                }.takeIf { it != QUERY_PARAM_PREFIX }.orEmpty()
+            )
+        }
     }
 }
