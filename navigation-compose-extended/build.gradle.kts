@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.sergiobelda.navigation.compose.extension"
+    namespace = "dev.sergiobelda.navigation.compose.extended"
     compileSdk = 34
 
     defaultConfig {

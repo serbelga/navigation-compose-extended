@@ -14,7 +14,7 @@ dependencyResolutionManagement {
 }
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-rootProject.name = "navigation-compose-extension-root"
+rootProject.name = "navigation-compose-extended-root"
 
-include(":navigation-compose-extension")
+include(":navigation-compose-extended")
 include(":sample-app")

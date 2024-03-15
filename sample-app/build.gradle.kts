@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "dev.sergiobelda.navigation.compose.extension.sample"
+    namespace = "dev.sergiobelda.navigation.compose.extended.sample"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "dev.sergiobelda.navigation.compose.extension.sample"
+        applicationId = "dev.sergiobelda.navigation.compose.extended.sample"
         minSdk = 24
         versionCode = 1
         versionName = "1.0"
@@ -39,7 +39,7 @@ android {
 dependencies {
     rootProject.extra
 
-    implementation(projects.navigationComposeExtension)
+    implementation(projects.navigationComposeExtended)
     implementation(libs.androidx.navigation.compose)
 
     implementation(libs.androidx.core.ktx)

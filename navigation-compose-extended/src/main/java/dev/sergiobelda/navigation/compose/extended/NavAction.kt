@@ -1,4 +1,4 @@
-package dev.sergiobelda.navigation.compose.extension
+package dev.sergiobelda.navigation.compose.extended
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember

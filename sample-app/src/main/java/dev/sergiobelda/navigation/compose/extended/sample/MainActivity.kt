@@ -1,4 +1,4 @@
-package dev.sergiobelda.navigation.compose.extension.sample
+package dev.sergiobelda.navigation.compose.extended.sample
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -16,14 +16,14 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import dev.sergiobelda.navigation.compose.extension.rememberNavAction
-import dev.sergiobelda.navigation.compose.extension.sample.ui.search.SearchNavDestination
-import dev.sergiobelda.navigation.compose.extension.sample.ui.search.SearchScreen
-import dev.sergiobelda.navigation.compose.extension.sample.ui.searchresult.SearchResultNavArgumentKeys
-import dev.sergiobelda.navigation.compose.extension.sample.ui.searchresult.SearchResultNavDestination
-import dev.sergiobelda.navigation.compose.extension.sample.ui.searchresult.SearchResultScreen
-import dev.sergiobelda.navigation.compose.extension.sample.ui.searchresult.customNavRoute
-import dev.sergiobelda.navigation.compose.extension.sample.ui.theme.SampleTheme
+import dev.sergiobelda.navigation.compose.extended.rememberNavAction
+import dev.sergiobelda.navigation.compose.extended.sample.ui.search.SearchNavDestination
+import dev.sergiobelda.navigation.compose.extended.sample.ui.search.SearchScreen
+import dev.sergiobelda.navigation.compose.extended.sample.ui.searchresult.SearchResultNavArgumentKeys
+import dev.sergiobelda.navigation.compose.extended.sample.ui.searchresult.SearchResultNavDestination
+import dev.sergiobelda.navigation.compose.extended.sample.ui.searchresult.SearchResultScreen
+import dev.sergiobelda.navigation.compose.extended.sample.ui.searchresult.customNavRoute
+import dev.sergiobelda.navigation.compose.extended.sample.ui.theme.SampleTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,4 +1,4 @@
-package dev.sergiobelda.navigation.compose.extension.sample.ui.theme
+package dev.sergiobelda.navigation.compose.extended.sample.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

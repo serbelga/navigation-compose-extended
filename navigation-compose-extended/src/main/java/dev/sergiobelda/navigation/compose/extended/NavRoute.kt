@@ -1,4 +1,4 @@
-package dev.sergiobelda.navigation.compose.extension
+package dev.sergiobelda.navigation.compose.extended
 
 import androidx.navigation.NamedNavArgument
 

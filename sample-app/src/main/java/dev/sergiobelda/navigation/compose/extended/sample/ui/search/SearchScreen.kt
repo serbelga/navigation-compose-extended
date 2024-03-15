@@ -1,4 +1,4 @@
-package dev.sergiobelda.navigation.compose.extension.sample.ui.search
+package dev.sergiobelda.navigation.compose.extended.sample.ui.search
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

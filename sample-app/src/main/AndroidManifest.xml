@@ -7,12 +7,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Navigationcomposeextension">
+        android:theme="@style/Theme.SampleApp">
         <activity
-            android:name=".MainActivity"
+            android:name="dev.sergiobelda.navigation.compose.extended.sample.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Navigationcomposeextension">
+            android:theme="@style/Theme.SampleApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
