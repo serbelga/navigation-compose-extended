@@ -7,7 +7,7 @@ import androidx.navigation.NavType.Companion.StringType
 /**
  * It resolves the argument values for given a [navBackStackEntry] for the [destination].
  */
-class NavSafeArgs<K>(
+class NavSafeArgs<K> internal constructor(
     private val destination: NavDestination<K>,
     private val navBackStackEntry: NavBackStackEntry,
 ) where K : NavArgumentKey {

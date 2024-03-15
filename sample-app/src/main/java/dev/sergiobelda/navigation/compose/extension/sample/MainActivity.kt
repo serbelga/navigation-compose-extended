@@ -72,7 +72,7 @@ fun MainScreen() {
                 route = SearchResultNavDestination.route,
                 arguments = SearchResultNavDestination.arguments
             ) {
-                val navSafeArgs = NavSafeArgs(SearchResultNavDestination, it)
+                val navSafeArgs = SearchResultNavDestination.navSafeArgs(it)
                 val search =
                     navSafeArgs.getString(SearchResultNavArgumentKeys.SearchNavArgumentKey)
                         .toString()
