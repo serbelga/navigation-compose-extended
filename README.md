@@ -11,7 +11,7 @@ object SearchNavDestination : NavDestination<NavArgumentKey>() {
     override val destinationId: String = "search"
 }
 
-object SearchResultNavDestination : NavDestination<SearchResultNavArgumentKeys>() {
+object SearchResultNavDestination : NavDestination<NavArgumentKey>() {
     override val destinationId: String = "searchresult"
 }
 ```
