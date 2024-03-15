@@ -16,15 +16,13 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import dev.sergiobelda.navigation.compose.extension.NavSafeArgs
 import dev.sergiobelda.navigation.compose.extension.rememberNavAction
 import dev.sergiobelda.navigation.compose.extension.sample.ui.search.SearchNavDestination
-import dev.sergiobelda.navigation.compose.extension.sample.ui.search.SearchNavRoute
 import dev.sergiobelda.navigation.compose.extension.sample.ui.search.SearchScreen
 import dev.sergiobelda.navigation.compose.extension.sample.ui.searchresult.SearchResultNavArgumentKeys
 import dev.sergiobelda.navigation.compose.extension.sample.ui.searchresult.SearchResultNavDestination
-import dev.sergiobelda.navigation.compose.extension.sample.ui.searchresult.SearchResultNavRoute
 import dev.sergiobelda.navigation.compose.extension.sample.ui.searchresult.SearchResultScreen
+import dev.sergiobelda.navigation.compose.extension.sample.ui.searchresult.customNavRoute
 import dev.sergiobelda.navigation.compose.extension.sample.ui.theme.SampleTheme
 
 class MainActivity : ComponentActivity() {
@@ -47,7 +45,7 @@ fun MainScreen() {
             BottomAppBar {
                 NavigationBarItem(
                     selected = true,
-                    onClick = { navAction.navigate(SearchNavRoute) },
+                    onClick = { navAction.navigate(SearchResultNavDestination.navRoute()) },
                     icon = { Icon(Icons.Rounded.Search, contentDescription = null) },
                     label = { Text(text = "Search") }
                 )
@@ -64,7 +62,9 @@ fun MainScreen() {
             ) {
                 SearchScreen(
                     navigateToSearchResults = { search, category ->
-                        navAction.navigate(SearchResultNavRoute(search))
+                        navAction.navigate(
+                            SearchResultNavDestination.customNavRoute(search)
+                        )
                     }
                 )
             }

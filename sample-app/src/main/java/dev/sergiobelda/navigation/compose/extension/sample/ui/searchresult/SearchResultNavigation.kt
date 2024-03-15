@@ -4,7 +4,6 @@ import androidx.navigation.NavArgumentBuilder
 import androidx.navigation.NavType
 import dev.sergiobelda.navigation.compose.extension.NavArgumentKey
 import dev.sergiobelda.navigation.compose.extension.NavDestination
-import dev.sergiobelda.navigation.compose.extension.NavRoute
 
 enum class SearchResultNavArgumentKeys(override val argumentKey: String) : NavArgumentKey {
     SearchNavArgumentKey("search"),
@@ -27,11 +26,8 @@ object SearchResultNavDestination : NavDestination<SearchResultNavArgumentKeys>(
         )
 }
 
-class SearchResultNavRoute(search: String, category: String? = null) :
-    NavRoute<SearchResultNavArgumentKeys>(
-        destination = SearchResultNavDestination,
-        arguments = mapOf(
-            SearchResultNavArgumentKeys.SearchNavArgumentKey to search,
-            SearchResultNavArgumentKeys.CategoryNavArgumentKey to category
-        )
+fun SearchResultNavDestination.customNavRoute(search: String, category: String? = "Default") =
+    navRoute(
+        SearchResultNavArgumentKeys.SearchNavArgumentKey to search,
+        SearchResultNavArgumentKeys.CategoryNavArgumentKey to category
     )

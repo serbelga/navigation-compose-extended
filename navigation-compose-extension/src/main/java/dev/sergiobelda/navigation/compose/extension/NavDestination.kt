@@ -61,6 +61,12 @@ abstract class NavDestination<K> where K : NavArgumentKey {
     val route get() = destinationId + argumentsRoute
 
     /**
+     * Returns the [NavRoute] associated with this destination given some [arguments].
+     */
+    fun navRoute(vararg arguments: Pair<K, Any?>): NavRoute<K> =
+        NavRoute(this, arguments.toMap())
+
+    /**
      * Returns a [NavSafeArgs] instance for this destination.
      */
     fun navSafeArgs(navBackStackEntry: NavBackStackEntry): NavSafeArgs<K> =

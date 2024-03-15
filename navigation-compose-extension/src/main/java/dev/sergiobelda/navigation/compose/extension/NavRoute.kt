@@ -9,7 +9,7 @@ import androidx.navigation.NamedNavArgument
  * @param destination Navigation destination.
  * @param arguments List of arguments passed in this route.
  */
-abstract class NavRoute<K>(
+class NavRoute<K> internal constructor(
     val destination: NavDestination<K>,
     private val arguments: Map<K, Any?> = emptyMap()
 ) where K : NavArgumentKey {
