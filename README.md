@@ -5,43 +5,60 @@
 ### Without arguments
 
 ```kotlin
-object ArtistsNavDestination : NavDestination() {
-    override val destinationId: String = "artists"
+object SearchNavDestination : TopLevelNavDestination<NavArgumentKey>() {
+    override val destinationId: String = "search"
 }
 
-NavHost(startDestination = ArtistsNavDestination.route) {
-    composable(route = ArtistsNavDestination.route) { ... }
+NavHost(startDestination = SearchNavDestination.route) {
+    composable(route = SearchNavDestination.route) { ... }
 }
 
-// Navigate to Artists screen
-object ArtistsNavRoute : NavRoute(ArtistsNavDestination)
+// Navigate to Search destination
+object SearchNavRoute : NavRoute<NavArgumentKey>(destination = SearchNavDestination)
 
-action.navigate(ArtistsNavRoute)
+action.navigate(SearchNavRoute)
 ```
 
 ### Defining arguments
 
 ```kotlin
-object ArtistDetailsNavDestination : NavDestination() {
-    override val destinationId: String = "artistdetails"
+enum class SearchResultNavArgumentKeys(override val argumentKey: String) : NavArgumentKey {
+    SearchNavArgumentKey("search"),
+    CategoryNavArgumentKey("category")
+}
 
-    override val arguments: List<NamedNavArgument> = listOf(
-        navArgument("artistId") { type = NavType.StringType }
-    )
+object SearchResultNavDestination : NavDestination<SearchResultNavArgumentKeys>() {
+    override val destinationId: String = "searchresult"
 
-    fun navArgArtistId(navBackStackEntry: NavBackStackEntry): String =
-        navBackStackEntry.arguments?.getString("artistId") ?: ""
+    override val navArguments: Map<SearchResultNavArgumentKeys, NavArgumentBuilder.() -> Unit> =
+        mapOf(
+            SearchResultNavArgumentKeys.SearchNavArgumentKey to {
+                type = NavType.StringType
+            },
+            SearchResultNavArgumentKeys.CategoryNavArgumentKey to {
+                type = NavType.StringType
+                nullable = true
+                defaultValue = "All"
+            }
+        )
 }
 
 NavHost {
     composable(
-        route = ArtistDetailsNavDestination.route,
-        arguments = ArtistDetailsNavDestination.arguments
+        route = SearchResultNavDestination.route,
+        arguments = SearchResultNavDestination.arguments
     ) { ... }
 }
 
-// Navigate to Artists details screen
-class ArtistDetailsNavRoute(artistId: Int) : NavRoute(ArtistDetailsNavDestination, artistId)
+// Navigate to Search Result destination
+class SearchResultNavRoute(search: String, category: String? = null) :
+    NavRoute<SearchResultNavArgumentKeys>(
+        destination = SearchResultNavDestination,
+        arguments = mapOf(
+            SearchResultNavArgumentKeys.SearchNavArgumentKey to search,
+            SearchResultNavArgumentKeys.CategoryNavArgumentKey to category
+        )
+    )
 
-action.navigate(ArtistDetailsNavRoute(1))
+action.navigate(SearchResultNavRoute("term"))
 ```
