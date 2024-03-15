@@ -5,7 +5,7 @@
 ### Without arguments
 
 ```kotlin
-object SearchNavDestination : TopLevelNavDestination<NavArgumentKey>() {
+object SearchNavDestination : NavDestination<NavArgumentKey>() {
     override val destinationId: String = "search"
 }
 
@@ -14,9 +14,7 @@ NavHost(startDestination = SearchNavDestination.route) {
 }
 
 // Navigate to Search destination
-object SearchNavRoute : NavRoute<NavArgumentKey>(destination = SearchNavDestination)
-
-action.navigate(SearchNavRoute)
+navAction.navigate(SearchResultNavDestination.navRoute())
 ```
 
 ### Defining arguments
@@ -51,14 +49,9 @@ NavHost {
 }
 
 // Navigate to Search Result destination
-class SearchResultNavRoute(search: String, category: String? = null) :
-    NavRoute<SearchResultNavArgumentKeys>(
-        destination = SearchResultNavDestination,
-        arguments = mapOf(
-            SearchResultNavArgumentKeys.SearchNavArgumentKey to search,
-            SearchResultNavArgumentKeys.CategoryNavArgumentKey to category
-        )
+navAction.navigate(
+    SearchResultNavDestination.navRoute(
+        SearchNavArgumentKey to search
     )
-
-action.navigate(SearchResultNavRoute("term"))
+)
 ```
