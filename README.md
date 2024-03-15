@@ -1,4 +1,4 @@
-# Navigation Compose extension
+# Navigation Compose Extended
 
 ## Usage
 
@@ -49,9 +49,11 @@ NavHost {
 }
 
 // Navigate to Search Result destination
-navAction.navigate(
-    SearchResultNavDestination.navRoute(
-        SearchResultNavArgumentKeys.SearchNavArgumentKey to search
-    )
+SearchScreen(
+    navigateToSearchResults = { search, category ->
+        navAction.navigate(
+            SearchResultNavDestination.customNavRoute(search)
+        )
+    }
 )
 ```
