@@ -16,9 +16,10 @@ object SearchResultNavDestination : NavDestination<SearchResultNavArgumentKeys>(
 }
 ```
 
-#### NavHost
+#### Set destinations in `NavHost`
 
 ```kotlin
+val navController = rememberNavController()
 NavHost(
     navController = navController,
     startDestination = SearchNavDestination.route
@@ -28,22 +29,29 @@ NavHost(
 }
 ```
 
-#### Navigate
+#### Navigate to Search Result destination using `NavAction`
 
 ```kotlin
-// Navigate to SearchResult destination
-SearchScreen(
-    navigateToSearchResult = { search, category ->
-        navAction.navigate(
-            SearchResultNavDestination.navRoute()
+val navController = rememberNavController()
+val navAction = rememberNavAction(navController)
+NavHost(
+    navController = navController,
+    startDestination = SearchNavDestination.route
+) {
+    composable(route = SearchNavDestination.route) {
+        SearchScreen(
+            navigateToSearchResult = {
+                navAction.navigate(
+                    SearchResultNavDestination.navRoute()
+                )
+            }
         )
     }
-)
 ```
 
 ### Navigate with arguments
 
-#### Define navArguments
+#### Define `navArguments`
 
 ```kotlin
 enum class SearchResultNavArgumentKeys(override val argumentKey: String) : NavArgumentKey {
@@ -68,7 +76,7 @@ object SearchResultNavDestination : NavDestination<SearchResultNavArgumentKeys>(
 }
 ```
 
-#### Set arguments in NavHost
+#### Set arguments in `NavHost`
 
 ```kotlin
 NavHost {
@@ -81,7 +89,7 @@ NavHost {
 }
 ```
 
-#### Navigate to Search Result destination
+#### Navigate to Search Result destination with arguments
 
 ```kotlin
 SearchScreen(
