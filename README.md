@@ -2,22 +2,48 @@
 
 ## Usage
 
-### Without arguments
+### Navigate without arguments
+
+#### Define destinations
 
 ```kotlin
 object SearchNavDestination : NavDestination<NavArgumentKey>() {
     override val destinationId: String = "search"
 }
 
-NavHost(startDestination = SearchNavDestination.route) {
-    composable(route = SearchNavDestination.route) { ... }
+object SearchResultNavDestination : NavDestination<SearchResultNavArgumentKeys>() {
+    override val destinationId: String = "searchresult"
 }
-
-// Navigate to Search destination
-navAction.navigate(SearchResultNavDestination.navRoute())
 ```
 
-### Defining arguments
+#### NavHost
+
+```kotlin
+NavHost(
+    navController = navController,
+    startDestination = SearchNavDestination.route
+) {
+    composable(route = SearchNavDestination.route) { SearchScreen() }
+    composable(route = SearchResultNavDestination.route) { SearchResultScreen() }
+}
+```
+
+#### Navigate
+
+```kotlin
+// Navigate to SearchResult destination
+SearchScreen(
+    navigateToSearchResult = { search, category ->
+        navAction.navigate(
+            SearchResultNavDestination.navRoute()
+        )
+    }
+)
+```
+
+### Navigate with arguments
+
+#### Define navArguments
 
 ```kotlin
 enum class SearchResultNavArgumentKeys(override val argumentKey: String) : NavArgumentKey {
@@ -40,19 +66,30 @@ object SearchResultNavDestination : NavDestination<SearchResultNavArgumentKeys>(
             }
         )
 }
+```
 
+#### Set arguments in NavHost
+
+```kotlin
 NavHost {
     composable(
         route = SearchResultNavDestination.route,
         arguments = SearchResultNavDestination.arguments
-    ) { ... }
+    ) { 
+        ...
+    }
 }
+```
 
-// Navigate to Search Result destination
+#### Navigate to Search Result destination
+
+```kotlin
 SearchScreen(
-    navigateToSearchResults = { search, category ->
+    navigateToSearchResult = { search, category ->
         navAction.navigate(
-            SearchResultNavDestination.customNavRoute(search)
+            SearchResultNavDestination.navRoute(
+                SearchResultNavArgumentKeys.SearchNavArgumentKey to search,
+            )
         )
     }
 )
