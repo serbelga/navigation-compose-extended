@@ -51,7 +51,7 @@ NavHost {
 // Navigate to Search Result destination
 navAction.navigate(
     SearchResultNavDestination.navRoute(
-        SearchNavArgumentKey to search
+        SearchResultNavArgumentKeys.SearchNavArgumentKey to search
     )
 )
 ```
