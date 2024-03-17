@@ -1,3 +1,19 @@
+/*
+ * Copyright 2024 Sergio Belda
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package dev.sergiobelda.navigation.compose.extended
 
 import androidx.navigation.NamedNavArgument
@@ -11,7 +27,7 @@ import androidx.navigation.NamedNavArgument
  */
 class NavRoute<K> internal constructor(
     val destination: NavDestination<K>,
-    private val arguments: Map<K, Any?> = emptyMap()
+    private val arguments: Map<K, Any?> = emptyMap(),
 ) where K : NavArgumentKey {
 
     /**
@@ -57,7 +73,9 @@ class NavRoute<K> internal constructor(
             if (argumentsKeyStringMap.containsKey(namedNavArgument.name)) {
                 append(PARAM_SEPARATOR)
                 append(argumentsKeyStringMap[namedNavArgument.name].toString())
-            } else throw Exception("Not present in arguments")
+            } else {
+                throw Exception("Not present in arguments")
+            }
         } ?: append(PARAM_SEPARATOR)
     }
 
@@ -75,7 +93,7 @@ class NavRoute<K> internal constructor(
             append(
                 list.joinToString(
                     prefix = QUERY_PARAM_PREFIX,
-                    separator = QUERY_PARAM_SEPARATOR
+                    separator = QUERY_PARAM_SEPARATOR,
                 ) { namedNavArgument ->
                     // Check if the argument is present in the arguments map, if not, check if it has a default value.
                     if (argumentsKeyStringMap.containsKey(namedNavArgument.name)) {
@@ -105,7 +123,7 @@ class NavRoute<K> internal constructor(
                             else -> ""
                         }
                     }
-                }.takeIf { it != QUERY_PARAM_PREFIX }.orEmpty()
+                }.takeIf { it != QUERY_PARAM_PREFIX }.orEmpty(),
             )
         }
     }
