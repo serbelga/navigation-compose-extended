@@ -35,13 +35,13 @@ abstract class NavDestination<K> where K : NavArgumentKey {
     /**
      * Define the navigation arguments to this destination.
      */
-    open val navArguments: Map<K, NavArgumentBuilder.() -> Unit> = emptyMap()
+    protected open val argumentsMap: Map<K, NavArgumentBuilder.() -> Unit> = emptyMap()
 
     /**
      * List of [NamedNavArgument] associated with destination.
      */
     val arguments: List<NamedNavArgument>
-        get() = navArguments.map {
+        get() = argumentsMap.map {
             navArgument(it.key.argumentKey, it.value)
         }
 

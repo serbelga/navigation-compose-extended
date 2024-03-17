@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     kotlin("android")
     id("dev.sergiobelda.gradle.spotless")
+    alias(libs.plugins.dokka)
 }
 
 android {

@@ -29,7 +29,7 @@ enum class SearchResultNavArgumentKeys(override val argumentKey: String) : NavAr
 object SearchResultNavDestination : NavDestination<SearchResultNavArgumentKeys>() {
     override val destinationId: String = "searchresult"
 
-    override val navArguments: Map<SearchResultNavArgumentKeys, NavArgumentBuilder.() -> Unit> =
+    override val argumentsMap: Map<SearchResultNavArgumentKeys, NavArgumentBuilder.() -> Unit> =
         mapOf(
             SearchResultNavArgumentKeys.SearchNavArgumentKey to {
                 type = NavType.StringType
