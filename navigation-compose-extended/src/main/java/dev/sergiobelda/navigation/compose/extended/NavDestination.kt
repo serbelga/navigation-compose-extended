@@ -28,7 +28,7 @@ import androidx.navigation.navArgument
  */
 abstract class NavDestination<K> where K : NavArgumentKey {
     /**
-     * Identifier of Destination.
+     * Identifier of Destination without arguments definition.
      */
     abstract val destinationId: String
 
@@ -48,7 +48,7 @@ abstract class NavDestination<K> where K : NavArgumentKey {
     /**
      * List of [NavDeepLink] associated with destination.
      */
-    open val navDeepLinks: List<NavDeepLink> = emptyList()
+    open val deepLinks: List<NavDeepLink> = emptyList()
 
     /**
      * Get the arguments route template for this destination.
