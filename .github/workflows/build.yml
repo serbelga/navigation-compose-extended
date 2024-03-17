@@ -26,3 +26,5 @@ jobs:
         cache: gradle
     - name: Run spotlessCheck
       run: ./gradlew spotlessCheck
+    - name: Build project
+      run: ./gradlew assembleDebug
