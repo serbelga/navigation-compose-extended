@@ -92,12 +92,12 @@ class NavAction(private val navController: NavHostController) {
     fun <K : NavArgumentKey> popBackStack(
         navRoute: NavRoute<K>,
         inclusive: Boolean,
-        saveState: Boolean = false
+        saveState: Boolean = false,
     ): Boolean =
         navController.popBackStack(
             route = navRoute.route,
             inclusive = inclusive,
-            saveState = saveState
+            saveState = saveState,
         )
 
     /**
