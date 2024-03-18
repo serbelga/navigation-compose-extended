@@ -89,12 +89,14 @@ fun MainScreen() {
                 arguments = SearchResultNavDestination.arguments,
             ) {
                 val navSafeArgs = SearchResultNavDestination.navSafeArgs(it)
-                val search =
-                    navSafeArgs.getString(SearchResultNavArgumentKeys.SearchNavArgumentKey)
-                        .toString()
-                val category =
-                    navSafeArgs.getString(SearchResultNavArgumentKeys.CategoryNavArgumentKey)
-                        .toString()
+                val search = navSafeArgs.getStringOrDefault(
+                    SearchResultNavArgumentKeys.SearchNavArgumentKey,
+                    ""
+                )
+                val category = navSafeArgs.getStringOrDefault(
+                    SearchResultNavArgumentKeys.CategoryNavArgumentKey,
+                    ""
+                )
                 SearchResultScreen(search, category)
             }
         }

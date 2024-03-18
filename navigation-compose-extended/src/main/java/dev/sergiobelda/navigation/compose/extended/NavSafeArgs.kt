@@ -17,7 +17,10 @@
 package dev.sergiobelda.navigation.compose.extended
 
 import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavType.Companion.BoolType
+import androidx.navigation.NavType.Companion.FloatType
 import androidx.navigation.NavType.Companion.IntType
+import androidx.navigation.NavType.Companion.LongType
 import androidx.navigation.NavType.Companion.StringType
 
 /**
@@ -35,8 +38,11 @@ class NavSafeArgs<K> internal constructor(
         navBackStackEntry.arguments?.apply {
             destination.arguments.forEach { namedNavArgument ->
                 map[namedNavArgument.name] = when (namedNavArgument.argument.type) {
-                    StringType -> getString(namedNavArgument.name)
+                    BoolType -> getBoolean(namedNavArgument.name)
+                    FloatType -> getFloat(namedNavArgument.name)
                     IntType -> getInt(namedNavArgument.name)
+                    LongType -> getLong(namedNavArgument.name)
+                    StringType -> getString(namedNavArgument.name)
                     else -> null
                 }
             }
@@ -45,8 +51,67 @@ class NavSafeArgs<K> internal constructor(
     }
 
     /**
+     * Get the [Boolean] value of the argument the given its [key].
+     */
+    fun getBoolean(key: K): Boolean? =
+        argumentValues.getValue(key.argumentKey) as? Boolean
+
+    /**
+     * Get the [Boolean] value of the argument the given its [key], or
+     * [defaultValue] if the argument is not present.
+     */
+    fun getBooleanOrDefault(key: K, defaultValue: Boolean): Boolean =
+        getBoolean(key) ?: defaultValue
+
+    /**
+     * Get the [Float] value of the argument the given its [key].
+     */
+    fun getFloat(key: K): Float? =
+        argumentValues.getValue(key.argumentKey) as? Float
+
+    /**
+     * Get the [Float] value of the argument the given its [key], or
+     * [defaultValue] if the argument is not present.
+     */
+    fun getFloatOrDefault(key: K, defaultValue: Float): Float =
+        getFloat(key) ?: defaultValue
+
+    /**
+     * Get the [Int] value of the argument the given its [key].
+     */
+    fun getInt(key: K): Int? =
+        argumentValues.getValue(key.argumentKey) as? Int
+
+    /**
+     * Get the [Int] value of the argument the given its [key], or
+     * [defaultValue] if the argument is not present.
+     */
+    fun getIntOrDefault(key: K, defaultValue: Int): Int =
+        getInt(key) ?: defaultValue
+
+    /**
+     * Get the [Long] value of the argument the given its [key].
+     */
+    fun getLong(key: K): Long? =
+        argumentValues.getValue(key.argumentKey) as? Long
+
+    /**
+     * Get the [Long] value of the argument the given its [key], or
+     * [defaultValue] if the argument is not present.
+     */
+    fun getLongOrDefault(key: K, defaultValue: Long): Long =
+        getLong(key) ?: defaultValue
+
+    /**
      * Get the [String] value of the argument the given its [key].
      */
     fun getString(key: K): String? =
         argumentValues.getValue(key.argumentKey) as? String
+
+    /**
+     * Get the [String] value of the argument the given its [key], or
+     * [defaultValue] if the argument is not present.
+     */
+    fun getStringOrDefault(key: K, defaultValue: String): String =
+        getString(key) ?: defaultValue
 }
