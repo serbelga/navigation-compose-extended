@@ -78,4 +78,32 @@ class NavAction(private val navController: NavHostController) {
             navController.navigate(navRoute.route, navOptions, navigatorExtras)
         }
     }
+
+    /**
+     * Pops the back stack to a specific destination.
+     *
+     * @param navRoute route to the destination.
+     * @param inclusive whether the given destination should also be popped.
+     * @param saveState true to save the state of the popped destination.
+     *
+     * @return true if the stack was popped at least once and the user has been navigated to
+     * another destination, false otherwise
+     */
+    fun <K : NavArgumentKey> popBackStack(
+        navRoute: NavRoute<K>,
+        inclusive: Boolean,
+        saveState: Boolean = false
+    ): Boolean =
+        navController.popBackStack(
+            route = navRoute.route,
+            inclusive = inclusive,
+            saveState = saveState
+        )
+
+    /**
+     * Attempts to navigate up in the navigation hierarchy.
+     *
+     * @return true if navigation was successful, false otherwise
+     */
+    fun navigateUp() = navController.navigateUp()
 }
