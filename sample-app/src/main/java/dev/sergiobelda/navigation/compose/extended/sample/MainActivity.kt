@@ -72,7 +72,7 @@ fun MainScreen() {
                 )
             }
         },
-        contentWindowInsets = ScaffoldDefaults.contentWindowInsets.only(sides = WindowInsetsSides.Bottom)
+        contentWindowInsets = ScaffoldDefaults.contentWindowInsets.only(sides = WindowInsetsSides.Bottom),
     ) { paddingValues ->
         NavHost(
             navController = navController,
@@ -97,11 +97,11 @@ fun MainScreen() {
                 val navSafeArgs = SearchResultNavDestination.navSafeArgs(it)
                 val search = navSafeArgs.getStringOrDefault(
                     SearchResultNavArgumentKeys.SearchNavArgumentKey,
-                    ""
+                    "",
                 )
                 val category = navSafeArgs.getStringOrDefault(
                     SearchResultNavArgumentKeys.CategoryNavArgumentKey,
-                    ""
+                    "",
                 )
                 SearchResultScreen(search, category)
             }

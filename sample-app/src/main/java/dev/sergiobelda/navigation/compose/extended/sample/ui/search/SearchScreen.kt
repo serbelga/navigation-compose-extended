@@ -47,9 +47,9 @@ fun SearchScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Search") }
+                title = { Text(text = "Search") },
             )
-        }
+        },
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -68,7 +68,7 @@ fun SearchScreen(
                     if (isError) {
                         Text(text = "Search cannot be empty")
                     }
-                }
+                },
             )
             Button(
                 onClick = {
@@ -78,7 +78,7 @@ fun SearchScreen(
                     } else {
                         isError = true
                     }
-                }
+                },
             ) {
                 Text(text = "Navigate")
             }
