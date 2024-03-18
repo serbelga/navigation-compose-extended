@@ -19,6 +19,9 @@ package dev.sergiobelda.navigation.compose.extended.sample
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Search
@@ -26,6 +29,7 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -44,6 +48,7 @@ import dev.sergiobelda.navigation.compose.extended.sample.ui.theme.SampleTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContent {
             SampleTheme {
                 MainScreen()
@@ -61,12 +66,13 @@ fun MainScreen() {
             BottomAppBar {
                 NavigationBarItem(
                     selected = true,
-                    onClick = { navAction.navigate(SearchResultNavDestination.navRoute()) },
+                    onClick = { navAction.navigate(SearchNavDestination.navRoute()) },
                     icon = { Icon(Icons.Rounded.Search, contentDescription = null) },
                     label = { Text(text = "Search") },
                 )
             }
         },
+        contentWindowInsets = ScaffoldDefaults.contentWindowInsets.only(sides = WindowInsetsSides.Bottom)
     ) { paddingValues ->
         NavHost(
             navController = navController,

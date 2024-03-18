@@ -74,7 +74,7 @@ class NavRoute<K> internal constructor(
                 append(PARAM_SEPARATOR)
                 append(argumentsKeyStringMap[namedNavArgument.name].toString())
             } else {
-                throw Exception("Not present in arguments")
+                throw IllegalArgumentException("${namedNavArgument.name} not present in arguments for destination ${destination}.")
             }
         } ?: append(PARAM_SEPARATOR)
     }

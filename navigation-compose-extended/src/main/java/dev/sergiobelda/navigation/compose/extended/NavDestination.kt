@@ -87,6 +87,8 @@ abstract class NavDestination<K> where K : NavArgumentKey {
      */
     fun navSafeArgs(navBackStackEntry: NavBackStackEntry): NavSafeArgs<K> =
         NavSafeArgs(this, navBackStackEntry)
+
+    override fun toString(): String = destinationId
 }
 
 /**

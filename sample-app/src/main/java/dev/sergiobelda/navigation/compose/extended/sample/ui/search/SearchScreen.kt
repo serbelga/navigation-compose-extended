@@ -16,8 +16,10 @@
 
 package dev.sergiobelda.navigation.compose.extended.sample.ui.search
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -34,30 +36,50 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(
     navigateToSearchResults: (search: String, category: String) -> Unit,
 ) {
+    var search by rememberSaveable { mutableStateOf("") }
+    var isError by rememberSaveable { mutableStateOf(false) }
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text(text = "Search") })
-        },
+            TopAppBar(
+                title = { Text(text = "Search") }
+            )
+        }
     ) { paddingValues ->
         Column(
             modifier = Modifier
+                .fillMaxSize()
                 .padding(paddingValues)
                 .padding(4.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            var search by rememberSaveable { mutableStateOf("") }
             OutlinedTextField(
                 value = search,
                 onValueChange = { search = it },
                 label = { Text(text = "Search") },
                 modifier = Modifier.fillMaxWidth(),
+                isError = isError,
+                supportingText = {
+                    if (isError) {
+                        Text(text = "Search cannot be empty")
+                    }
+                }
             )
-            Button(onClick = { navigateToSearchResults(search, "") }) {
+            Button(
+                onClick = {
+                    if (search.isNotBlank()) {
+                        isError = false
+                        navigateToSearchResults(search, "")
+                    } else {
+                        isError = true
+                    }
+                }
+            ) {
                 Text(text = "Navigate")
             }
         }
