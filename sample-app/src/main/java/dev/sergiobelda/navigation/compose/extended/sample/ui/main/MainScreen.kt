@@ -65,6 +65,7 @@ private enum class MainNavigationBarItem(
 fun MainScreen() {
     val navController = rememberNavController()
     val navAction = rememberNavAction(navController)
+    val uri = "https://www.example.com"
     Scaffold(
         bottomBar = {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -101,6 +102,7 @@ fun MainScreen() {
             composable(
                 route = SearchResultNavDestination.route,
                 arguments = SearchResultNavDestination.arguments,
+                deepLinks = SearchResultNavDestination.deepLinks,
             ) {
                 val navSafeArgs = SearchResultNavDestination.navSafeArgs(it)
                 val search = navSafeArgs.getStringOrDefault(

@@ -40,6 +40,12 @@ object SearchResultNavDestination : NavDestination<SearchResultNavArgumentKeys>(
                 defaultValue = "All"
             },
         )
+
+    // adb shell am start -d "sample://searchresult/Search?category=Category" -a android.intent.action.VIEW
+    override val deepLinkUris: List<String> =
+        listOf(
+            "sample://searchresult",
+        )
 }
 
 fun SearchResultNavDestination.customNavRoute(search: String, category: String? = "Default") =
