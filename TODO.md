@@ -1,4 +1,0 @@
-- [ ] DSL for create destination/composable nodes
-- [ ] Plugin to create navSafeArgs - KSP
-- [ ] NavSafeArgs add more getters
-- [ ] Add deeplink support
