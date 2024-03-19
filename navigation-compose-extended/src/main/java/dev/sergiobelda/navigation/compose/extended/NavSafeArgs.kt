@@ -24,10 +24,10 @@ import androidx.navigation.NavType.Companion.LongType
 import androidx.navigation.NavType.Companion.StringType
 
 /**
- * It resolves the argument values for given a [navBackStackEntry] for the [destination].
+ * It resolves the argument values for given a [navBackStackEntry] for the [navDestination].
  */
 class NavSafeArgs<K> internal constructor(
-    private val destination: NavDestination<K>,
+    private val navDestination: NavDestination<K>,
     private val navBackStackEntry: NavBackStackEntry,
 ) where K : NavArgumentKey {
 
@@ -36,7 +36,7 @@ class NavSafeArgs<K> internal constructor(
     private fun buildArgumentValuesMap(): Map<String, Any?> {
         val map = mutableMapOf<String, Any?>()
         navBackStackEntry.arguments?.apply {
-            destination.arguments.forEach { namedNavArgument ->
+            navDestination.arguments.forEach { namedNavArgument ->
                 map[namedNavArgument.name] = when (namedNavArgument.argument.type) {
                     BoolType -> getBoolean(namedNavArgument.name)
                     FloatType -> getFloat(namedNavArgument.name)

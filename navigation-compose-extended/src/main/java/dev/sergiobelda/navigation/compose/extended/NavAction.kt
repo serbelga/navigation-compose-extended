@@ -56,7 +56,7 @@ class NavAction(private val navController: NavHostController) {
         navOptions: NavOptions? = null,
         navigatorExtras: Navigator.Extras? = null,
     ) {
-        if (navRoute.destination is TopLevelNavDestination) {
+        if (navRoute.navDestination is TopLevelNavDestination) {
             navController.navigate(
                 route = navRoute.route,
                 navOptions = navOptions {

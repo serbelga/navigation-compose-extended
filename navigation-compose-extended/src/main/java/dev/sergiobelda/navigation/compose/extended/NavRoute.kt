@@ -22,19 +22,19 @@ import androidx.navigation.NamedNavArgument
  * Represents the navigation route to reach some destination. [NavAction.navigate] receives a
  * [NavRoute] object.
  *
- * @param destination Navigation destination.
+ * @param navDestination Navigation destination.
  * @param arguments List of arguments passed in this route.
  */
 class NavRoute<K> internal constructor(
-    val destination: NavDestination<K>,
+    val navDestination: NavDestination<K>,
     private val arguments: Map<K, Any?> = emptyMap(),
 ) where K : NavArgumentKey {
 
     /**
-     * Navigation route. It consists of [destination] id and the [arguments] values.
+     * Navigation route. It consists of [navDestination] id and the [arguments] values.
      */
     internal val route: String =
-        destination.destinationId.addArgumentsValues()
+        navDestination.destinationId.addArgumentsValues()
 
     /**
      * The [arguments] transformed into a Map<String, Any?> where the key is the argument string key.
@@ -46,10 +46,10 @@ class NavRoute<K> internal constructor(
      * Returns the part of the route that contains the arguments values.
      */
     private fun String.addArgumentsValues(): String {
-        val optionalParameters = destination.arguments.filter {
+        val optionalParameters = navDestination.arguments.filter {
             it.argument.isDefaultValuePresent || it.argument.isNullable
         }
-        val parameters = destination.arguments.filter {
+        val parameters = navDestination.arguments.filter {
             !it.argument.isDefaultValuePresent && !it.argument.isNullable
         }
 
@@ -74,7 +74,7 @@ class NavRoute<K> internal constructor(
                 append(PARAM_SEPARATOR)
                 append(argumentsKeyStringMap[namedNavArgument.name].toString())
             } else {
-                throw IllegalArgumentException("${namedNavArgument.name} not present in arguments for destination $destination.")
+                throw IllegalArgumentException("${namedNavArgument.name} not present in arguments for destination $navDestination.")
             }
         } ?: append(PARAM_SEPARATOR)
     }
