@@ -65,7 +65,6 @@ private enum class MainNavigationBarItem(
 fun MainScreen() {
     val navController = rememberNavController()
     val navAction = rememberNavAction(navController)
-    val uri = "https://www.example.com"
     Scaffold(
         bottomBar = {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
