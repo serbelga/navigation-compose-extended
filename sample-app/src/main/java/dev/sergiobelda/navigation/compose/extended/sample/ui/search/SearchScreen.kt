@@ -17,13 +17,17 @@
 package dev.sergiobelda.navigation.compose.extended.sample.ui.search
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.Send
+import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material.icons.rounded.Send
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -33,8 +37,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import dev.sergiobelda.navigation.compose.extended.sample.R
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,7 +54,7 @@ fun SearchScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Search") },
+                title = { Text(text = stringResource(R.string.search)) },
             )
         },
     ) { paddingValues ->
@@ -55,15 +62,22 @@ fun SearchScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(4.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+                .padding(horizontal = 8.dp),
+            horizontalAlignment = Alignment.End,
         ) {
             OutlinedTextField(
                 value = search,
                 onValueChange = { search = it },
-                label = { Text(text = "Search") },
-                modifier = Modifier.fillMaxWidth(),
+                placeholder = { Text(text = stringResource(R.string.search_and_discover_music)) },
+                modifier = Modifier
+                    .fillMaxWidth(),
                 isError = isError,
+                leadingIcon = {
+                    Icon(
+                        Icons.Rounded.Search,
+                        contentDescription = stringResource(R.string.search),
+                    )
+                },
                 supportingText = {
                     if (isError) {
                         Text(text = "Search cannot be empty")
@@ -80,7 +94,10 @@ fun SearchScreen(
                     }
                 },
             ) {
-                Text(text = "Navigate")
+                Icon(
+                    Icons.AutoMirrored.Rounded.Send,
+                    contentDescription = null,
+                )
             }
         }
     }

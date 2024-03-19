@@ -14,47 +14,51 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.navigation.compose.extended.sample
+package dev.sergiobelda.navigation.compose.extended.sample.ui.main
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.AccountBox
 import androidx.compose.material.icons.rounded.Search
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import dev.sergiobelda.navigation.compose.extended.NavArgumentKey
+import dev.sergiobelda.navigation.compose.extended.NavDestination
 import dev.sergiobelda.navigation.compose.extended.rememberNavAction
+import dev.sergiobelda.navigation.compose.extended.sample.R
 import dev.sergiobelda.navigation.compose.extended.sample.ui.search.SearchNavDestination
 import dev.sergiobelda.navigation.compose.extended.sample.ui.search.SearchScreen
 import dev.sergiobelda.navigation.compose.extended.sample.ui.searchresult.SearchResultNavArgumentKeys
 import dev.sergiobelda.navigation.compose.extended.sample.ui.searchresult.SearchResultNavDestination
 import dev.sergiobelda.navigation.compose.extended.sample.ui.searchresult.SearchResultScreen
 import dev.sergiobelda.navigation.compose.extended.sample.ui.searchresult.customNavRoute
-import dev.sergiobelda.navigation.compose.extended.sample.ui.theme.SampleTheme
+import dev.sergiobelda.navigation.compose.extended.sample.ui.yourlibrary.YourLibraryNavDestination
+import dev.sergiobelda.navigation.compose.extended.sample.ui.yourlibrary.YourLibraryScreen
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            SampleTheme {
-                MainScreen()
-            }
-        }
-    }
+private enum class MainNavigationBarItem(
+    val navDestination: NavDestination<NavArgumentKey>,
+    val icon: ImageVector,
+    @StringRes val labelResId: Int,
+) {
+    Search(SearchNavDestination, Icons.Rounded.Search, R.string.search),
+    YourLibrary(YourLibraryNavDestination, Icons.Rounded.AccountBox, R.string.your_library),
 }
 
 @Composable
@@ -63,13 +67,17 @@ fun MainScreen() {
     val navAction = rememberNavAction(navController)
     Scaffold(
         bottomBar = {
-            BottomAppBar {
-                NavigationBarItem(
-                    selected = true,
-                    onClick = { navAction.navigate(SearchNavDestination.navRoute()) },
-                    icon = { Icon(Icons.Rounded.Search, contentDescription = null) },
-                    label = { Text(text = "Search") },
-                )
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val currentDestination = navBackStackEntry?.destination
+            NavigationBar {
+                MainNavigationBarItem.entries.forEach { item ->
+                    NavigationBarItem(
+                        selected = currentDestination?.hierarchy?.any { it.route == item.navDestination.route } == true,
+                        onClick = { navAction.navigate(item.navDestination.navRoute()) },
+                        icon = { Icon(item.icon, contentDescription = null) },
+                        label = { Text(text = stringResource(item.labelResId)) },
+                    )
+                }
             }
         },
         contentWindowInsets = ScaffoldDefaults.contentWindowInsets.only(sides = WindowInsetsSides.Bottom),
@@ -104,6 +112,11 @@ fun MainScreen() {
                     "",
                 )
                 SearchResultScreen(search, category)
+            }
+            composable(
+                route = YourLibraryNavDestination.route,
+            ) {
+                YourLibraryScreen()
             }
         }
     }

@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SampleApp">
         <activity
-            android:name="dev.sergiobelda.navigation.compose.extended.sample.MainActivity"
+            android:name="dev.sergiobelda.navigation.compose.extended.sample.ui.main.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.SampleApp">
