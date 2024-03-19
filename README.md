@@ -102,3 +102,32 @@ SearchScreen(
     }
 )
 ```
+
+### Navigate with Deep Links
+
+```kotlin
+object SearchResultNavDestination : NavDestination<SearchResultNavArgumentKeys>() {
+    
+    // ...
+    
+    override val deepLinkUris: List<String> =
+        listOf(
+            "sample://searchresult",
+        )
+}
+```
+
+```kotlin
+NavHost {
+    composable(
+        route = SearchResultNavDestination.route,
+        deepLinks = SearchResultNavDestination.deepLinks,
+    ) { 
+        ...
+    }
+}
+```
+
+```bash
+adb shell am start -d "sample://searchresult/Search?category=Category" -a android.intent.action.VIEW
+```
