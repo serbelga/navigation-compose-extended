@@ -41,7 +41,6 @@ object SearchResultNavDestination : NavDestination<SearchResultNavArgumentKeys>(
             },
         )
 
-    // adb shell am start -d "sample://searchresult/Search?category=Category" -a android.intent.action.VIEW
     override val deepLinkUris: List<String> =
         listOf(
             "sample://searchresult",
