@@ -137,6 +137,7 @@ private fun NavGraphBuilder.searchNavDestination(
         composable(
             route = SearchResultNavDestination.route,
             arguments = SearchResultNavDestination.arguments,
+            deepLinks = SearchResultNavDestination.deepLinks,
         ) {
             val navSafeArgs = SearchResultNavDestination.navSafeArgs(it)
             val search = navSafeArgs.getStringOrDefault(

@@ -40,6 +40,11 @@ object SearchResultNavDestination : NavDestination<SearchResultNavArgumentKeys>(
                 defaultValue = "All"
             },
         )
+
+    override val deepLinkUris: List<String> =
+        listOf(
+            "sample://searchresult",
+        )
 }
 
 fun SearchResultNavDestination.customNavRoute(search: String, category: String? = "Default") =

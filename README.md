@@ -1,6 +1,6 @@
 # Navigation Compose Extended
 
-## Usage
+## How to use
 
 ### Navigate without arguments
 
@@ -102,3 +102,53 @@ SearchScreen(
     }
 )
 ```
+
+### Navigate with Deep Links
+
+#### In the `AndroidManifest.xml`
+
+```xml
+<activity
+    ...>
+    <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:host="searchresult" android:scheme="sample" />
+    </intent-filter>
+</activity>
+```
+
+#### Define `deepLinkUris`
+
+```kotlin
+object SearchResultNavDestination : NavDestination<SearchResultNavArgumentKeys>() {
+    
+    // ...
+    
+    override val deepLinkUris: List<String> =
+        listOf(
+            "sample://searchresult",
+        )
+}
+```
+
+#### Set deep links in `NavHost`
+
+```kotlin
+NavHost {
+    composable(
+        route = SearchResultNavDestination.route,
+        deepLinks = SearchResultNavDestination.deepLinks,
+    ) { 
+        ...
+    }
+}
+```
+
+#### Trigger the deep link using adb
+
+```bash
+adb shell am start -d "sample://searchresult/Search?category=Category" -a android.intent.action.VIEW
+```
+

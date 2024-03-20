@@ -21,6 +21,7 @@ import androidx.navigation.NavArgumentBuilder
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 
 /**
  * Represents some Destination in the Navigation graph. It's defined by a
@@ -38,6 +39,11 @@ abstract class NavDestination<K> where K : NavArgumentKey {
     protected open val argumentsMap: Map<K, NavArgumentBuilder.() -> Unit> = emptyMap()
 
     /**
+     * Define the deep link URIs to this destination.
+     */
+    protected open val deepLinkUris: List<String> = emptyList()
+
+    /**
      * List of [NamedNavArgument] associated with destination.
      */
     val arguments: List<NamedNavArgument>
@@ -48,7 +54,17 @@ abstract class NavDestination<K> where K : NavArgumentKey {
     /**
      * List of [NavDeepLink] associated with destination.
      */
-    open val deepLinks: List<NavDeepLink> = emptyList()
+    val deepLinks: List<NavDeepLink>
+        get() = deepLinkUris.map {
+            navDeepLink {
+                uriPattern = it + argumentsRoute
+            }
+        }
+
+    /**
+     * Route to this destination. It consists of [destinationId] and [arguments].
+     */
+    val route get() = destinationId + argumentsRoute
 
     /**
      * Get the arguments route template for this destination.
@@ -70,11 +86,6 @@ abstract class NavDestination<K> where K : NavArgumentKey {
                 separator = QUERY_PARAM_SEPARATOR,
             ) { "${it.name}={${it.name}}" }.orEmpty()
         }
-
-    /**
-     * Route to this destination. It consists of [destinationId] and [arguments].
-     */
-    val route get() = destinationId + argumentsRoute
 
     /**
      * Returns the [NavRoute] associated with this destination given some [arguments].
