@@ -80,7 +80,15 @@ class NavAction(private val navController: NavHostController) {
     }
 
     /**
-     * Pops the back stack to a specific destination.
+     * Attempts to pop the controller's back stack.
+     *
+     * @return true if the stack was popped at least once and the user has been navigated to
+     * another destination, false otherwise
+     */
+    fun popBackStack(): Boolean = navController.popBackStack()
+
+    /**
+     * Pops the back stack to a specific [navRoute].
      *
      * @param navRoute route to the destination.
      * @param inclusive whether the given destination should also be popped.

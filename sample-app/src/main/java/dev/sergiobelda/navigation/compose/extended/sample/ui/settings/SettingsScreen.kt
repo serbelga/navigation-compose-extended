@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.navigation.compose.extended.sample.ui.search
+package dev.sergiobelda.navigation.compose.extended.sample.ui.settings
 
-import dev.sergiobelda.navigation.compose.extended.NavArgumentKey
-import dev.sergiobelda.navigation.compose.extended.NavDestination
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
 
-object SearchNavDestination : NavDestination<NavArgumentKey>() {
-    override val destinationId: String = "search"
+@Composable
+fun SettingsScreen() {
+    Scaffold {
+    }
 }

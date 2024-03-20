@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.navigation.compose.extended.sample.ui.searchresult
+package dev.sergiobelda.navigation.compose.extended.sample.ui.search.result
 
 import androidx.navigation.NavArgumentBuilder
 import androidx.navigation.NavType

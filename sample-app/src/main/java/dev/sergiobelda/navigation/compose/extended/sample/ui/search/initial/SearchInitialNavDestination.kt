@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.navigation.compose.extended.sample.ui.search
+package dev.sergiobelda.navigation.compose.extended.sample.ui.search.initial
 
 import dev.sergiobelda.navigation.compose.extended.NavArgumentKey
-import dev.sergiobelda.navigation.compose.extended.NavDestination
+import dev.sergiobelda.navigation.compose.extended.TopLevelNavDestination
 
-object SearchNavDestination : NavDestination<NavArgumentKey>() {
-    override val destinationId: String = "search"
+object SearchInitialNavDestination : TopLevelNavDestination<NavArgumentKey>() {
+    override val destinationId: String = "searchinitial"
 }
