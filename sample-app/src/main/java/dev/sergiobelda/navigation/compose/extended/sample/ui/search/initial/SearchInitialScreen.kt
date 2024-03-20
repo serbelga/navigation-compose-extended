@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.navigation.compose.extended.sample.ui.search
+package dev.sergiobelda.navigation.compose.extended.sample.ui.search.initial
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
@@ -24,7 +24,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Send
 import androidx.compose.material.icons.rounded.Search
-import androidx.compose.material.icons.rounded.Send
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -46,8 +45,8 @@ import dev.sergiobelda.navigation.compose.extended.sample.R
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(
-    navigateToSearchResults: (search: String, category: String) -> Unit,
+fun SearchInitialScreen(
+    navigateToSearchResult: (search: String, category: String) -> Unit,
 ) {
     var search by rememberSaveable { mutableStateOf("") }
     var isError by rememberSaveable { mutableStateOf(false) }
@@ -88,7 +87,7 @@ fun SearchScreen(
                 onClick = {
                     if (search.isNotBlank()) {
                         isError = false
-                        navigateToSearchResults(search, "")
+                        navigateToSearchResult(search, "")
                     } else {
                         isError = true
                     }
