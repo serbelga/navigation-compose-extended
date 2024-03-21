@@ -1,0 +1,23 @@
+site_name: Navigation Compose Extended
+site_description: 'A collection of classes and functions to simplify the use of Jetpack Navigation Compose.'
+site_author: 'Sergio Belda'
+site_url: 'https://serbelga.github.io/navigation-compose-extended/'
+edit_uri: 'tree/main/docs/'
+remote_branch: gh-pages
+
+repo_name: 'navigation-compose-extended'
+repo_url: 'https://github.com/serbelga/navigation-compose-extended'
+
+docs_dir: docs
+
+nav:
+  - 'Overview': index.md
+  - 'API Reference': api/
+  - 'Sample App': https://github.com/serbelga/navigation-compose-extended/tree/main/sample-app
+
+theme:
+  name: 'material'
+  palette:
+    primary: 'black'
+  icon:
+    logo: material/navigation
