@@ -25,9 +25,10 @@ NavHost(
 }
 ```
 
-We can navigate to some destination using the `NavAction`. In the following code, 
-we navigate to the `SearchResultNavDestination` using the `navigate` function that receives 
-a `NavRoute`:
+We can navigate to some destination using the actions functions provided by the `NavAction` class. 
+The `NavAction.navigate` function receive a `NavRoute` instance to navigate to some destination.
+This `NavRoute` associated with a destination can be obtained using the `navRoute()` function in the `NavDestination` class.
+In the following code, we navigate to the `SearchResultNavDestination`:
 
 ```kotlin
 val navController = rememberNavController()
@@ -159,4 +160,18 @@ Trigger the deep link using adb:
 
 ```shell
 adb shell am start -a android.intent.action.VIEW -d "sample://searchresult"
+```
+
+## Create Top Level Destinations
+
+There's a special kind of destination to represent the top level destinations in the navigation graph.
+This is useful for destinations associated to items in a BottomNavigationBar where we can navigate to 
+different screens by clicking on each navigation bar item. To avoid building up a large stack of destinations
+on the back stack when we click on navigation items and to avoid multiple copies of the same destination 
+when we reselect the same item, we can use this kind of destination.
+
+```kotlin
+object SearchNavDestination : TopLevelNavDestination<NavArgumentKey>() {
+    override val destinationId: String = "search"
+}
 ```
