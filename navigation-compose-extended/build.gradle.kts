@@ -1,9 +1,15 @@
+import com.vanniktech.maven.publish.SonatypeHost
+
 plugins {
     alias(libs.plugins.androidLibrary)
     kotlin("android")
     id("dev.sergiobelda.gradle.spotless")
     alias(libs.plugins.dokka)
+    alias(libs.plugins.vanniktechMavenPublish)
 }
+
+group = "dev.sergiobelda.navigation.compose.extended"
+version = libs.versions.navigationComposeExtended.get()
 
 android {
     namespace = "dev.sergiobelda.navigation.compose.extended"
@@ -46,4 +52,10 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+}
+
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, true)
+
+    signAllPublications()
 }

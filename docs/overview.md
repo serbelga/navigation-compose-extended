@@ -1,11 +1,12 @@
-# Navigation Compose Extended
-
-Navigation Compose Extended is a complementary library for AndroidX Jetpack Navigation Compose to
-improve creation of navigation elements, as destination routes, arguments, deep links, … in a
+Navigation Compose Extended is a complementary library for AndroidX Jetpack Navigation Compose to 
+improve creation of navigation elements, as destination routes, arguments, deep links, … in a 
 more idiomatic way than using literals.
 
-Visit the [project website](https://sergiobelda.dev/navigation-compose-extended/) for documentation 
-and API Reference.
+With this library you can define models for your navigation destinations, navigation arguments, ...
+and it automatically creates the navigation routes, arguments and deep link variables for the NavHost.
+
+It also provides functions to navigate to navigation destinations using these models and arguments 
+keys, and functions to retrieve arguments values in a more secure way.
 
 ## License
 
