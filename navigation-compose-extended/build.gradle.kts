@@ -55,7 +55,7 @@ dependencies {
 }
 
 mavenPublishing {
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, true)
+    publishToMavenCentral(SonatypeHost.S01, true)
 
     signAllPublications()
 }
