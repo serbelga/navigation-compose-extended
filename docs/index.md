@@ -10,6 +10,10 @@ and it automatically creates the navigation routes, arguments and deep link vari
 It also provides functions to navigate to navigation destinations using these models and arguments 
 keys, and functions to retrieve arguments values in a more secure way.
 
+## Download
+
+[![Maven Central](https://img.shields.io/maven-central/v/dev.sergiobelda.navigation.compose.extended/navigation-compose-extended)](https://search.maven.org/search?q=g:dev.sergiobelda.navigation.compose.extended)
+
 ## License
 
 ```

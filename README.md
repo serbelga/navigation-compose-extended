@@ -1,5 +1,7 @@
 # Navigation Compose Extended
 
+[![Maven Central](https://img.shields.io/maven-central/v/dev.sergiobelda.navigation.compose.extended/navigation-compose-extended)](https://search.maven.org/search?q=g:dev.sergiobelda.navigation.compose.extended)
+
 Navigation Compose Extended is a complementary library for AndroidX Jetpack Navigation Compose to
 improve creation of navigation elements, as destination routes, arguments, deep links, … in a
 more idiomatic way than using literals.
