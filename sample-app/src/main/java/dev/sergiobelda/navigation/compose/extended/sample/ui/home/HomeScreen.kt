@@ -139,12 +139,12 @@ private fun NavGraphBuilder.searchNavDestination(
             arguments = SearchResultNavDestination.arguments,
             deepLinks = SearchResultNavDestination.deepLinks,
         ) {
-            val navSafeArgs = SearchResultNavDestination.navSafeArgs(it)
-            val search = navSafeArgs.getStringOrDefault(
+            val navArgs = SearchResultNavDestination.navArgs(it)
+            val search = navArgs.getStringOrDefault(
                 SearchResultNavArgumentKeys.SearchNavArgumentKey,
                 "",
             )
-            val category = navSafeArgs.getStringOrDefault(
+            val category = navArgs.getStringOrDefault(
                 SearchResultNavArgumentKeys.CategoryNavArgumentKey,
                 "",
             )

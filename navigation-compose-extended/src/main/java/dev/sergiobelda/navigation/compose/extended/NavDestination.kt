@@ -94,10 +94,10 @@ abstract class NavDestination<K> where K : NavArgumentKey {
         NavRoute(this, arguments.toMap())
 
     /**
-     * Returns a [NavSafeArgs] instance for this destination.
+     * Returns a [NavArgs] instance for this destination.
      */
-    fun navSafeArgs(navBackStackEntry: NavBackStackEntry): NavSafeArgs<K> =
-        NavSafeArgs(this, navBackStackEntry)
+    fun navArgs(navBackStackEntry: NavBackStackEntry): NavArgs<K> =
+        NavArgs(this, navBackStackEntry)
 
     override fun toString(): String = destinationId
 }
