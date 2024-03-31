@@ -48,6 +48,7 @@ import androidx.navigation.compose.rememberNavController
 import dev.sergiobelda.navigation.compose.extended.NavAction
 import dev.sergiobelda.navigation.compose.extended.NavArgumentKey
 import dev.sergiobelda.navigation.compose.extended.NavDestination
+import dev.sergiobelda.navigation.compose.extended.composable
 import dev.sergiobelda.navigation.compose.extended.rememberNavAction
 import dev.sergiobelda.navigation.compose.extended.sample.R
 import dev.sergiobelda.navigation.compose.extended.sample.ui.search.SearchNavDestination
@@ -135,11 +136,8 @@ private fun NavGraphBuilder.searchNavDestination(
             )
         }
         composable(
-            route = SearchResultNavDestination.route,
-            arguments = SearchResultNavDestination.arguments,
-            deepLinks = SearchResultNavDestination.deepLinks,
-        ) {
-            val navSafeArgs = SearchResultNavDestination.navSafeArgs(it)
+            navDestination = SearchResultNavDestination,
+        ) { _, navSafeArgs ->
             val search = navSafeArgs.getStringOrDefault(
                 SearchResultNavArgumentKeys.SearchNavArgumentKey,
                 "",
