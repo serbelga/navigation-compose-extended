@@ -17,12 +17,16 @@
 package dev.sergiobelda.navigation.compose.extended.compiler.processor
 
 import com.google.devtools.ksp.processing.CodeGenerator
+import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.symbol.KSVisitorVoid
 
-class SafeNavDestinationClassVisitor(codeGenerator: CodeGenerator) : KSVisitorVoid() {
+class SafeNavDestinationClassVisitor(
+    logger: KSPLogger,
+    codeGenerator: CodeGenerator
+) : KSVisitorVoid() {
 
-    private val safeNavArgsGenerator = SafeNavArgsGenerator(codeGenerator)
+    private val safeNavArgsGenerator = SafeNavArgsGenerator(logger, codeGenerator)
 
     override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: Unit) {
         safeNavArgsGenerator.generate(

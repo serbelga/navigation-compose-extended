@@ -31,7 +31,7 @@ class SafeNavDestinationProcessor(
 
     private val safeNavDestinationValidator = SafeNavDestinationValidator()
 
-    private val safeNavDestinationClassVisitor = SafeNavDestinationClassVisitor(codeGenerator)
+    private val safeNavDestinationClassVisitor = SafeNavDestinationClassVisitor(logger, codeGenerator)
 
     override fun process(resolver: Resolver): List<KSAnnotated> {
         var symbols: List<KSAnnotated> = emptyList()

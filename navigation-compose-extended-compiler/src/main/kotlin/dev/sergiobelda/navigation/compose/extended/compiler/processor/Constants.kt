@@ -19,10 +19,10 @@ package dev.sergiobelda.navigation.compose.extended.compiler.processor
 internal const val AndroidXNavigationPackage = "androidx.navigation"
 internal const val NavigationComposeExtendedPackage = "dev.sergiobelda.navigation.compose.extended"
 
-internal const val NavArgsSingleClassName = "NavArgs"
+internal const val NavArgsSimpleClassName = "NavArgs"
 
-internal const val NavBackStackEntrySingleClassName = "NavBackStackEntry"
+internal const val NavBackStackEntrySimpleClassName = "NavBackStackEntry"
 
-internal const val NavDestinationSingleClassName = "NavDestination"
+internal const val NavDestinationSimpleClassName = "NavDestination"
 internal const val NavDestinationClassName =
-    "$NavigationComposeExtendedPackage.$NavDestinationSingleClassName"
+    "$NavigationComposeExtendedPackage.$NavDestinationSimpleClassName"
