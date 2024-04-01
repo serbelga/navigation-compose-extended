@@ -136,13 +136,14 @@ private fun NavGraphBuilder.searchNavDestination(
             )
         }
         composable(
-            navDestination = SearchResultNavDestination,
-        ) { _, navSafeArgs ->
-            val search = navSafeArgs.getStringOrDefault(
+            navDestination = SearchResultNavDestination
+        ) {
+            val navArgs = SearchResultNavDestination.navArgs(it)
+            val search = navArgs.getStringOrDefault(
                 SearchResultNavArgumentKeys.SearchNavArgumentKey,
                 "",
             )
-            val category = navSafeArgs.getStringOrDefault(
+            val category = navArgs.getStringOrDefault(
                 SearchResultNavArgumentKeys.CategoryNavArgumentKey,
                 "",
             )
