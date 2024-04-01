@@ -48,6 +48,7 @@ import androidx.navigation.compose.rememberNavController
 import dev.sergiobelda.navigation.compose.extended.NavAction
 import dev.sergiobelda.navigation.compose.extended.NavArgumentKey
 import dev.sergiobelda.navigation.compose.extended.NavDestination
+import dev.sergiobelda.navigation.compose.extended.composable
 import dev.sergiobelda.navigation.compose.extended.rememberNavAction
 import dev.sergiobelda.navigation.compose.extended.sample.R
 import dev.sergiobelda.navigation.compose.extended.sample.ui.search.SearchNavDestination
@@ -124,7 +125,7 @@ private fun NavGraphBuilder.searchNavDestination(
         startDestination = SearchInitialNavDestination.route,
     ) {
         composable(
-            route = SearchInitialNavDestination.route,
+            navDestination = SearchInitialNavDestination,
         ) {
             SearchInitialScreen(
                 navigateToSearchResult = { search, category ->
@@ -135,9 +136,7 @@ private fun NavGraphBuilder.searchNavDestination(
             )
         }
         composable(
-            route = SearchResultNavDestination.route,
-            arguments = SearchResultNavDestination.arguments,
-            deepLinks = SearchResultNavDestination.deepLinks,
+            navDestination = SearchResultNavDestination,
         ) {
             val navArgs = SearchResultNavDestination.navArgs(it)
             val search = navArgs.getStringOrDefault(
@@ -159,7 +158,7 @@ private fun NavGraphBuilder.searchNavDestination(
 
 private fun NavGraphBuilder.yourLibraryNavDestination() {
     composable(
-        route = YourLibraryNavDestination.route,
+        navDestination = YourLibraryNavDestination,
     ) {
         YourLibraryScreen()
     }
