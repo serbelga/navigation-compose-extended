@@ -49,6 +49,7 @@ import dev.sergiobelda.navigation.compose.extended.NavAction
 import dev.sergiobelda.navigation.compose.extended.NavArgumentKey
 import dev.sergiobelda.navigation.compose.extended.NavDestination
 import dev.sergiobelda.navigation.compose.extended.composable
+import dev.sergiobelda.navigation.compose.extended.navigation
 import dev.sergiobelda.navigation.compose.extended.rememberNavAction
 import dev.sergiobelda.navigation.compose.extended.sample.R
 import dev.sergiobelda.navigation.compose.extended.sample.ui.search.SearchNavDestination
@@ -121,8 +122,8 @@ private fun NavGraphBuilder.searchNavDestination(
     navAction: NavAction,
 ) {
     navigation(
-        route = SearchNavDestination.route,
-        startDestination = SearchInitialNavDestination.route,
+        navDestination = SearchNavDestination,
+        startNavDestination = SearchInitialNavDestination,
     ) {
         composable(
             navDestination = SearchInitialNavDestination,

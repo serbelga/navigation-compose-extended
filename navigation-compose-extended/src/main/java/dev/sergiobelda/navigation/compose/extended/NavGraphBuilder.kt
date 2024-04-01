@@ -28,6 +28,7 @@ import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
+import androidx.navigation.compose.navigation
 
 /**
  * Add the [Composable] to the [NavGraphBuilder]
@@ -62,6 +63,40 @@ fun <K : NavArgumentKey> NavGraphBuilder.composable(
     ) { navBackStackEntry ->
         content(navBackStackEntry)
     }
+}
+
+/**
+ * TODO: Add documentation
+
+ */
+fun <K : NavArgumentKey> NavGraphBuilder.navigation(
+    navDestination: NavDestination<K>,
+    startNavDestination: NavDestination<K>,
+    arguments: List<NamedNavArgument> = navDestination.arguments,
+    deepLinks: List<NavDeepLink> = navDestination.deepLinks,
+    enterTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)? =
+        null,
+    exitTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)? =
+        null,
+    popEnterTransition: (
+    AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?
+    )? = enterTransition,
+    popExitTransition: (
+    AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?
+    )? = exitTransition,
+    builder: NavGraphBuilder.() -> Unit
+) {
+    navigation(
+        startDestination = startNavDestination.route,
+        route = navDestination.route,
+        arguments = arguments,
+        deepLinks = deepLinks,
+        enterTransition = enterTransition,
+        exitTransition = exitTransition,
+        popEnterTransition = popEnterTransition,
+        popExitTransition = popExitTransition,
+        builder = builder
+    )
 }
 
 /**
