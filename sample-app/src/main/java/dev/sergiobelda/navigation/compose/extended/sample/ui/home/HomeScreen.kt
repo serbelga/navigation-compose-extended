@@ -136,7 +136,7 @@ private fun NavGraphBuilder.searchNavDestination(
             )
         }
         composable(
-            navDestination = SearchResultNavDestination
+            navDestination = SearchResultNavDestination,
         ) {
             val navArgs = SearchResultNavDestination.navArgs(it)
             val search = navArgs.getStringOrDefault(
