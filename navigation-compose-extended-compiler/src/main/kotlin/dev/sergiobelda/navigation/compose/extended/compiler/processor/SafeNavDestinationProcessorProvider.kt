@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.navigation.compose.extended.sample.ui.search.initial
+package dev.sergiobelda.navigation.compose.extended.compiler.processor
 
-import dev.sergiobelda.navigation.compose.extended.NavArgumentKey
-import dev.sergiobelda.navigation.compose.extended.TopLevelNavDestination
-import dev.sergiobelda.navigation.compose.extended.compiler.annotation.SafeNavDestination
+import com.google.devtools.ksp.processing.SymbolProcessor
+import com.google.devtools.ksp.processing.SymbolProcessorEnvironment
+import com.google.devtools.ksp.processing.SymbolProcessorProvider
 
-@SafeNavDestination
-object SearchInitialNavDestination : TopLevelNavDestination<NavArgumentKey>() {
-    override val destinationId: String = "searchinitial"
+class SafeNavDestinationProcessorProvider : SymbolProcessorProvider {
+    override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor =
+        SafeNavDestinationProcessor(environment.logger, environment.codeGenerator)
 }

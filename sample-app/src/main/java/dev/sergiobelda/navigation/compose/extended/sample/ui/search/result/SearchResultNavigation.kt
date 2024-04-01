@@ -20,12 +20,14 @@ import androidx.navigation.NavArgumentBuilder
 import androidx.navigation.NavType
 import dev.sergiobelda.navigation.compose.extended.NavArgumentKey
 import dev.sergiobelda.navigation.compose.extended.NavDestination
+import dev.sergiobelda.navigation.compose.extended.compiler.annotation.SafeNavDestination
 
 enum class SearchResultNavArgumentKeys(override val argumentKey: String) : NavArgumentKey {
     SearchNavArgumentKey("search"),
     CategoryNavArgumentKey("category"),
 }
 
+@SafeNavDestination
 object SearchResultNavDestination : NavDestination<SearchResultNavArgumentKeys>() {
     override val destinationId: String = "searchresult"
 

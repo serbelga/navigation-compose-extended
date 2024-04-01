@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.navigation.compose.extended.sample.ui.search.initial
+package dev.sergiobelda.navigation.compose.extended.compiler.processor
 
-import dev.sergiobelda.navigation.compose.extended.NavArgumentKey
-import dev.sergiobelda.navigation.compose.extended.TopLevelNavDestination
-import dev.sergiobelda.navigation.compose.extended.compiler.annotation.SafeNavDestination
+internal const val AndroidXNavigationPackage = "androidx.navigation"
+internal const val NavigationComposeExtendedPackage = "dev.sergiobelda.navigation.compose.extended"
 
-@SafeNavDestination
-object SearchInitialNavDestination : TopLevelNavDestination<NavArgumentKey>() {
-    override val destinationId: String = "searchinitial"
-}
+internal const val NavArgsSingleClassName = "NavArgs"
+
+internal const val NavBackStackEntrySingleClassName = "NavBackStackEntry"
+
+internal const val NavDestinationSingleClassName = "NavDestination"
+internal const val NavDestinationClassName =
+    "$NavigationComposeExtendedPackage.$NavDestinationSingleClassName"

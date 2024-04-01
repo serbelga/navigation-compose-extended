@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     kotlin("android")
     id("dev.sergiobelda.gradle.spotless")
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -38,8 +39,10 @@ android {
 }
 
 dependencies {
-    implementation(projects.navigationComposeExtended)
     implementation(libs.androidx.navigation.compose)
+    implementation(projects.navigationComposeExtended)
+    implementation(projects.navigationComposeExtendedCompiler)
+    ksp(projects.navigationComposeExtendedCompiler)
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.material3)

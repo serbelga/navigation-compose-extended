@@ -18,4 +18,5 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "navigation-compose-extended-root"
 
 include(":navigation-compose-extended")
+include(":navigation-compose-extended-compiler")
 include(":sample-app")
