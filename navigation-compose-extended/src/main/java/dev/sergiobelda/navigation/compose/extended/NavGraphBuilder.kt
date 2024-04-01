@@ -33,7 +33,7 @@ fun <K : NavArgumentKey> NavGraphBuilder.composable(
     exitTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)? = null,
     popEnterTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)? = enterTransition,
     popExitTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)? = exitTransition,
-    content: @Composable AnimatedContentScope.(NavBackStackEntry, NavSafeArgs<K>) -> Unit
+    content: @Composable AnimatedContentScope.(NavBackStackEntry) -> Unit
 ) {
     composable(
         route = navDestination.route,
@@ -44,10 +44,7 @@ fun <K : NavArgumentKey> NavGraphBuilder.composable(
         popEnterTransition = popEnterTransition,
         popExitTransition = popExitTransition,
     ) { navBackStackEntry ->
-        content(
-            navBackStackEntry,
-            navDestination.navSafeArgs(navBackStackEntry)
-        )
+        content(navBackStackEntry)
     }
 }
 
@@ -70,7 +67,7 @@ fun <K : NavArgumentKey> NavGraphBuilder.dialog(
     arguments: List<NamedNavArgument> = navDestination.arguments,
     deepLinks: List<NavDeepLink> = navDestination.deepLinks,
     dialogProperties: DialogProperties = DialogProperties(),
-    content: @Composable (NavBackStackEntry, NavSafeArgs<K>) -> Unit
+    content: @Composable (NavBackStackEntry) -> Unit
 ) {
     dialog(
         route = navDestination.route,
@@ -78,9 +75,6 @@ fun <K : NavArgumentKey> NavGraphBuilder.dialog(
         deepLinks = deepLinks,
         dialogProperties = dialogProperties,
     ) { navBackStackEntry ->
-        content(
-            navBackStackEntry,
-            navDestination.navSafeArgs(navBackStackEntry)
-        )
+        content(navBackStackEntry)
     }
 }

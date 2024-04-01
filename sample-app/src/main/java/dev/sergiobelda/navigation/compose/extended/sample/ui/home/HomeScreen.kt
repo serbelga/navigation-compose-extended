@@ -125,7 +125,7 @@ private fun NavGraphBuilder.searchNavDestination(
         startDestination = SearchInitialNavDestination.route,
     ) {
         composable(
-            route = SearchInitialNavDestination.route,
+            navDestination = SearchInitialNavDestination,
         ) {
             SearchInitialScreen(
                 navigateToSearchResult = { search, category ->
@@ -158,7 +158,7 @@ private fun NavGraphBuilder.searchNavDestination(
 
 private fun NavGraphBuilder.yourLibraryNavDestination() {
     composable(
-        route = YourLibraryNavDestination.route,
+        navDestination = YourLibraryNavDestination,
     ) {
         YourLibraryScreen()
     }

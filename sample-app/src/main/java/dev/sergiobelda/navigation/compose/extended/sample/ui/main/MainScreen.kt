@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import dev.sergiobelda.navigation.compose.extended.composable
 import dev.sergiobelda.navigation.compose.extended.rememberNavAction
 import dev.sergiobelda.navigation.compose.extended.sample.ui.home.HomeNavDestination
 import dev.sergiobelda.navigation.compose.extended.sample.ui.home.HomeScreen
@@ -35,7 +36,7 @@ fun MainScreen() {
         startDestination = HomeNavDestination.route,
     ) {
         composable(
-            route = HomeNavDestination.route,
+            navDestination = HomeNavDestination,
         ) {
             HomeScreen(
                 navigateToSettings = {
@@ -44,7 +45,7 @@ fun MainScreen() {
             )
         }
         composable(
-            route = SettingsNavDestination.route,
+            navDestination = SettingsNavDestination,
         ) {
             SettingsScreen()
         }
