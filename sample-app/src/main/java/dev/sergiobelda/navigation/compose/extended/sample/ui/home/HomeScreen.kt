@@ -40,14 +40,13 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import dev.sergiobelda.navigation.compose.extended.NavAction
 import dev.sergiobelda.navigation.compose.extended.NavArgumentKey
 import dev.sergiobelda.navigation.compose.extended.NavDestination
+import dev.sergiobelda.navigation.compose.extended.NavHost
 import dev.sergiobelda.navigation.compose.extended.composable
 import dev.sergiobelda.navigation.compose.extended.rememberNavAction
 import dev.sergiobelda.navigation.compose.extended.sample.R
@@ -108,7 +107,7 @@ fun HomeScreen(
     ) { paddingValues ->
         NavHost(
             navController = navController,
-            startDestination = SearchNavDestination.route,
+            startNavDestination = SearchNavDestination,
             modifier = Modifier.padding(paddingValues),
         ) {
             searchNavDestination(navAction)

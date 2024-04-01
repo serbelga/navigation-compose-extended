@@ -17,8 +17,8 @@
 package dev.sergiobelda.navigation.compose.extended.sample.ui.main
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import dev.sergiobelda.navigation.compose.extended.NavHost
 import dev.sergiobelda.navigation.compose.extended.composable
 import dev.sergiobelda.navigation.compose.extended.rememberNavAction
 import dev.sergiobelda.navigation.compose.extended.sample.ui.home.HomeNavDestination
@@ -32,7 +32,7 @@ fun MainScreen() {
     val navAction = rememberNavAction(navController)
     NavHost(
         navController = navController,
-        startDestination = HomeNavDestination.route,
+        startNavDestination = HomeNavDestination,
     ) {
         composable(
             navDestination = HomeNavDestination,
