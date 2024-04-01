@@ -18,7 +18,6 @@ package dev.sergiobelda.navigation.compose.extended.sample.ui.main
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dev.sergiobelda.navigation.compose.extended.composable
 import dev.sergiobelda.navigation.compose.extended.rememberNavAction
