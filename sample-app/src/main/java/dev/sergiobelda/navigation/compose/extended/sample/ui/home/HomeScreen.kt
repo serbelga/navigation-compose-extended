@@ -40,14 +40,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import dev.sergiobelda.navigation.compose.extended.NavAction
 import dev.sergiobelda.navigation.compose.extended.NavArgumentKey
 import dev.sergiobelda.navigation.compose.extended.NavDestination
+import dev.sergiobelda.navigation.compose.extended.NavHost
+import dev.sergiobelda.navigation.compose.extended.composable
+import dev.sergiobelda.navigation.compose.extended.navigation
 import dev.sergiobelda.navigation.compose.extended.rememberNavAction
 import dev.sergiobelda.navigation.compose.extended.sample.R
 import dev.sergiobelda.navigation.compose.extended.sample.ui.search.SearchNavDestination
@@ -107,7 +107,7 @@ fun HomeScreen(
     ) { paddingValues ->
         NavHost(
             navController = navController,
-            startDestination = SearchNavDestination.route,
+            startNavDestination = SearchNavDestination,
             modifier = Modifier.padding(paddingValues),
         ) {
             searchNavDestination(navAction)
@@ -120,11 +120,12 @@ private fun NavGraphBuilder.searchNavDestination(
     navAction: NavAction,
 ) {
     navigation(
-        route = SearchNavDestination.route,
-        startDestination = SearchInitialNavDestination.route,
+        navDestination = SearchNavDestination,
+        startNavDestination = SearchInitialNavDestination,
+        arguments = emptyList(),
     ) {
         composable(
-            route = SearchInitialNavDestination.route,
+            navDestination = SearchInitialNavDestination,
         ) {
             SearchInitialScreen(
                 navigateToSearchResult = { search, category ->
@@ -135,9 +136,7 @@ private fun NavGraphBuilder.searchNavDestination(
             )
         }
         composable(
-            route = SearchResultNavDestination.route,
-            arguments = SearchResultNavDestination.arguments,
-            deepLinks = SearchResultNavDestination.deepLinks,
+            navDestination = SearchResultNavDestination,
         ) {
             val navArgs = SearchResultNavDestination.navArgs(it)
             val search = navArgs.getStringOrDefault(
@@ -159,7 +158,7 @@ private fun NavGraphBuilder.searchNavDestination(
 
 private fun NavGraphBuilder.yourLibraryNavDestination() {
     composable(
-        route = YourLibraryNavDestination.route,
+        navDestination = YourLibraryNavDestination,
     ) {
         YourLibraryScreen()
     }
