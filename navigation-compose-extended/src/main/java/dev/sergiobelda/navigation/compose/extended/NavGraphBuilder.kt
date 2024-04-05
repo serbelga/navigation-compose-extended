@@ -92,12 +92,12 @@ fun NavGraphBuilder.navigation(
     exitTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)? =
         null,
     popEnterTransition: (
-    AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?
+        AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?
     )? = enterTransition,
     popExitTransition: (
-    AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?
+        AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?
     )? = exitTransition,
-    builder: NavGraphBuilder.() -> Unit
+    builder: NavGraphBuilder.() -> Unit,
 ) {
     navigation(
         startDestination = startNavDestination.route,
@@ -108,7 +108,7 @@ fun NavGraphBuilder.navigation(
         exitTransition = exitTransition,
         popEnterTransition = popEnterTransition,
         popExitTransition = popExitTransition,
-        builder = builder
+        builder = builder,
     )
 }
 
