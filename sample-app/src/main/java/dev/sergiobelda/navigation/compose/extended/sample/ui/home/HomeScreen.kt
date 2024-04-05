@@ -41,7 +41,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import dev.sergiobelda.navigation.compose.extended.NavAction
 import dev.sergiobelda.navigation.compose.extended.NavArgumentKey
@@ -123,6 +122,7 @@ private fun NavGraphBuilder.searchNavDestination(
     navigation(
         navDestination = SearchNavDestination,
         startNavDestination = SearchInitialNavDestination,
+        arguments = emptyList(),
     ) {
         composable(
             navDestination = SearchInitialNavDestination,
