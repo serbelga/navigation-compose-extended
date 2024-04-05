@@ -25,9 +25,11 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
+import androidx.navigation.NavGraph
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
+import androidx.navigation.compose.navigation
 
 /**
  * Add the [Composable] to the [NavGraphBuilder]
@@ -41,8 +43,8 @@ import androidx.navigation.compose.dialog
  * @param popExitTransition callback to determine the destination's popExit transition
  * @param content composable for the destination
  */
-fun <K : NavArgumentKey> NavGraphBuilder.composable(
-    navDestination: NavDestination<K>,
+fun NavGraphBuilder.composable(
+    navDestination: NavDestination<*>,
     arguments: List<NamedNavArgument> = navDestination.arguments,
     deepLinks: List<NavDeepLink> = navDestination.deepLinks,
     enterTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)? = null,
@@ -65,6 +67,52 @@ fun <K : NavArgumentKey> NavGraphBuilder.composable(
 }
 
 /**
+ * Construct a nested [NavGraph]
+ *
+ * @param navDestination navigation destination associated with this NavGraph
+ * @param startNavDestination the starting destination for this NavGraph
+ * @param arguments list of arguments to associate with destination
+ * @param deepLinks list of deep links to associate with the destinations
+ * @param enterTransition callback to define enter transitions for destination in this NavGraph
+ * @param exitTransition callback to define exit transitions for destination in this NavGraph
+ * @param popEnterTransition callback to define pop enter transitions for destination in this
+ * NavGraph
+ * @param popExitTransition callback to define pop exit transitions for destination in this NavGraph
+ * @param builder the builder used to construct the graph
+ *
+ * @return the newly constructed nested NavGraph
+ */
+fun NavGraphBuilder.navigation(
+    navDestination: NavDestination<*>,
+    startNavDestination: NavDestination<*>,
+    arguments: List<NamedNavArgument> = navDestination.arguments,
+    deepLinks: List<NavDeepLink> = navDestination.deepLinks,
+    enterTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)? =
+        null,
+    exitTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)? =
+        null,
+    popEnterTransition: (
+        AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?
+    )? = enterTransition,
+    popExitTransition: (
+        AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?
+    )? = exitTransition,
+    builder: NavGraphBuilder.() -> Unit,
+) {
+    navigation(
+        startDestination = startNavDestination.route,
+        route = navDestination.route,
+        arguments = arguments,
+        deepLinks = deepLinks,
+        enterTransition = enterTransition,
+        exitTransition = exitTransition,
+        popEnterTransition = popEnterTransition,
+        popExitTransition = popExitTransition,
+        builder = builder,
+    )
+}
+
+/**
  * Add the [Composable] to the [NavGraphBuilder] that will be hosted within a
  * [androidx.compose.ui.window.Dialog]. This is suitable only when this dialog represents
  * a separate screen in your app that needs its own lifecycle and saved state, independent
@@ -78,8 +126,8 @@ fun <K : NavArgumentKey> NavGraphBuilder.composable(
  * @param dialogProperties properties that should be passed to [androidx.compose.ui.window.Dialog].
  * @param content composable content for the destination that will be hosted within the Dialog
  */
-fun <K : NavArgumentKey> NavGraphBuilder.dialog(
-    navDestination: NavDestination<K>,
+fun NavGraphBuilder.dialog(
+    navDestination: NavDestination<*>,
     arguments: List<NamedNavArgument> = navDestination.arguments,
     deepLinks: List<NavDeepLink> = navDestination.deepLinks,
     dialogProperties: DialogProperties = DialogProperties(),

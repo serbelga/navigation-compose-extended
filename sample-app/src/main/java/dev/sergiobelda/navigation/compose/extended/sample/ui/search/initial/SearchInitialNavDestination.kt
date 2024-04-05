@@ -17,8 +17,8 @@
 package dev.sergiobelda.navigation.compose.extended.sample.ui.search.initial
 
 import dev.sergiobelda.navigation.compose.extended.NavArgumentKey
-import dev.sergiobelda.navigation.compose.extended.TopLevelNavDestination
+import dev.sergiobelda.navigation.compose.extended.NavDestination
 
-object SearchInitialNavDestination : TopLevelNavDestination<NavArgumentKey>() {
+object SearchInitialNavDestination : NavDestination<NavArgumentKey>() {
     override val destinationId: String = "searchinitial"
 }
