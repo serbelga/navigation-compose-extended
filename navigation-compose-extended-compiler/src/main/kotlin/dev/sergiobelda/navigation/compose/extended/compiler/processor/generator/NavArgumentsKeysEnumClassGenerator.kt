@@ -55,9 +55,9 @@ internal class NavArgumentsKeysEnumClassGenerator(
     private fun TypeSpec.Builder.addNavArgumentParameters(): TypeSpec.Builder {
         navArgumentParameters.forEach { navArgumentParameter ->
             // TODO Add NavArgumentKey as const
-            navArgumentParameter.name?.asString()?.formatName()?.plus("NavArgumentKey")?.let {
+            navArgumentParameter.name?.asString()?.let {
                 addEnumConstant(
-                    it,
+                    it.formatName().plus("NavArgumentKey"),
                     TypeSpec.anonymousClassBuilder()
                         .addSuperclassConstructorParameter("%S", it)
                         .build(),
