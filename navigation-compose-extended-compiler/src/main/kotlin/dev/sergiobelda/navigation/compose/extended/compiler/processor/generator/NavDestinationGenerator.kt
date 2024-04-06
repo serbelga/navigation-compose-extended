@@ -26,6 +26,9 @@ import com.squareup.kotlinpoet.ksp.writeTo
 import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavArgument
 import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavDestination
 
+/**
+ * TODO Add documentation
+ */
 internal class NavDestinationGenerator(
     private val logger: KSPLogger,
     private val codeGenerator: CodeGenerator,
@@ -35,10 +38,15 @@ internal class NavDestinationGenerator(
         functionDeclaration: KSFunctionDeclaration,
     ) {
         val packageName = functionDeclaration.packageName.asString()
-        val classSimpleName = functionDeclaration.simpleName.asString()
+        val functionSimpleName = functionDeclaration.simpleName.asString()
+
         val annotation: NavDestination? = functionDeclaration
             .getAnnotationsByType(NavDestination::class)
             .firstOrNull()
+
+        requireNotNull(annotation) {
+            "NavDestination annotation not found in $functionDeclaration function."
+        }
 
         val navArgumentParameters = functionDeclaration
             .parameters
@@ -46,14 +54,8 @@ internal class NavDestinationGenerator(
                 it.getAnnotationsByType(NavArgument::class).toList().isNotEmpty()
             }
 
-        requireNotNull(annotation) {
-            "NavDestination annotation not found in $functionDeclaration function."
-        }
-
         val name =
-            annotation.name.takeUnless { it.isBlank() }?.formatName() ?: classSimpleName
-        val destinationId = annotation.destinationId
-
+            annotation.name.takeUnless { it.isBlank() }?.formatName() ?: functionSimpleName
         // TODO: Move to constants
         val fileName = "${name}Navigation"
         val navArgumentKeysName = "${name}NavArgumentKeys"
@@ -76,7 +78,7 @@ internal class NavDestinationGenerator(
                     name = navDestinationName,
                     navArgumentKeysName = navArgumentKeysName,
                     isTopLevelNavDestination = annotation.isTopLevelNavDestination,
-                    destinationId = destinationId,
+                    destinationId = annotation.destinationId,
                     navArgumentParameters = navArgumentParameters,
                 ).generate(),
             )

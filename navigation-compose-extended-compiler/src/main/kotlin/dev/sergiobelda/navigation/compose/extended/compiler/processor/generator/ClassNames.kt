@@ -18,6 +18,9 @@ package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 
 import com.squareup.kotlinpoet.ClassName
 
+/**
+ * TODO Add documentation
+ */
 internal object ClassNames {
     val NavArgumentKey =
         ClassName(NavigationComposeExtendedPackageName, NavArgumentKeySimpleClassName)

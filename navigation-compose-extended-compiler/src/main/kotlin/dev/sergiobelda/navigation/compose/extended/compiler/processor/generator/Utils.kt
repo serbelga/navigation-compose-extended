@@ -18,6 +18,9 @@ package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 
 import java.util.Locale
 
+/**
+ * TODO Add documentation
+ */
 internal fun String.formatName(): String =
     replaceFirstChar {
         if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString()

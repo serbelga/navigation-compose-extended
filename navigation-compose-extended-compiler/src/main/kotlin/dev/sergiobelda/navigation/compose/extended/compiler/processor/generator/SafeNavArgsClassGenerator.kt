@@ -18,6 +18,9 @@ package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 
 import com.squareup.kotlinpoet.TypeSpec
 
+/**
+ * TODO Add documentation
+ */
 internal class SafeNavArgsClassGenerator(
     val name: String,
 ) {

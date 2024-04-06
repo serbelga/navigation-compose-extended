@@ -25,6 +25,9 @@ import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
 
+/**
+ * TODO Add documentation
+ */
 internal class NavDestinationObjectGenerator(
     val packageName: String,
     val name: String,
