@@ -14,15 +14,9 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.navigation.compose.extended.compiler.processor
+package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 
 import com.squareup.kotlinpoet.ClassName
-import dev.sergiobelda.navigation.compose.extended.compiler.processor.Constants.AndroidXNavigationPackageName
-import dev.sergiobelda.navigation.compose.extended.compiler.processor.Constants.NavArgumentBuilderSimpleClassName
-import dev.sergiobelda.navigation.compose.extended.compiler.processor.Constants.NavArgumentKeySimpleClassName
-import dev.sergiobelda.navigation.compose.extended.compiler.processor.Constants.NavDestinationSimpleClassName
-import dev.sergiobelda.navigation.compose.extended.compiler.processor.Constants.NavigationComposeExtendedPackageName
-import dev.sergiobelda.navigation.compose.extended.compiler.processor.Constants.TopLevelNavDestinationSimpleClassName
 
 internal object ClassNames {
     val NavArgumentKey =
@@ -35,3 +29,14 @@ internal object ClassNames {
     val TopLevelNavDestination =
         ClassName(NavigationComposeExtendedPackageName, TopLevelNavDestinationSimpleClassName)
 }
+
+private const val AndroidXNavigationPackageName = "androidx.navigation"
+private const val NavigationComposeExtendedPackageName =
+    "dev.sergiobelda.navigation.compose.extended"
+
+private const val NavArgsSimpleClassName = "NavArgs"
+private const val NavArgumentKeySimpleClassName = "NavArgumentKey"
+private const val NavArgumentBuilderSimpleClassName = "NavArgumentBuilder"
+private const val NavBackStackEntrySimpleClassName = "NavBackStackEntry"
+private const val NavDestinationSimpleClassName = "NavDestination"
+private const val TopLevelNavDestinationSimpleClassName = "TopLevelNavDestination"

@@ -16,24 +16,8 @@
 
 package dev.sergiobelda.navigation.compose.extended.compiler.processor
 
-import com.google.devtools.ksp.processing.CodeGenerator
-import com.google.devtools.ksp.processing.KSPLogger
-import com.google.devtools.ksp.symbol.KSClassDeclaration
-import com.google.devtools.ksp.symbol.KSDeclaration
-import com.squareup.kotlinpoet.ClassName
-import com.squareup.kotlinpoet.CodeBlock
-import com.squareup.kotlinpoet.FileSpec
-import com.squareup.kotlinpoet.FunSpec
-import com.squareup.kotlinpoet.KModifier
-import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.plusParameter
-import com.squareup.kotlinpoet.PropertySpec
-import com.squareup.kotlinpoet.TypeSpec
-import com.squareup.kotlinpoet.ksp.writeTo
-import dev.sergiobelda.navigation.compose.extended.compiler.processor.Constants.AndroidXNavigationPackageName
-import dev.sergiobelda.navigation.compose.extended.compiler.processor.Constants.NavArgsSimpleClassName
-import dev.sergiobelda.navigation.compose.extended.compiler.processor.Constants.NavBackStackEntrySimpleClassName
-import dev.sergiobelda.navigation.compose.extended.compiler.processor.Constants.NavigationComposeExtendedPackageName
-
+// TODO: Remove and migrate to SafeNavArgsClassGenerator
+/*
 class NavArgsGenerator(
     private val logger: KSPLogger,
     private val codeGenerator: CodeGenerator,
@@ -103,3 +87,4 @@ private fun navArgsProperty(
 
 private const val NavArgsProperty = "navArgs"
 private const val NavBackStackEntryParameter = "navBackStackEntry"
+*/

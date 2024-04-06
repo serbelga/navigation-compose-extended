@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.navigation.compose.extended.compiler.processor
+package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 
-import com.google.devtools.ksp.symbol.KSAnnotated
-import com.google.devtools.ksp.symbol.KSFunctionDeclaration
-import com.google.devtools.ksp.validate
+import com.squareup.kotlinpoet.TypeSpec
 
-internal class NavDestinationValidator {
+internal class SafeNavArgsClassGenerator(
+    val name: String,
+) {
 
-    fun isValid(symbol: KSAnnotated): Boolean =
-        symbol is KSFunctionDeclaration &&
-            symbol.validate()
+    fun generate(): TypeSpec =
+        TypeSpec.classBuilder(name)
+            .build()
 }
