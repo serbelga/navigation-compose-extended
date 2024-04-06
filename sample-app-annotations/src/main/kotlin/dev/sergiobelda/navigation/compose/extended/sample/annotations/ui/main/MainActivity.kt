@@ -14,11 +14,21 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.navigation.compose.extended.sample.ui.search.initial
+package dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.main
 
-import dev.sergiobelda.navigation.compose.extended.NavArgumentKey
-import dev.sergiobelda.navigation.compose.extended.NavDestination
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.theme.SampleTheme
 
-object SearchInitialNavDestination : NavDestination<NavArgumentKey>() {
-    override val destinationId: String = "searchinitial"
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            SampleTheme {
+            }
+        }
+    }
 }

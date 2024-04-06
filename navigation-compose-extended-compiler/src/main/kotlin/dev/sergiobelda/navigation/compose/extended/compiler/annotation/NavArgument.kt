@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.navigation.compose.extended.sample.ui.search.initial
+package dev.sergiobelda.navigation.compose.extended.compiler.annotation
 
-import dev.sergiobelda.navigation.compose.extended.NavArgumentKey
-import dev.sergiobelda.navigation.compose.extended.NavDestination
-
-object SearchInitialNavDestination : NavDestination<NavArgumentKey>() {
-    override val destinationId: String = "searchinitial"
-}
+@Retention(AnnotationRetention.RUNTIME)
+@Target(AnnotationTarget.VALUE_PARAMETER)
+annotation class NavArgument(
+    val name: String = "",
+)

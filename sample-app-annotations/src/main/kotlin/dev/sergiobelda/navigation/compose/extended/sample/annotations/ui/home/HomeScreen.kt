@@ -14,8 +14,15 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.navigation.compose.extended.compiler.annotation
+package dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.home
 
-@Retention(AnnotationRetention.RUNTIME)
-@Target(AnnotationTarget.CLASS)
-annotation class SafeNavDestination
+import androidx.compose.runtime.Composable
+import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavDestination
+
+@NavDestination(
+    name = "Home",
+    destinationId = "home",
+)
+@Composable
+fun HomeScreen() {
+}

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SampleApp</string>
+    <string name="app_name">Navigation Compose Extended</string>
     <string name="search">Search</string>
     <string name="search_and_discover_music">Search and discover music</string>
     <string name="your_library">Your Library</string>

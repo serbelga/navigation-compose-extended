@@ -16,11 +16,20 @@
 
 package dev.sergiobelda.navigation.compose.extended.compiler.processor
 
-import com.google.devtools.ksp.processing.SymbolProcessor
-import com.google.devtools.ksp.processing.SymbolProcessorEnvironment
-import com.google.devtools.ksp.processing.SymbolProcessorProvider
+import com.google.devtools.ksp.processing.CodeGenerator
+import com.google.devtools.ksp.processing.KSPLogger
+import com.google.devtools.ksp.symbol.KSFunctionDeclaration
+import com.google.devtools.ksp.symbol.KSVisitorVoid
 
-class SafeNavDestinationProcessorProvider : SymbolProcessorProvider {
-    override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor =
-        SafeNavDestinationProcessor(environment.logger, environment.codeGenerator)
+internal class NavDestinationVisitor(
+    logger: KSPLogger,
+    codeGenerator: CodeGenerator,
+) : KSVisitorVoid() {
+    private val navDestinationGenerator = NavDestinationGenerator(logger, codeGenerator)
+
+    override fun visitFunctionDeclaration(function: KSFunctionDeclaration, data: Unit) {
+        navDestinationGenerator.generate(
+            functionDeclaration = function,
+        )
+    }
 }

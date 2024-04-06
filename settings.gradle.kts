@@ -20,3 +20,4 @@ rootProject.name = "navigation-compose-extended-root"
 include(":navigation-compose-extended")
 include(":navigation-compose-extended-compiler")
 include(":sample-app")
+include(":sample-app-annotations")

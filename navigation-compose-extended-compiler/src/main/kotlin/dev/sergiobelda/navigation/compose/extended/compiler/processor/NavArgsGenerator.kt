@@ -16,7 +16,6 @@
 
 package dev.sergiobelda.navigation.compose.extended.compiler.processor
 
-import com.google.devtools.ksp.getDeclaredProperties
 import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.symbol.KSClassDeclaration
@@ -30,10 +29,14 @@ import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.plusParameter
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.ksp.writeTo
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.Constants.AndroidXNavigationPackageName
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.Constants.NavArgsSimpleClassName
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.Constants.NavBackStackEntrySimpleClassName
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.Constants.NavigationComposeExtendedPackageName
 
-class SafeNavArgsGenerator(
+class NavArgsGenerator(
     private val logger: KSPLogger,
-    private val codeGenerator: CodeGenerator
+    private val codeGenerator: CodeGenerator,
 ) {
     fun generate(
         classDeclaration: KSClassDeclaration,
@@ -48,7 +51,6 @@ class SafeNavArgsGenerator(
 
         logger.info("Declared properties" + classDeclaration.getAllProperties().toList().toString())
 
-
         val fileSpec = FileSpec.builder(
             packageName = packageName,
             fileName = safeNavDestinationName,
@@ -59,13 +61,16 @@ class SafeNavArgsGenerator(
                         FunSpec.constructorBuilder()
                             .addParameter(
                                 NavBackStackEntryParameter,
-                                ClassName(AndroidXNavigationPackage, NavBackStackEntrySimpleClassName),
+                                ClassName(AndroidXNavigationPackageName, NavBackStackEntrySimpleClassName),
                             )
                             .build(),
                     )
-                    .addProperty(navArgsProperty(classSimpleName,
-                        navArgumentKey
-                    ))
+                    .addProperty(
+                        navArgsProperty(
+                            classSimpleName,
+                            navArgumentKey,
+                        ),
+                    )
                     .build(),
             )
         }.build()
@@ -76,21 +81,22 @@ class SafeNavArgsGenerator(
 
 private fun navArgsProperty(
     navDestinationName: String,
-    navArgumentKey: KSDeclaration?
+    navArgumentKey: KSDeclaration?,
 ): PropertySpec =
     PropertySpec
         .builder(
             NavArgsProperty,
             // NavArgs class
-            ClassName(NavigationComposeExtendedPackage, NavArgsSimpleClassName).plusParameter(
+            ClassName(NavigationComposeExtendedPackageName, NavArgsSimpleClassName).plusParameter(
                 // plus NavArgumentKey generic type
                 ClassName(
-                    navArgumentKey?.packageName?.asString()!!, navArgumentKey.simpleName.asString()
-                )
-            )
+                    navArgumentKey?.packageName?.asString()!!,
+                    navArgumentKey.simpleName.asString(),
+                ),
+            ),
         )
         .delegate(
-            CodeBlock.of("lazy { %N.%N(%N) }", navDestinationName, NavArgsProperty, NavBackStackEntryParameter)
+            CodeBlock.of("lazy { %N.%N(%N) }", navDestinationName, NavArgsProperty, NavBackStackEntryParameter),
         )
         .addModifiers(KModifier.PRIVATE)
         .build()

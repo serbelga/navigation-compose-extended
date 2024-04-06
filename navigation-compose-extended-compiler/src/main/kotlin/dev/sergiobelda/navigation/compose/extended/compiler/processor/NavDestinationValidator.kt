@@ -16,14 +16,14 @@
 
 package dev.sergiobelda.navigation.compose.extended.compiler.processor
 
-internal object Constants {
-    const val AndroidXNavigationPackageName = "androidx.navigation"
-    const val NavigationComposeExtendedPackageName = "dev.sergiobelda.navigation.compose.extended"
+import com.google.devtools.ksp.symbol.KSAnnotated
+import com.google.devtools.ksp.symbol.KSFunctionDeclaration
+import com.google.devtools.ksp.validate
 
-    internal const val NavArgsSimpleClassName = "NavArgs"
-    internal const val NavArgumentKeySimpleClassName = "NavArgumentKey"
-    internal const val NavArgumentBuilderSimpleClassName = "NavArgumentBuilder"
-    internal const val NavBackStackEntrySimpleClassName = "NavBackStackEntry"
-    internal const val NavDestinationSimpleClassName = "NavDestination"
-    internal const val TopLevelNavDestinationSimpleClassName = "TopLevelNavDestination"
+internal class NavDestinationValidator {
+
+    fun isValid(symbol: KSAnnotated): Boolean =
+        symbol is KSFunctionDeclaration &&
+            symbol.validate() // &&
+    // symbol.isNavDestination()
 }

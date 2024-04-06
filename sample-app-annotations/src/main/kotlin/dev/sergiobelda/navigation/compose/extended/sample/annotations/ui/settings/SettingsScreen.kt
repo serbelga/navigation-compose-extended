@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.navigation.compose.extended.compiler.processor
+package dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.settings
 
-import com.google.devtools.ksp.symbol.KSAnnotated
-import com.google.devtools.ksp.symbol.KSClassDeclaration
-import com.google.devtools.ksp.validate
+import androidx.compose.runtime.Composable
+import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavArgument
+import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavDestination
 
-class SafeNavDestinationValidator() {
-
-    fun isValid(symbol: KSAnnotated): Boolean =
-        symbol is KSClassDeclaration &&
-            symbol.validate() &&
-            symbol.isNavDestination()
+@NavDestination(
+    name = "Settings",
+    destinationId = "settings",
+)
+@Composable
+fun SettingsScreen(
+    @NavArgument userId: String,
+    viewModel: String,
+) {
 }
-
-private fun KSClassDeclaration.isNavDestination(): Boolean =
-    isSubclassOf(NavDestinationClassName)

@@ -22,20 +22,20 @@ import com.google.devtools.ksp.processing.Resolver
 import com.google.devtools.ksp.processing.SymbolProcessor
 import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.validate
-import dev.sergiobelda.navigation.compose.extended.compiler.annotation.SafeNavDestination
+import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavDestination
 
-class SafeNavDestinationProcessor(
+internal class NavDestinationProcessor(
     logger: KSPLogger,
     codeGenerator: CodeGenerator,
 ) : SymbolProcessor {
 
-    private val safeNavDestinationValidator = SafeNavDestinationValidator()
+    private val navDestinationValidator = NavDestinationValidator()
 
-    private val safeNavDestinationClassVisitor = SafeNavDestinationClassVisitor(logger, codeGenerator)
+    private val navDestinationVisitor = NavDestinationVisitor(logger, codeGenerator)
 
     override fun process(resolver: Resolver): List<KSAnnotated> {
         var symbols: List<KSAnnotated> = emptyList()
-        val annotationName = SafeNavDestination::class.qualifiedName
+        val annotationName = NavDestination::class.qualifiedName
         if (annotationName != null) {
             val resolvedSymbols = resolver
                 .getSymbolsWithAnnotation(annotationName)
@@ -43,10 +43,10 @@ class SafeNavDestinationProcessor(
             val validatedSymbols = resolvedSymbols.filter { it.validate() }.toList()
             validatedSymbols
                 .filter {
-                    safeNavDestinationValidator.isValid(it)
+                    navDestinationValidator.isValid(it)
                 }
                 .forEach {
-                    it.accept(safeNavDestinationClassVisitor, Unit)
+                    it.accept(navDestinationVisitor, Unit)
                 }
             symbols = resolvedSymbols - validatedSymbols.toSet()
         }
