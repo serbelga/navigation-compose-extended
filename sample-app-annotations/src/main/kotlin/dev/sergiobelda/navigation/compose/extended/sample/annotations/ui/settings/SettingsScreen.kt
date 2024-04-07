@@ -27,6 +27,6 @@ import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavDestin
 @Composable
 fun SettingsScreen(
     @NavArgument userId: Int,
-    @NavArgument text: String,
+    @NavArgument text: String?,
 ) {
 }

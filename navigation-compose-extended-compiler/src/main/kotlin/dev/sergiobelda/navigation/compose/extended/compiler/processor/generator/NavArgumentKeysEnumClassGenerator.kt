@@ -52,18 +52,18 @@ internal class NavArgumentKeysEnumClassGenerator(
             .addNavArgumentParameters()
             .build()
 
-    private fun TypeSpec.Builder.addNavArgumentParameters(): TypeSpec.Builder {
-        navArgumentParameters.forEach { navArgumentParameter ->
-            // TODO Add NavArgumentKey as const
-            navArgumentParameter.name?.asString()?.let {
-                addEnumConstant(
-                    it.formatNavArgumentKey(),
-                    TypeSpec.anonymousClassBuilder()
-                        .addSuperclassConstructorParameter("%S", it)
-                        .build(),
-                )
+    private fun TypeSpec.Builder.addNavArgumentParameters() =
+        apply {
+            navArgumentParameters.forEach { navArgumentParameter ->
+                // TODO Add NavArgumentKey as const
+                navArgumentParameter.name?.asString()?.let {
+                    addEnumConstant(
+                        it.formatNavArgumentKey(),
+                        TypeSpec.anonymousClassBuilder()
+                            .addSuperclassConstructorParameter("%S", it)
+                            .build(),
+                    )
+                }
             }
         }
-        return this
-    }
 }

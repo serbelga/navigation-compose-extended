@@ -33,12 +33,17 @@ internal object ClassNames {
         ClassName(ANDROIDX_NAVIGATION_PACKAGE_NAME, "NavBackStackEntry")
     val NavDestination =
         ClassName(NAVIGATION_COMPOSE_EXTENDED_PACKAGE_NAME, "NavDestination")
+    val NavRoute =
+        ClassName(NAVIGATION_COMPOSE_EXTENDED_PACKAGE_NAME, "NavRoute")
     val NavType =
         ClassName(ANDROIDX_NAVIGATION_PACKAGE_NAME, "NavType")
     val TopLevelNavDestination =
         ClassName(NAVIGATION_COMPOSE_EXTENDED_PACKAGE_NAME, "TopLevelNavDestination")
 }
 
+/**
+ * TODO Add documentation
+ */
 internal object MemberNames {
     val MapOf = MemberName(KOTLIN_COLLECTIONS, "mapOf")
     val NavArgsGetBoolean = MemberName("", "getBoolean")
@@ -46,6 +51,7 @@ internal object MemberNames {
     val NavArgsGetInt = MemberName("", "getInt")
     val NavArgsGetLong = MemberName("", "getLong")
     val NavArgsGetString = MemberName("", "getString")
+    val NavRoute = MemberName("", "navRoute")
 }
 
 private const val ANDROIDX_NAVIGATION_PACKAGE_NAME = "androidx.navigation"

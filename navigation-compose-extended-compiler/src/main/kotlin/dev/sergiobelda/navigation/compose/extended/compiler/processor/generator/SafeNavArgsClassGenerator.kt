@@ -73,32 +73,33 @@ internal class SafeNavArgsClassGenerator(
             .addModifiers(KModifier.PRIVATE)
             .build()
 
-    private fun TypeSpec.Builder.addNavArgumentParametersGetters(): TypeSpec.Builder {
-        navArgumentParameters.forEach { navArgumentParameter ->
-            navArgumentParameter.name?.asString()?.let { name ->
-                val type = navArgumentParameter.type.resolve().toTypeName().copy(nullable = true)
-                val member: MemberName =
-                    navArgumentParameter.type.resolve().mapToNavTypeGetter() ?: return@forEach
-                addProperty(
-                    PropertySpec.builder(
-                        name,
-                        type,
-                    ).getter(
-                        FunSpec.getterBuilder()
-                            .addStatement(
-                                "return %N.%M(%T.%N)",
-                                NAV_ARGS_PROPERTY_NAME,
-                                member,
-                                navArgumentKeysClass,
-                                name.formatNavArgumentKey(),
-                            )
-                            .build(),
-                    ).build(),
-                )
+    private fun TypeSpec.Builder.addNavArgumentParametersGetters() =
+        apply {
+            navArgumentParameters.forEach { navArgumentParameter ->
+                navArgumentParameter.name?.asString()?.let { name ->
+                    val type =
+                        navArgumentParameter.type.resolve().toTypeName().copy(nullable = true)
+                    val member: MemberName =
+                        navArgumentParameter.type.resolve().mapToNavTypeGetter() ?: return@forEach
+                    addProperty(
+                        PropertySpec.builder(
+                            name,
+                            type,
+                        ).getter(
+                            FunSpec.getterBuilder()
+                                .addStatement(
+                                    "return %N.%M(%T.%N)",
+                                    NAV_ARGS_PROPERTY_NAME,
+                                    member,
+                                    navArgumentKeysClass,
+                                    name.formatNavArgumentKey(),
+                                )
+                                .build(),
+                        ).build(),
+                    )
+                }
             }
         }
-        return this
-    }
 
     companion object {
         private const val NAV_BACK_STACK_ENTRY_PARAMETER_NAME = "navBackStackEntry"

@@ -19,6 +19,7 @@ package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 import com.google.devtools.ksp.symbol.KSValueParameter
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.CodeBlock
+import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.LambdaTypeName
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
@@ -26,6 +27,7 @@ import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.buildCodeBlock
+import com.squareup.kotlinpoet.ksp.toTypeName
 
 /**
  * NavDestination object generator.
@@ -51,7 +53,6 @@ internal class NavDestinationObjectGenerator(
                 ),
             )
             .addProperty(
-                // TODO Add destinationId as const
                 PropertySpec.builder(
                     DESTINATION_ID_PROPERTY_NAME,
                     String::class,
@@ -63,11 +64,12 @@ internal class NavDestinationObjectGenerator(
             .addProperty(
                 argumentsMapProperty(),
             )
+            .addSafeNavRoute()
             .build()
     }
 
     private fun argumentsMapProperty(): PropertySpec =
-        PropertySpec.Companion.builder(
+        PropertySpec.builder(
             ARGUMENTS_MAP_PROPERTY_NAME,
             Map::class.asClassName()
                 .parameterizedBy(
@@ -82,20 +84,20 @@ internal class NavDestinationObjectGenerator(
                 buildCodeBlock {
                     addStatement("%M(", MemberNames.MapOf)
                     indent()
-                    addNavArguments()
+                    addNavArgumentsToMap()
                     unindent()
                     addStatement(")")
                 },
             )
             .build()
 
-    private fun CodeBlock.Builder.addNavArguments() {
+    private fun CodeBlock.Builder.addNavArgumentsToMap() {
         navArgumentParameters.forEach { navArgumentParameter ->
-            navArgumentParameter.name?.asString()?.let {
+            navArgumentParameter.name?.asString()?.let { name ->
                 addStatement(
                     "%T.%L to {",
                     navArgumentKeysClass,
-                    it.formatNavArgumentKey(),
+                    name.formatNavArgumentKey(),
                 )
                 addNavArgumentBuilderProperties(navArgumentParameter)
                 addStatement("},")
@@ -109,6 +111,55 @@ internal class NavDestinationObjectGenerator(
         addStatement("type = %T.$type", ClassNames.NavType)
         unindent()
     }
+
+    private fun TypeSpec.Builder.addSafeNavRoute() =
+        apply {
+            if (navArgumentParameters.isNotEmpty()) {
+                addFunction(
+                    FunSpec.builder("navRoute")
+                        .addNavArgumentsToNavRouteFunctionParameters()
+                        .returns(
+                            ClassNames.NavRoute.parameterizedBy(
+                                navArgumentKeysClass,
+                            ),
+                        )
+                        .addCode(
+                            buildCodeBlock {
+                                add("return %M(\n", MemberNames.NavRoute)
+                                indent()
+                                addNavArgumentsToNavRouteFunctionBody()
+                                unindent()
+                                add(")")
+                            },
+                        )
+                        .build(),
+                )
+            }
+        }
+
+    private fun FunSpec.Builder.addNavArgumentsToNavRouteFunctionParameters() =
+        apply {
+            navArgumentParameters.forEach { navArgumentParameter ->
+                navArgumentParameter.name?.asString()?.let { name ->
+                    addParameter(
+                        name,
+                        navArgumentParameter.type.resolve().toTypeName(),
+                    )
+                }
+            }
+        }
+
+    private fun CodeBlock.Builder.addNavArgumentsToNavRouteFunctionBody() =
+        navArgumentParameters.forEach { navArgumentParameter ->
+            navArgumentParameter.name?.asString()?.let { name ->
+                addStatement(
+                    "%T.%L to %L,",
+                    navArgumentKeysClass,
+                    name.formatNavArgumentKey(),
+                    name,
+                )
+            }
+        }
 
     companion object {
         private const val ARGUMENTS_MAP_PROPERTY_NAME = "argumentsMap"
