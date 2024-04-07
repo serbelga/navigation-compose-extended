@@ -56,7 +56,6 @@ import dev.sergiobelda.navigation.compose.extended.sample.ui.search.initial.Sear
 import dev.sergiobelda.navigation.compose.extended.sample.ui.search.result.SearchResultNavArgumentKeys
 import dev.sergiobelda.navigation.compose.extended.sample.ui.search.result.SearchResultNavDestination
 import dev.sergiobelda.navigation.compose.extended.sample.ui.search.result.SearchResultScreen
-import dev.sergiobelda.navigation.compose.extended.sample.ui.search.result.customNavRoute
 import dev.sergiobelda.navigation.compose.extended.sample.ui.yourlibrary.YourLibraryNavDestination
 import dev.sergiobelda.navigation.compose.extended.sample.ui.yourlibrary.YourLibraryScreen
 
@@ -130,7 +129,9 @@ private fun NavGraphBuilder.searchNavDestination(
             SearchInitialScreen(
                 navigateToSearchResult = { search, category ->
                     navAction.navigate(
-                        SearchResultNavDestination.customNavRoute(search),
+                        SearchResultNavDestination.navRoute(
+                            SearchResultNavArgumentKeys.SearchNavArgumentKey to search,
+                        ),
                     )
                 },
             )

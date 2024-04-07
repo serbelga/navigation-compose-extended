@@ -14,6 +14,55 @@ keys, and functions to retrieve arguments values in a more secure way.
 
 [![Maven Central](https://img.shields.io/maven-central/v/dev.sergiobelda.navigation.compose.extended/navigation-compose-extended)](https://search.maven.org/search?q=g:dev.sergiobelda.navigation.compose.extended)
 
+```kotlin
+dependencies {
+    // Add AndroidX Navigation Compose dependency.
+    implementation("androidx.navigation:navigation-compose:$nav_version")
+
+    implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended:$version")
+    // Use KSP to generate NavDestinations with annotations.
+    implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended-compiler:$version")
+    ksp("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended-compiler:$version")
+}
+```
+
+```kotlin
+@NavDestination(
+    name = "Settings",
+    destinationId = "settings",
+)
+@Composable
+fun SettingsScreen(
+    @NavArgument userId: Int,
+    @NavArgument(defaultValue = "Default") text: String?, // Set default value for the NavArgument.
+    @NavArgument(name = "custom-name", defaultValue = "true") result: Boolean, // Set a custom NavArgument name.
+) {
+```
+
+```kotlin
+val navController = rememberNavController()
+val navAction = rememberNavAction(navController)
+NavHost(navController = navController, startNavDestination = HomeNavDestination) {
+    composable(navDestination = HomeNavDestination) {
+        HomeScreen(
+            navigateToSettings = { userId ->
+                navAction.navigate(
+                    SettingsNavDestination.safeNavRoute(userId = userId)
+                )
+            },
+        )
+    }
+    composable(navDestination = SettingsNavDestination) { navBackStackEntry ->
+        val safeNavArgs = SettingsSafeNavArgs(navBackStackEntry)
+        SettingsScreen(
+            userId = safeNavArgs.userId ?: 0,
+            text = safeNavArgs.text,
+            result = safeNavArgs.customName ?: false,
+        )
+    }
+}
+```
+
 ## License
 
 ```

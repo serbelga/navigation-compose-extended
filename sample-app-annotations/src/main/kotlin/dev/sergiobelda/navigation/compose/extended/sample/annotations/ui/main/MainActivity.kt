@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
                         SettingsScreen(
                             userId = safeNavArgs.userId ?: 0,
                             text = safeNavArgs.text,
-                            result = safeNavArgs.alternativeResult ?: false,
+                            result = safeNavArgs.customName ?: false,
                         )
                     }
                 }

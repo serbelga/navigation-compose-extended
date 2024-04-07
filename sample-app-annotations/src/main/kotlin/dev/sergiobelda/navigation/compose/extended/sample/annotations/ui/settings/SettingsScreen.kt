@@ -32,8 +32,8 @@ import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavDestin
 @Composable
 fun SettingsScreen(
     @NavArgument userId: Int,
-    @NavArgument(defaultValue = "Default") text: String?,
-    @NavArgument(name = "alternative-result", defaultValue = "true") result: Boolean,
+    @NavArgument(defaultValue = "Default") text: String?, // Set default value for the NavArgument.
+    @NavArgument(name = "custom-name", defaultValue = "true") result: Boolean, // Set a custom NavArgument name.
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column {
