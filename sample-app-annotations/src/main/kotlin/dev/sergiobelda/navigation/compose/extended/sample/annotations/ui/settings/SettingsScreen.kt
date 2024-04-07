@@ -16,7 +16,13 @@
 
 package dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.settings
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavArgument
 import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavDestination
 
@@ -27,7 +33,13 @@ import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavDestin
 @Composable
 fun SettingsScreen(
     @NavArgument userId: Int,
-    @NavArgument text: String?,
-    @NavArgument(name = "alternative-Result", defaultValue = "true") result: Boolean,
+    @NavArgument(defaultValue = "Default") text: String?,
+    @NavArgument(name = "alternative-result", defaultValue = "true") result: Boolean,
 ) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column {
+            Text(text = "Settings Screen")
+            Text(text = "User ID: $userId")
+        }
+    }
 }

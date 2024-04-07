@@ -22,4 +22,8 @@ internal data class NavArgumentParameter(
     val name: String,
     val defaultValue: String,
     val parameter: KSValueParameter,
-)
+) {
+
+    val hasDefaultValue: Boolean
+        get() = defaultValue.isNotBlank()
+}

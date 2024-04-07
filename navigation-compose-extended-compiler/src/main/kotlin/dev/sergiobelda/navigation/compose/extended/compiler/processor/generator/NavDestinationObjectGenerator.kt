@@ -21,6 +21,7 @@ import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.LambdaTypeName
+import com.squareup.kotlinpoet.ParameterSpec
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
@@ -111,7 +112,7 @@ internal class NavDestinationObjectGenerator(
         if (type.isMarkedNullable) {
             addStatement("nullable = true")
         }
-        if (navArgumentParameter.defaultValue.isNotBlank()) {
+        if (navArgumentParameter.hasDefaultValue) {
             val defaultValue = navArgumentParameter.defaultValue.toValue(type)
             addStatement("defaultValue = %L", defaultValue)
         }
@@ -122,7 +123,7 @@ internal class NavDestinationObjectGenerator(
         apply {
             if (navArgumentParameters.isNotEmpty()) {
                 addFunction(
-                    FunSpec.builder("navRoute")
+                    FunSpec.builder("safeNavRoute")
                         .addNavArgumentsToNavRouteFunctionParameters()
                         .returns(
                             ClassNames.NavRoute.parameterizedBy(
@@ -146,9 +147,19 @@ internal class NavDestinationObjectGenerator(
     private fun FunSpec.Builder.addNavArgumentsToNavRouteFunctionParameters() =
         apply {
             navArgumentParameters.forEach { navArgumentParameter ->
+                val type = navArgumentParameter.parameter.type.resolve()
                 addParameter(
-                    navArgumentParameter.name,
-                    navArgumentParameter.parameter.type.resolve().toTypeName(),
+                    ParameterSpec.builder(
+                        navArgumentParameter.name,
+                        type.toTypeName(),
+                    ).apply {
+                        navArgumentParameter.takeIf { it.hasDefaultValue }?.let {
+                            defaultValue(
+                                "%L",
+                                it.defaultValue.toValue(type)
+                            )
+                        }
+                    }.build()
                 )
             }
         }

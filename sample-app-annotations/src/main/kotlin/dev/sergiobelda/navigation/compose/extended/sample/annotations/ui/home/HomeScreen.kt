@@ -16,7 +16,13 @@
 
 package dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.home
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavDestination
 
 @NavDestination(
@@ -24,5 +30,13 @@ import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavDestin
     destinationId = "home",
 )
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navigateToSettings: () -> Unit) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column {
+            Text(text = "Home Screen")
+            Button(onClick = { navigateToSettings() }) {
+                Text(text = "Navigate to Settings")
+            }
+        }
+    }
 }

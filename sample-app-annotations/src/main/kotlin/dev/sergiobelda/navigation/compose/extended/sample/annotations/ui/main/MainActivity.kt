@@ -20,6 +20,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.navigation.compose.rememberNavController
+import dev.sergiobelda.navigation.compose.extended.NavHost
+import dev.sergiobelda.navigation.compose.extended.composable
+import dev.sergiobelda.navigation.compose.extended.rememberNavAction
+import dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.home.HomeNavDestination
+import dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.home.HomeScreen
+import dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.settings.SettingsNavDestination
+import dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.settings.SettingsSafeNavArgs
+import dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.settings.SettingsScreen
 import dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.theme.SampleTheme
 
 class MainActivity : ComponentActivity() {
@@ -28,6 +37,29 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             SampleTheme {
+                val navController = rememberNavController()
+                val navAction = rememberNavAction(navController)
+                NavHost(navController = navController, startNavDestination = HomeNavDestination) {
+                    composable(navDestination = HomeNavDestination) {
+                        HomeScreen(
+                            navigateToSettings = {
+                                navAction.navigate(
+                                    SettingsNavDestination.safeNavRoute(
+                                        userId = 1
+                                    )
+                                )
+                            }
+                        )
+                    }
+                    composable(navDestination = SettingsNavDestination) { navBackStackEntry ->
+                        val safeNavArgs = SettingsSafeNavArgs(navBackStackEntry)
+                        SettingsScreen(
+                            userId = safeNavArgs.userId ?: 0,
+                            text = safeNavArgs.text,
+                            result = safeNavArgs.alternativeResult ?: false
+                        )
+                    }
+                }
             }
         }
     }
