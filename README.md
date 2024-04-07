@@ -97,15 +97,17 @@ the `safeNavRoute()` function if we are using annotation.
 In the following code, we navigate to the `SettingsNavDestination`:
 
 ```kotlin
-composable(navDestination = HomeNavDestination) {
-    HomeScreen(
-        navigateToSettings = {
-            navAction.navigate(
-                SettingsNavDestination.navRoute()
-            )
-        },
-    )
-}
+val navAction = rememberNavAction(navController)
+NavHost(navController = navController, startNavDestination = HomeNavDestination) {
+    composable(navDestination = HomeNavDestination) {
+        HomeScreen(
+            navigateToSettings = {
+                navAction.navigate(
+                    SettingsNavDestination.navRoute()
+                )
+            },
+        )
+    }
 ```
 
 ### Navigate with arguments
