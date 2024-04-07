@@ -27,7 +27,7 @@ import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavArgume
 import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavDestination
 
 /**
- * TODO Add documentation
+ * Generate code for functions annotated with [NavDestination] and [NavArgument] parameters.
  */
 internal class NavDestinationGenerator(
     private val codeGenerator: CodeGenerator,
@@ -72,17 +72,15 @@ internal class NavDestinationGenerator(
         val functionSimpleName = functionDeclaration.simpleName.asString()
         val name =
             annotation.name.takeUnless { it.isBlank() }?.formatName() ?: functionSimpleName
-        // TODO: Move to constants
-        val fileName = "${name}Navigation"
-        val navArgumentKeysName = "${name}NavArgumentKeys"
+        val navArgumentKeysName = name + NAV_ARGUMENT_KEYS
         val navArgumentKeysClass = ClassName(packageName, navArgumentKeysName)
-        val navDestinationName = "${name}NavDestination"
+        val navDestinationName = name + NAV_DESTINATION
         val navDestinationClass = ClassName(packageName, navDestinationName)
-        val safeNavArgsName = "${name}SafeNavArgs"
+        val safeNavArgsName = name + SAFE_NAV_ARGS
 
         val fileSpec = FileSpec.builder(
             packageName = packageName,
-            fileName = fileName,
+            fileName = name + NAVIGATION_FILE_NAME_SUFFIX,
         ).apply {
             addType(
                 NavArgumentKeysEnumClassGenerator(
@@ -110,5 +108,12 @@ internal class NavDestinationGenerator(
         }.build()
 
         fileSpec.writeTo(codeGenerator = codeGenerator, aggregating = false)
+    }
+
+    companion object {
+        private const val NAVIGATION_FILE_NAME_SUFFIX = "Navigation"
+        private const val NAV_ARGUMENT_KEYS = "NavArgumentKeys"
+        private const val NAV_DESTINATION = "NavDestination"
+        private const val SAFE_NAV_ARGS = "SafeNavArgs"
     }
 }
