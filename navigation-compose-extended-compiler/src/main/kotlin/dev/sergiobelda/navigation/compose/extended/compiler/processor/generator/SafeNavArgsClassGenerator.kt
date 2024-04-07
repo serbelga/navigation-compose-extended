@@ -80,7 +80,6 @@ internal class SafeNavArgsClassGenerator(
                     navArgumentParameter.parameter.type.resolve().toTypeName().copy(nullable = true)
                 val member: MemberName =
                     navArgumentParameter.parameter.type.resolve().mapToNavArgsGetter()
-                        ?: return@forEach
                 addProperty(
                     PropertySpec.builder(
                         navArgumentParameter.name,

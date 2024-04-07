@@ -16,7 +16,7 @@ ksp = "1.9.23-1.0.19"
 ktlint = "0.50.0"
 lifecycleRuntimeKtx = "2.7.0"
 navigationCompose = "2.7.7"
-navigationComposeExtended = "0.1.0"
+navigationComposeExtended = "0.2.0"
 spotless = "6.25.0"
 vanniktechMavenPublishPlugin = "0.28.0"
 
