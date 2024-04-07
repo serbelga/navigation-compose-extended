@@ -1,5 +1,5 @@
 > [!IMPORTANT]  
-> In the next explanation, we are using annotations to create navigation elements, but we can also create them programmatically.
+> In the next documentation, annotations are used to create navigation elements, but we can also create them programmatically.
 
 The `NavDestination` represents some Destination in the Navigation graph.
 
