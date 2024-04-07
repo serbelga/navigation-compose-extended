@@ -86,7 +86,7 @@ internal class NavDestinationGenerator(
                 NavArgumentKeysEnumClassGenerator(
                     name = navArgumentKeysName,
                     navArgumentParameters = navArgumentParameters,
-                ).invoke(),
+                ).generate(),
             )
             addType(
                 NavDestinationObjectGenerator(

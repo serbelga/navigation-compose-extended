@@ -29,7 +29,7 @@ internal class NavArgumentKeysEnumClassGenerator(
     private val name: String,
     private val navArgumentParameters: List<NavArgumentParameter>,
 ) {
-    operator fun invoke(): TypeSpec =
+    fun generate(): TypeSpec =
         TypeSpec.enumBuilder(name)
             .primaryConstructor(
                 FunSpec.constructorBuilder()
