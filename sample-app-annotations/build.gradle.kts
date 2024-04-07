@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "dev.sergiobelda.navigation.compose.extended.sample"
+    namespace = "dev.sergiobelda.navigation.compose.extended.sample.annotations"
     compileSdk = libs.versions.androidCompileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "dev.sergiobelda.navigation.compose.extended.sample"
+        applicationId = "dev.sergiobelda.navigation.compose.extended.sample.annotations"
         minSdk = libs.versions.androidMinSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
@@ -41,6 +41,8 @@ android {
 dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(projects.navigationComposeExtended)
+    implementation(projects.navigationComposeExtendedCompiler)
+    ksp(projects.navigationComposeExtendedCompiler)
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.material3)
