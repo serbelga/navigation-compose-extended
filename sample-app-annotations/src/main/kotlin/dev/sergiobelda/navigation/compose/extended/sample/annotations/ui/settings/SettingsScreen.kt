@@ -39,6 +39,8 @@ fun SettingsScreen(
         Column {
             Text(text = "Settings Screen")
             Text(text = "User ID: $userId")
+            Text(text = "Text: $text")
+            Text(text = "Result: $result")
         }
     }
 }

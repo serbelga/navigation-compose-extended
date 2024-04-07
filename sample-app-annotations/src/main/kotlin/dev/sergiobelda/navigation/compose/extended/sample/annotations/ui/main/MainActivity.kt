@@ -19,7 +19,6 @@ package dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.main
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.rememberNavController
 import dev.sergiobelda.navigation.compose.extended.NavHost
 import dev.sergiobelda.navigation.compose.extended.composable
@@ -34,7 +33,6 @@ import dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.theme.S
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             SampleTheme {
                 val navController = rememberNavController()
