@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm")
     alias(libs.plugins.ksp)
+    alias(libs.plugins.dokka)
     id("dev.sergiobelda.gradle.spotless")
 }
 

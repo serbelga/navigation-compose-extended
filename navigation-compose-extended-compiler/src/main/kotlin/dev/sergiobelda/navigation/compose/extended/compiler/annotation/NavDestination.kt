@@ -17,11 +17,10 @@
 package dev.sergiobelda.navigation.compose.extended.compiler.annotation
 
 /**
- * Represents a navigation destination in the Navigation graph.
- *
- * Annotating a function or expression with this annotation will generate a NavDestination
- * object for this function. You must set a [destinationId] that will be used to identify this
- * destination. The function name will be used as the navigation destination unless you set a
+ * Represents a navigation destination in the Navigation graph. Annotating a function or expression
+ * with this annotation will generate a NavDestination object for this function.
+ * You must set a [destinationId] that will be used to identify this destination.
+ * The function name will be used as the navigation destination unless you set a
  * [name] value. You can indicate that this navigation destination is a top-level destination by
  * setting [isTopLevelNavDestination] to true. [deepLinkUris] is a list of deep links that will be
  * associated with this navigation destination.

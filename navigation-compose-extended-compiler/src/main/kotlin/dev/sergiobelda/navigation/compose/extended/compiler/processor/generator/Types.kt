@@ -33,7 +33,7 @@ private object KotlinTypeName {
 /**
  * NavArgument valid types.
  */
-enum class NavArgumentType {
+internal enum class NavArgumentType {
     BOOLEAN,
     FLOAT,
     INT,
