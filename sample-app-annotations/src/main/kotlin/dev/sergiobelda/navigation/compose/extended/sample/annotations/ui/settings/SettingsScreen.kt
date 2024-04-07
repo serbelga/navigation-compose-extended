@@ -26,7 +26,7 @@ import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavArgume
 import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavDestination
 
 @NavDestination(
-    name = "1Set -tings",
+    name = "Settings",
     destinationId = "settings",
 )
 @Composable
