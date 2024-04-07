@@ -17,7 +17,7 @@
 package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 
 /**
- * TODO Add documentation
+ * Apply a Kotlin Property format to the given [String].
  */
 internal fun String.toKotlinPropertyName(): String {
     // Replace any "_" or "-" followed by a letter or digit with the uppercase letter.
@@ -47,7 +47,7 @@ private fun String.uppercaseFirstChar(): String =
     replaceFirstChar(Char::titlecase)
 
 /**
- * TODO Add documentation
+ * Add the "NavArgumentKey" suffix to the given [String].
  */
 internal fun String.formatNavArgumentKey(): String =
     formatName().plus(NAV_ARGUMENT_KEY_SUFFIX)

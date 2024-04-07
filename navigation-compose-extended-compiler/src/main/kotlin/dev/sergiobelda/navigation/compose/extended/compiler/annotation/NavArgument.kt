@@ -16,11 +16,17 @@
 
 package dev.sergiobelda.navigation.compose.extended.compiler.annotation
 
+/**
+ * Represents a navigation argument in a navigation destination.
+ *
+ * Annotating a parameter with this annotation will generate a NavArgumentKey entry in the
+ * navigation destination and will register this argument in the navigation destination's arguments
+ * list. The parameter name will be used as the argument key unless you set a [name] value. You can
+ * also set a [defaultValue] for this argument.
+ */
 @Retention(AnnotationRetention.BINARY)
 @Target(AnnotationTarget.VALUE_PARAMETER)
 annotation class NavArgument(
-    // TODO: Add name to generator
     val name: String = "",
-    // TODO: Add name to generator
     val defaultValue: String = "",
 )

@@ -18,12 +18,19 @@ package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 
 import com.google.devtools.ksp.symbol.KSValueParameter
 
+/**
+ * Represents a navigation argument in a navigation destination. It is defined by the
+ * navigation argument's [name], [defaultValue] and [parameter] data.
+ */
 internal data class NavArgumentParameter(
     val name: String,
     val defaultValue: String,
     val parameter: KSValueParameter,
 ) {
 
+    /**
+     * Returns true if the navigation argument has a default value.
+     */
     val hasDefaultValue: Boolean
         get() = defaultValue.isNotBlank()
 }

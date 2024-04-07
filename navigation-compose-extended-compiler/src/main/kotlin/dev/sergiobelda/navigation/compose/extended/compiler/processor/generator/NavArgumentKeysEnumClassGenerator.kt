@@ -22,26 +22,26 @@ import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 
 /**
- * TODO Add documentation
+ * Generates an enum class that contains the navigation arguments keys. The enum class inherits
+ * from NavArgumentKey contains as many entries as [navArgumentParameters].
  */
 internal class NavArgumentKeysEnumClassGenerator(
     private val name: String,
     private val navArgumentParameters: List<NavArgumentParameter>,
 ) {
-    fun generate(): TypeSpec =
-        // TODO Add argumentKey as const
+    operator fun invoke(): TypeSpec =
         TypeSpec.enumBuilder(name)
             .primaryConstructor(
                 FunSpec.constructorBuilder()
                     .addParameter(
-                        "argumentKey",
+                        ARGUMENT_KEY_PARAM_NAME,
                         String::class,
                     )
                     .build(),
             )
             .addProperty(
-                PropertySpec.builder("argumentKey", String::class)
-                    .initializer("argumentKey")
+                PropertySpec.builder(ARGUMENT_KEY_PARAM_NAME, String::class)
+                    .initializer(ARGUMENT_KEY_PARAM_NAME)
                     .addModifiers(KModifier.OVERRIDE)
                     .build(),
             )
@@ -54,7 +54,6 @@ internal class NavArgumentKeysEnumClassGenerator(
     private fun TypeSpec.Builder.addNavArgumentParameters() =
         apply {
             navArgumentParameters.forEach { navArgumentParameter ->
-                // TODO Add NavArgumentKey as const
                 addEnumConstant(
                     navArgumentParameter.name.formatNavArgumentKey(),
                     TypeSpec.anonymousClassBuilder()
@@ -63,4 +62,8 @@ internal class NavArgumentKeysEnumClassGenerator(
                 )
             }
         }
+
+    companion object {
+        private const val ARGUMENT_KEY_PARAM_NAME = "argumentKey"
+    }
 }

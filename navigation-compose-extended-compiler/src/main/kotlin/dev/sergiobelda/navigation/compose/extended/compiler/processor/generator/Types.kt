@@ -20,7 +20,7 @@ import com.google.devtools.ksp.symbol.KSType
 import com.squareup.kotlinpoet.MemberName
 
 /**
- * TODO: Add documentation.
+ * Kotlin Primitive types.
  */
 private object KotlinTypeName {
     const val BOOLEAN = "kotlin.Boolean"
@@ -31,7 +31,7 @@ private object KotlinTypeName {
 }
 
 /**
- * TODO: Add documentation.
+ * NavArgument valid types.
  */
 enum class NavArgumentType {
     BOOLEAN,
@@ -39,11 +39,12 @@ enum class NavArgumentType {
     INT,
     LONG,
     STRING,
-    INVALID,
 }
 
 /**
- * TODO: Add documentation.
+ * Convert a [KSType] to a [NavArgumentType].
+ *
+ * @throws RuntimeException if the type is invalid.
  */
 internal fun KSType.toNavArgumentType(): NavArgumentType =
     when (this.declaration.qualifiedName?.asString()) {
@@ -52,11 +53,11 @@ internal fun KSType.toNavArgumentType(): NavArgumentType =
         KotlinTypeName.INT -> NavArgumentType.INT
         KotlinTypeName.LONG -> NavArgumentType.LONG
         KotlinTypeName.STRING -> NavArgumentType.STRING
-        else -> NavArgumentType.INVALID
+        else -> throw RuntimeException("Invalid type, $this cannot be used a NavArgument type.")
     }
 
 /**
- * TODO: Add documentation.
+ * Converts a [KSType] to a NavType definition.
  */
 internal fun KSType.mapToNavType(): String {
     val navArgumentType = toNavArgumentType()
@@ -66,15 +67,13 @@ internal fun KSType.mapToNavType(): String {
         NavArgumentType.INT -> "IntType"
         NavArgumentType.LONG -> "LongType"
         NavArgumentType.STRING -> "StringType"
-        // TODO: Check invalid
-        NavArgumentType.INVALID -> "StringType"
     }
 }
 
 /**
- * TODO: Add documentation.
+ * Converts a [KSType] to a NavArgs getter function name.
  */
-internal fun KSType.mapToNavTypeGetter(): MemberName? {
+internal fun KSType.mapToNavArgsGetter(): MemberName {
     val navArgumentType = toNavArgumentType()
     return when (navArgumentType) {
         NavArgumentType.BOOLEAN -> MemberNames.NavArgsGetBoolean
@@ -82,13 +81,11 @@ internal fun KSType.mapToNavTypeGetter(): MemberName? {
         NavArgumentType.INT -> MemberNames.NavArgsGetInt
         NavArgumentType.LONG -> MemberNames.NavArgsGetLong
         NavArgumentType.STRING -> MemberNames.NavArgsGetString
-        // TODO: Check invalid
-        NavArgumentType.INVALID -> null
     }
 }
 
 /**
- * TODO: Add documentation.
+ * Converts a [String] to a value based on a given [KSType].
  */
 internal fun String.toValue(type: KSType): Any {
     val navArgumentType = type.toNavArgumentType()
@@ -98,6 +95,5 @@ internal fun String.toValue(type: KSType): Any {
         NavArgumentType.INT -> this.trim().toInt()
         NavArgumentType.LONG -> this.trim().toLong()
         NavArgumentType.STRING -> "\"$this\""
-        else -> throw RuntimeException("Invalid type")
     }
 }

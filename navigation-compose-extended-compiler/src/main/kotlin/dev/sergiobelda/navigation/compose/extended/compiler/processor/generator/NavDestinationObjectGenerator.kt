@@ -30,7 +30,7 @@ import com.squareup.kotlinpoet.buildCodeBlock
 import com.squareup.kotlinpoet.ksp.toTypeName
 
 /**
- * NavDestination object generator.
+ * Generates the NavDestination object for the navigation destination.
  */
 internal class NavDestinationObjectGenerator(
     private val name: String,

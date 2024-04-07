@@ -27,7 +27,8 @@ import com.squareup.kotlinpoet.buildCodeBlock
 import com.squareup.kotlinpoet.ksp.toTypeName
 
 /**
- * TODO Add documentation
+ * Generates the SafeNavArgs class for the navigation destination. This class provides as
+ * many getter variables as [navArgumentParameters] to access the navigation arguments.
  */
 internal class SafeNavArgsClassGenerator(
     private val name: String,
@@ -78,7 +79,7 @@ internal class SafeNavArgsClassGenerator(
                 val type =
                     navArgumentParameter.parameter.type.resolve().toTypeName().copy(nullable = true)
                 val member: MemberName =
-                    navArgumentParameter.parameter.type.resolve().mapToNavTypeGetter()
+                    navArgumentParameter.parameter.type.resolve().mapToNavArgsGetter()
                         ?: return@forEach
                 addProperty(
                     PropertySpec.builder(

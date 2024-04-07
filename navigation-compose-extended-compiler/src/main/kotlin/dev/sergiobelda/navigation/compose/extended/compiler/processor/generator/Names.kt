@@ -20,7 +20,7 @@ import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.MemberName
 
 /**
- * TODO Add documentation
+ * [ClassName]s used for navigation destination generation.
  */
 internal object ClassNames {
     val NavArgs =
@@ -42,7 +42,7 @@ internal object ClassNames {
 }
 
 /**
- * TODO Add documentation
+ * [MemberName]s used for navigation destination generation.
  */
 internal object MemberNames {
     val MapOf = MemberName(KOTLIN_COLLECTIONS, "mapOf")
