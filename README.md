@@ -6,8 +6,9 @@ Navigation Compose Extended is a complementary library for AndroidX Jetpack Navi
 improve creation of navigation elements, as destination routes, arguments, deep links, … in a
 more idiomatic way than using literals.
 
-Visit the [project website](https://sergiobelda.dev/navigation-compose-extended/) for documentation 
-and API Reference.
+Take a look at the [sample-app-annotations](https://github.com/serbelga/navigation-compose-extended/tree/main/sample-app-annotations) and [sample-app](https://github.com/serbelga/navigation-compose-extended/tree/main/sample-app) for working examples.
+
+Visit the [project website](https://sergiobelda.dev/navigation-compose-extended/) for documentation and API Reference.
 
 ## Download
 
@@ -23,13 +24,96 @@ dependencies {
 }
 ```
 
-## Create NavDestinations using Annotations
+## Usage
+
+The `NavDestination` represents some Destination in the Navigation graph.
+
+### Create NavDestinations
 
 ```kotlin
 @NavDestination(
+    destinationId = "home",
+    name = "Home", // Optional: NavDestination name.
+    isTopLevelNavDestination = true, // Optional: Mark NavDestination as a top-level destination.
+)
+@Composable
+fun HomeScreen() {}
+```
+
+The compiler will generate a NavDestination object associated with this destination.
+
+```kotlin
+public object HomeNavDestination : NavDestination<HomeNavArgumentKeys>() {
+  override val destinationId: String = "home"
+}
+```
+
+### Using the `NavDestination` into the NavHost
+
+```kotlin
+NavHost(navController = navController, startNavDestination = HomeNavDestination) {
+    composable(navDestination = HomeNavDestination) {
+        HomeScreen()
+    }
+    composable(navDestination = SettingsNavDestination) {
+        SettingsScreen()
+    }
+}
+```
+
+> [!NOTE]  
+> Here we are using wrappers (`NavHost`, `composable`) that receive the `NavDestination` type to create the navigation graph. 
+> Visit the [API Reference](https://sergiobelda.dev/navigation-compose-extended/api/navigation-compose-extended/dev.sergiobelda.navigation.compose.extended/index.html) for 
+> more information.
+
+`NavDestination` class also offers variables for `route`, `arguments` and `deepLinks` that can be used as follows if we don't want to use these wrappers:
+
+```kotlin
+NavHost(navController = navController, startDestination = HomeNavDestination.route) {
+    composable(
+        route = HomeNavDestination.route,
+        deepLinks = HomeNavDestination.deepLinks
+    ) {
+        HomeScreen()
+    }
+    composable(
+        route = HomeNavDestination.route,
+        arguments = HomeNavDestination.arguments
+    ) {
+        SettingsScreen()
+    }
+}
+```
+
+### Navigate
+
+We can navigate to some destination using the actions functions provided by the `NavAction` class.
+The `NavAction.navigate` function receive a `NavRoute` instance to navigate to some destination.
+This `NavRoute` associated with a destination can be obtained using the `navRoute()` function in the `NavDestination` class or 
+the `safeNavRoute()` function if we are using annotation.
+In the following code, we navigate to the `SettingsNavDestination`:
+
+```kotlin
+composable(navDestination = HomeNavDestination) {
+    HomeScreen(
+        navigateToSettings = {
+            navAction.navigate(
+                SettingsNavDestination.navRoute()
+            )
+        },
+    )
+}
+```
+
+### Navigate with arguments
+
+The `NavArgumentKey` represents a navigation argument key in the Navigation graph.
+If we are using annotations, we can annotate function parameters as:
+
+```kotlin
+@NavDestination(
+    name = "Settings",
     destinationId = "settings",
-    name = "Settings", // Optional: NavDestination name.
-    isTopLevelNavDestination = true, // Optional: Mark NavDestination as a top-level destination. 
 )
 @Composable
 fun SettingsScreen(
@@ -37,127 +121,101 @@ fun SettingsScreen(
     @NavArgument(defaultValue = "Default") text: String?, // Set default value for the NavArgument.
     @NavArgument(name = "custom-name", defaultValue = "true") result: Boolean, // Set a custom NavArgument name.
     viewModel: SettingsViewModel
-) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Column {
-            Text(text = "Settings Screen")
-            Text(text = "User ID: $userId")
-            Text(text = "Text: $text")
-            Text(text = "Result: $result")
-        }
-    }
-}
+) {}
 ```
 
-<details>
-  <summary>The compiler will generate following classes</summary>
-
-### NavArgumentKey enum class
-
-Contains the NavArgument keys to create the navigation arguments and retrieve values.
+The compiler will generate an enum class containing the navigation arguments keys for this navigation destination.
 
 ```kotlin
 public enum class SettingsNavArgumentKeys(
-    override val argumentKey: String,
+  override val argumentKey: String,
 ) : NavArgumentKey {
-    UserIdNavArgumentKey("userId"),
-    TextNavArgumentKey("text"),
-    CustomNameNavArgumentKey("customName"),
-    ;
+  UserIdNavArgumentKey("userId"),
+  TextNavArgumentKey("text"),
+  CustomNameNavArgumentKey("customName"),
+  ;
 }
 ```
 
-### NavDestination object
-
-Contains the destinationId associated with this navigation destination, a Map<NavArgumentKey, NavArgumentBuilder> that
-specifies navigation arguments properties and a `safeNavRoute` function with the navigation arguments as parameters that returns 
-a `NavRoute` instance that can be used to navigate to this destination.
+and will set the `argumentsMap` property in the `NavDestination` that associate each `NavArgumentKey` with its properties.
 
 ```kotlin
 public object SettingsNavDestination : NavDestination<SettingsNavArgumentKeys>() {
-    override val destinationId: String = "settings"
+  override val destinationId: String = "settings"
 
-    override val argumentsMap: Map<SettingsNavArgumentKeys, NavArgumentBuilder.() -> Unit> = mapOf(
-        SettingsNavArgumentKeys.UserIdNavArgumentKey to {
-            type = NavType.IntType
-        },
-        SettingsNavArgumentKeys.TextNavArgumentKey to {
-            type = NavType.StringType
-            nullable = true
-            defaultValue = "Default"
-        },
-        SettingsNavArgumentKeys.CustomNameNavArgumentKey to {
-            type = NavType.BoolType
-            defaultValue = true
-        },
-    )
-
-    public fun safeNavRoute(
-        userId: Int,
-        text: String? = "Default",
-        customName: Boolean = true,
-    ): NavRoute<SettingsNavArgumentKeys> = navRoute(
-        SettingsNavArgumentKeys.UserIdNavArgumentKey to userId,
-        SettingsNavArgumentKeys.TextNavArgumentKey to text,
-        SettingsNavArgumentKeys.CustomNameNavArgumentKey to customName,
-    )
-}
+  override val argumentsMap: Map<SettingsNavArgumentKeys, NavArgumentBuilder.() -> Unit> = mapOf(
+    SettingsNavArgumentKeys.UserIdNavArgumentKey to {
+      type = NavType.IntType
+    },
+    SettingsNavArgumentKeys.TextNavArgumentKey to {
+      type = NavType.StringType
+      nullable = true
+      defaultValue = "Default"
+    },
+    SettingsNavArgumentKeys.CustomNameNavArgumentKey to {
+      type = NavType.BoolType
+      defaultValue = true
+    },
+  )
 ```
 
-### SafeNavArgs class
-
-A class definition that contains getters to retrieve navigation arguments values.
+If we use the annotations, we can use the generated `safeNavRoute()` function with the navigation arguments as parameters:
 
 ```kotlin
-public class SettingsSafeNavArgs(
-  navBackStackEntry: NavBackStackEntry,
-) {
-  private val navArgs: NavArgs<SettingsNavArgumentKeys> by lazy {
-    SettingsNavDestination.navArgs(navBackStackEntry)
-  }
-    
-  public val userId: Int?
-    get() = navArgs.getInt(SettingsNavArgumentKeys.UserIdNavArgumentKey)
-
-  public val text: String?
-    get() = navArgs.getString(SettingsNavArgumentKeys.TextNavArgumentKey)
-
-  public val customName: Boolean?
-    get() = navArgs.getBoolean(SettingsNavArgumentKeys.CustomNameNavArgumentKey)
-}
-```
-</details>
-
-### Generate the Navigation Graph
-
-```kotlin
-NavHost(navController = navController, startNavDestination = HomeNavDestination) {
-    composable(navDestination = HomeNavDestination) {
-        HomeScreen(
-            navigateToSettings = {
-                navAction.navigate(
-                    SettingsNavDestination.safeNavRoute(
-                        userId = 1,
-                    ),
+composable(navDestination = HomeNavDestination) {
+    HomeScreen(
+        navigateToSettings = {
+            navAction.navigate(
+                SettingsNavDestination.safeNavRoute(
+                    userId = 1,
+                    text = "Text",
+                    customName = true
                 )
-            },
-        )
-    }
-    composable(navDestination = SettingsNavDestination) { navBackStackEntry ->
-        val safeNavArgs = SettingsSafeNavArgs(navBackStackEntry)
-        SettingsScreen(
-            userId = safeNavArgs.userId ?: 0,
-            text = safeNavArgs.text,
-            result = safeNavArgs.customName ?: false,
-        )
-    }
+            )
+        },
+    )
 }
 ```
 
-> [!NOTE]  
-> There's also a couple of wrappers that receive the `NavDestination` types to create the navigation graph: `NavHost`, `composable`, `dialog`, ...
+otherwise, we must use `navRoute()` function associating the NavArgumentKey to its value.
 
-## Create NavDestinations programmatically
+```kotlin
+composable(navDestination = HomeNavDestination) {
+    HomeScreen(
+        navigateToSettings = {
+            navAction.navigate(
+                SettingsNavDestination.navRoute(
+                    SettingsNavArgumentKeys.UserIdNavArgumentKey to 1,
+                    SettingsNavArgumentKeys.TextNavArgumentKey to "Text",
+                    SettingsNavArgumentKeys.CustomNameNavArgumentKey to true
+                )
+            )
+        },
+    )
+}
+```
+
+### Retrieving the navigation arguments values
+
+The value of navigation arguments can be obtained using the `NavArgs` class. The `NavDestination.navArgs()` provides an instance
+of this class. There are multiple getters to retrieve values:
+
+```kotlin
+composable(navDestination = SettingsNavDestination) { navBackStackEntry ->
+    val navArgs = SettingsNavDestination.navArgs(navBackStackEntry)
+    val userId = navArgs.getInt(SettingsNavArgumentKeys.UserIdNavArgumentKey) ?: 0
+    SettingsScreen(
+        userId = userId,
+```
+
+If we use annotations processor, a `SafeNavArgs` class is generated with getters for each navigation argument:
+
+```kotlin
+composable(navDestination = SettingsNavDestination) { navBackStackEntry ->
+    val navArgs = SettingsSafeNavArgs(navBackStackEntry)
+    SettingsScreen(
+        userId =  navArgs.userId ?: 0,
+```
 
 ## License
 

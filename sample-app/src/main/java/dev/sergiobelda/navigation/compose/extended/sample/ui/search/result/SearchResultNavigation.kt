@@ -46,9 +46,3 @@ object SearchResultNavDestination : NavDestination<SearchResultNavArgumentKeys>(
             "sample://searchresult",
         )
 }
-
-fun SearchResultNavDestination.customNavRoute(search: String, category: String? = "Default") =
-    navRoute(
-        SearchResultNavArgumentKeys.SearchNavArgumentKey to search,
-        SearchResultNavArgumentKeys.CategoryNavArgumentKey to category,
-    )
