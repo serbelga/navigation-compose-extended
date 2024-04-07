@@ -19,7 +19,6 @@ package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 import com.google.devtools.ksp.KspExperimental
 import com.google.devtools.ksp.getAnnotationsByType
 import com.google.devtools.ksp.processing.CodeGenerator
-import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.symbol.KSFunctionDeclaration
 import com.google.devtools.ksp.symbol.KSValueParameter
 import com.squareup.kotlinpoet.ClassName
@@ -32,7 +31,6 @@ import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavDestin
  * TODO Add documentation
  */
 internal class NavDestinationGenerator(
-    private val logger: KSPLogger,
     private val codeGenerator: CodeGenerator,
 ) {
     @OptIn(KspExperimental::class)
@@ -49,12 +47,30 @@ internal class NavDestinationGenerator(
 
         val navArgumentParameters = functionDeclaration
             .parameters
-            .filter {
-                it.getAnnotationsByType(NavArgument::class).toList().isNotEmpty()
+            .mapNotNull {
+                val parameterName = it.name?.asString()
+                val navArgumentAnnotation =
+                    it.getAnnotationsByType(NavArgument::class).firstOrNull()
+                if (parameterName != null && navArgumentAnnotation != null) {
+                    NavArgumentParameter(
+                        name = navArgumentAnnotation.name.ifBlank { parameterName }
+                            .toKotlinPropertyName(),
+                        defaultValue = navArgumentAnnotation.defaultValue,
+                        parameter = it,
+                    )
+                } else {
+                    null
+                }
             }
             .filter {
-                it.isValidNavArgumentType()
+                it.parameter.isValidNavArgumentType()
             }
+
+        val navArgumentNames =
+            navArgumentParameters.groupBy { it.name }.values.filter { it.size > 1 }
+        require(navArgumentNames.isEmpty()) {
+            "NavArgument names must be unique. Duplicated names: ${navArgumentNames.joinToString { it.first().name }}"
+        }
 
         val packageName = functionDeclaration.packageName.asString()
         val functionSimpleName = functionDeclaration.simpleName.asString()

@@ -16,7 +16,6 @@
 
 package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 
-import com.google.devtools.ksp.symbol.KSValueParameter
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.PropertySpec
@@ -27,7 +26,7 @@ import com.squareup.kotlinpoet.TypeSpec
  */
 internal class NavArgumentKeysEnumClassGenerator(
     private val name: String,
-    private val navArgumentParameters: List<KSValueParameter>,
+    private val navArgumentParameters: List<NavArgumentParameter>,
 ) {
     fun generate(): TypeSpec =
         // TODO Add argumentKey as const
@@ -56,14 +55,12 @@ internal class NavArgumentKeysEnumClassGenerator(
         apply {
             navArgumentParameters.forEach { navArgumentParameter ->
                 // TODO Add NavArgumentKey as const
-                navArgumentParameter.name?.asString()?.let {
-                    addEnumConstant(
-                        it.formatNavArgumentKey(),
-                        TypeSpec.anonymousClassBuilder()
-                            .addSuperclassConstructorParameter("%S", it)
-                            .build(),
-                    )
-                }
+                addEnumConstant(
+                    navArgumentParameter.name.formatNavArgumentKey(),
+                    TypeSpec.anonymousClassBuilder()
+                        .addSuperclassConstructorParameter("%S", navArgumentParameter.name)
+                        .build(),
+                )
             }
         }
 }

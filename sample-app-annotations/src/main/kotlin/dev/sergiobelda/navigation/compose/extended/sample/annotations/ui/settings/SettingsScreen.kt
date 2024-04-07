@@ -28,5 +28,6 @@ import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavDestin
 fun SettingsScreen(
     @NavArgument userId: Int,
     @NavArgument text: String?,
+    @NavArgument(name = "alternative-Result", defaultValue = "true") result: Boolean,
 ) {
 }

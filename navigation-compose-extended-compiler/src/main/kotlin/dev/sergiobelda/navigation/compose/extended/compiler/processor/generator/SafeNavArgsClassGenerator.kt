@@ -16,7 +16,6 @@
 
 package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 
-import com.google.devtools.ksp.symbol.KSValueParameter
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
@@ -34,7 +33,7 @@ internal class SafeNavArgsClassGenerator(
     private val name: String,
     private val navDestinationClass: ClassName,
     private val navArgumentKeysClass: ClassName,
-    private val navArgumentParameters: List<KSValueParameter>,
+    private val navArgumentParameters: List<NavArgumentParameter>,
 ) {
     fun generate(): TypeSpec =
         TypeSpec.classBuilder(name)
@@ -76,28 +75,27 @@ internal class SafeNavArgsClassGenerator(
     private fun TypeSpec.Builder.addNavArgumentParametersGetters() =
         apply {
             navArgumentParameters.forEach { navArgumentParameter ->
-                navArgumentParameter.name?.asString()?.let { name ->
-                    val type =
-                        navArgumentParameter.type.resolve().toTypeName().copy(nullable = true)
-                    val member: MemberName =
-                        navArgumentParameter.type.resolve().mapToNavTypeGetter() ?: return@forEach
-                    addProperty(
-                        PropertySpec.builder(
-                            name,
-                            type,
-                        ).getter(
-                            FunSpec.getterBuilder()
-                                .addStatement(
-                                    "return %N.%M(%T.%N)",
-                                    NAV_ARGS_PROPERTY_NAME,
-                                    member,
-                                    navArgumentKeysClass,
-                                    name.formatNavArgumentKey(),
-                                )
-                                .build(),
-                        ).build(),
-                    )
-                }
+                val type =
+                    navArgumentParameter.parameter.type.resolve().toTypeName().copy(nullable = true)
+                val member: MemberName =
+                    navArgumentParameter.parameter.type.resolve().mapToNavTypeGetter()
+                        ?: return@forEach
+                addProperty(
+                    PropertySpec.builder(
+                        navArgumentParameter.name,
+                        type,
+                    ).getter(
+                        FunSpec.getterBuilder()
+                            .addStatement(
+                                "return %N.%M(%T.%N)",
+                                NAV_ARGS_PROPERTY_NAME,
+                                member,
+                                navArgumentKeysClass,
+                                navArgumentParameter.name.formatNavArgumentKey(),
+                            )
+                            .build(),
+                    ).build(),
+                )
             }
         }
 

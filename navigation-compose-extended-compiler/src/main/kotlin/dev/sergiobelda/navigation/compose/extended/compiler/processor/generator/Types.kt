@@ -86,3 +86,18 @@ internal fun KSType.mapToNavTypeGetter(): MemberName? {
         NavArgumentType.INVALID -> null
     }
 }
+
+/**
+ * TODO: Add documentation.
+ */
+internal fun String.toValue(type: KSType): Any {
+    val navArgumentType = type.toNavArgumentType()
+    return when (navArgumentType) {
+        NavArgumentType.BOOLEAN -> this.toBoolean()
+        NavArgumentType.FLOAT -> this.toFloat()
+        NavArgumentType.INT -> this.toInt()
+        NavArgumentType.LONG -> this.toLong()
+        NavArgumentType.STRING -> "\"$this\""
+        else -> throw RuntimeException("Invalid type")
+    }
+}

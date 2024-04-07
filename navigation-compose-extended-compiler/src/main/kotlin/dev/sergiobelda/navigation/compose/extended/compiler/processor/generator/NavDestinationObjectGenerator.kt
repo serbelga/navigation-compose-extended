@@ -16,7 +16,6 @@
 
 package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 
-import com.google.devtools.ksp.symbol.KSValueParameter
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.FunSpec
@@ -37,7 +36,7 @@ internal class NavDestinationObjectGenerator(
     private val isTopLevelNavDestination: Boolean,
     private val destinationId: String,
     private val navArgumentKeysClass: ClassName,
-    private val navArgumentParameters: List<KSValueParameter>,
+    private val navArgumentParameters: List<NavArgumentParameter>,
 ) {
     fun generate(): TypeSpec {
         val superClass = if (isTopLevelNavDestination) {
@@ -93,24 +92,28 @@ internal class NavDestinationObjectGenerator(
 
     private fun CodeBlock.Builder.addNavArgumentsToMap() {
         navArgumentParameters.forEach { navArgumentParameter ->
-            navArgumentParameter.name?.asString()?.let { name ->
-                addStatement(
-                    "%T.%L to {",
-                    navArgumentKeysClass,
-                    name.formatNavArgumentKey(),
-                )
-                addNavArgumentBuilderProperties(navArgumentParameter)
-                addStatement("},")
-            }
+            addStatement(
+                "%T.%L to {",
+                navArgumentKeysClass,
+                navArgumentParameter.name.formatNavArgumentKey(),
+            )
+            addNavArgumentBuilderProperties(navArgumentParameter)
+            addStatement("},")
         }
     }
 
-    private fun CodeBlock.Builder.addNavArgumentBuilderProperties(parameter: KSValueParameter) {
+    private fun CodeBlock.Builder.addNavArgumentBuilderProperties(
+        navArgumentParameter: NavArgumentParameter,
+    ) {
         indent()
-        val type = parameter.type.resolve()
+        val type = navArgumentParameter.parameter.type.resolve()
         addStatement("type = %T.${type.mapToNavType()}", ClassNames.NavType)
         if (type.isMarkedNullable) {
             addStatement("nullable = true")
+        }
+        if (navArgumentParameter.defaultValue.isNotBlank()) {
+            val defaultValue = navArgumentParameter.defaultValue.toValue(type)
+            addStatement("defaultValue = %L", defaultValue)
         }
         unindent()
     }
@@ -143,25 +146,21 @@ internal class NavDestinationObjectGenerator(
     private fun FunSpec.Builder.addNavArgumentsToNavRouteFunctionParameters() =
         apply {
             navArgumentParameters.forEach { navArgumentParameter ->
-                navArgumentParameter.name?.asString()?.let { name ->
-                    addParameter(
-                        name,
-                        navArgumentParameter.type.resolve().toTypeName(),
-                    )
-                }
+                addParameter(
+                    navArgumentParameter.name,
+                    navArgumentParameter.parameter.type.resolve().toTypeName(),
+                )
             }
         }
 
     private fun CodeBlock.Builder.addNavArgumentsToNavRouteFunctionBody() =
         navArgumentParameters.forEach { navArgumentParameter ->
-            navArgumentParameter.name?.asString()?.let { name ->
-                addStatement(
-                    "%T.%L to %L,",
-                    navArgumentKeysClass,
-                    name.formatNavArgumentKey(),
-                    name,
-                )
-            }
+            addStatement(
+                "%T.%L to %L,",
+                navArgumentKeysClass,
+                navArgumentParameter.name.formatNavArgumentKey(),
+                navArgumentParameter.name,
+            )
         }
 
     companion object {

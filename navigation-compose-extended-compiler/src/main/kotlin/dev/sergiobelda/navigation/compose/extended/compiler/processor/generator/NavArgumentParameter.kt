@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.navigation.compose.extended.compiler.processor
+package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 
-import com.google.devtools.ksp.processing.SymbolProcessor
-import com.google.devtools.ksp.processing.SymbolProcessorEnvironment
-import com.google.devtools.ksp.processing.SymbolProcessorProvider
+import com.google.devtools.ksp.symbol.KSValueParameter
 
-internal class NavDestinationProcessorProvider : SymbolProcessorProvider {
-    override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor =
-        NavDestinationProcessor(environment.codeGenerator)
-}
+internal data class NavArgumentParameter(
+    val name: String,
+    val defaultValue: String,
+    val parameter: KSValueParameter,
+)

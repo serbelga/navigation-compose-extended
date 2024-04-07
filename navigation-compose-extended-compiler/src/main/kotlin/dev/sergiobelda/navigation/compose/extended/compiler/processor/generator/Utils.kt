@@ -16,15 +16,35 @@
 
 package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 
-import java.util.Locale
-
 /**
  * TODO Add documentation
  */
+internal fun String.toKotlinPropertyName(): String {
+    // Replace any "_" or "-" followed by a letter or digit with the uppercase letter.
+    // e.g. "_a" -> "A", "--a" -> "A", "__1" -> "_1", "--1" -> "_1"
+    val pattern = "[_-]+[a-zA-Z0-9]".toRegex()
+    val name = replace(pattern) { match ->
+        if (match.value.last().isDigit()) {
+            "_${match.value.last()}"
+        } else {
+            match.value.last().uppercase()
+        }
+    }
+
+    // If the first character is a digit, prefix the name with an "_".
+    return name.let {
+        if (it.firstOrNull()?.isDigit() == true) "_$it" else it.trim().lowercaseFirstChar()
+    }
+}
+
 internal fun String.formatName(): String =
-    replaceFirstChar {
-        if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString()
-    }.trim()
+    uppercaseFirstChar().trim()
+
+private fun String.lowercaseFirstChar(): String =
+    replaceFirstChar(Char::lowercase)
+
+private fun String.uppercaseFirstChar(): String =
+    replaceFirstChar(Char::titlecase)
 
 /**
  * TODO Add documentation

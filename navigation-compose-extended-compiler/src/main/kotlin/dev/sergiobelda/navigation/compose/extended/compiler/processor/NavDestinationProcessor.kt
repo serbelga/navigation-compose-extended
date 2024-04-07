@@ -17,7 +17,6 @@
 package dev.sergiobelda.navigation.compose.extended.compiler.processor
 
 import com.google.devtools.ksp.processing.CodeGenerator
-import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.processing.Resolver
 import com.google.devtools.ksp.processing.SymbolProcessor
 import com.google.devtools.ksp.symbol.KSAnnotated
@@ -25,13 +24,12 @@ import com.google.devtools.ksp.validate
 import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavDestination
 
 internal class NavDestinationProcessor(
-    logger: KSPLogger,
     codeGenerator: CodeGenerator,
 ) : SymbolProcessor {
 
     private val navDestinationValidator = NavDestinationValidator()
 
-    private val navDestinationVisitor = NavDestinationVisitor(logger, codeGenerator)
+    private val navDestinationVisitor = NavDestinationVisitor(codeGenerator)
 
     override fun process(resolver: Resolver): List<KSAnnotated> {
         var symbols: List<KSAnnotated> = emptyList()
