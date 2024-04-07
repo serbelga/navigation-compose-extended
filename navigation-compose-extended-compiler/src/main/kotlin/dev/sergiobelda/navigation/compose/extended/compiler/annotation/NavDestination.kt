@@ -19,7 +19,7 @@ package dev.sergiobelda.navigation.compose.extended.compiler.annotation
 /**
  * TODO
  */
-@Retention(AnnotationRetention.RUNTIME)
+@Retention(AnnotationRetention.BINARY)
 @Target(AnnotationTarget.FUNCTION)
 annotation class NavDestination(
     val destinationId: String,

@@ -156,10 +156,10 @@ internal class NavDestinationObjectGenerator(
                         navArgumentParameter.takeIf { it.hasDefaultValue }?.let {
                             defaultValue(
                                 "%L",
-                                it.defaultValue.toValue(type)
+                                it.defaultValue.toValue(type),
                             )
                         }
-                    }.build()
+                    }.build(),
                 )
             }
         }

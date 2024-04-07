@@ -45,10 +45,10 @@ class MainActivity : ComponentActivity() {
                             navigateToSettings = {
                                 navAction.navigate(
                                     SettingsNavDestination.safeNavRoute(
-                                        userId = 1
-                                    )
+                                        userId = 1,
+                                    ),
                                 )
-                            }
+                            },
                         )
                     }
                     composable(navDestination = SettingsNavDestination) { navBackStackEntry ->
@@ -56,7 +56,7 @@ class MainActivity : ComponentActivity() {
                         SettingsScreen(
                             userId = safeNavArgs.userId ?: 0,
                             text = safeNavArgs.text,
-                            result = safeNavArgs.alternativeResult ?: false
+                            result = safeNavArgs.alternativeResult ?: false,
                         )
                     }
                 }

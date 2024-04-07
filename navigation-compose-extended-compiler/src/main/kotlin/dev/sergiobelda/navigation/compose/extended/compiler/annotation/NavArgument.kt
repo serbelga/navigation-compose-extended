@@ -16,7 +16,7 @@
 
 package dev.sergiobelda.navigation.compose.extended.compiler.annotation
 
-@Retention(AnnotationRetention.RUNTIME)
+@Retention(AnnotationRetention.BINARY)
 @Target(AnnotationTarget.VALUE_PARAMETER)
 annotation class NavArgument(
     // TODO: Add name to generator
