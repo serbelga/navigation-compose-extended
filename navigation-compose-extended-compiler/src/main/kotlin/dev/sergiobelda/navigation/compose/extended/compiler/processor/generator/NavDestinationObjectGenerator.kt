@@ -107,8 +107,11 @@ internal class NavDestinationObjectGenerator(
 
     private fun CodeBlock.Builder.addNavArgumentBuilderProperties(parameter: KSValueParameter) {
         indent()
-        val type = parameter.type.resolve().mapToNavType()
-        addStatement("type = %T.$type", ClassNames.NavType)
+        val type = parameter.type.resolve()
+        addStatement("type = %T.${type.mapToNavType()}", ClassNames.NavType)
+        if (type.isMarkedNullable) {
+            addStatement("nullable = true")
+        }
         unindent()
     }
 
