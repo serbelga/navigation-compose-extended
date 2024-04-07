@@ -1,5 +1,6 @@
-> [!IMPORTANT]  
-> In the next documentation, annotations are used to create navigation elements, but we can also create them programmatically.
+!!! info
+
+    In the next documentation, annotations are used to create navigation elements, but we can also create them programmatically.
 
 The `NavDestination` represents some Destination in the Navigation graph.
 
@@ -36,10 +37,11 @@ NavHost(navController = navController, startNavDestination = HomeNavDestination)
 }
 ```
 
-> [!NOTE]  
-> Here we are using wrappers (`NavHost`, `composable`) that receive the `NavDestination` type to create the navigation graph.
-> Visit the [API Reference](https://sergiobelda.dev/navigation-compose-extended/api/navigation-compose-extended/dev.sergiobelda.navigation.compose.extended/index.html) for
-> more information.
+!!! note
+
+    Here we are using wrappers (`NavHost`, `composable`) that receive the `NavDestination` type to create the navigation graph. Visit the 
+    [API Reference](https://sergiobelda.dev/navigation-compose-extended/api/navigation-compose-extended/dev.sergiobelda.navigation.compose.extended/index.html) 
+    for more information.
 
 `NavDestination` class also offers variables for `route`, `arguments` and `deepLinks` that can be used as follows if we don't want to use these wrappers:
 
