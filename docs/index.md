@@ -17,12 +17,12 @@ keys, and functions to retrieve arguments values in a more secure way.
 ```kotlin
 dependencies {
     // Add AndroidX Navigation Compose dependency.
-    implementation("androidx.navigation:navigation-compose:$NAV_VERSION")
+    implementation("androidx.navigation:navigation-compose:$nav_version")
 
-    implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended:$VERSION")
-    // Use KSP to generate NavDestinations.
-    implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended-compiler:$VERSION")
-    ksp("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended-compiler:$VERSION")
+    implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended:$version")
+    // Use KSP to generate NavDestinations with annotations.
+    implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended-compiler:$version")
+    ksp("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended-compiler:$version")
 }
 ```
 
