@@ -16,7 +16,7 @@ The `NavDestination` represents some Destination in the Navigation graph.
 fun HomeScreen() {}
 ```
 
-If we use the `@NavDestination` annotation as above, the compiler will generate a `NavDestination` object associated with this destination.
+The compiler will generate a `NavDestination` object associated with this destination.
 
 ```kotlin
 public object HomeNavDestination : NavDestination<HomeNavArgumentKeys>() {
@@ -67,7 +67,7 @@ NavHost(navController = navController, startDestination = HomeNavDestination.rou
 We can navigate to some destination using the actions functions provided by the `NavAction` class.
 The `NavAction.navigate()` function receive a `NavRoute` instance to navigate to some destination.
 This `NavRoute` associated with a destination can be obtained using the `navRoute()` function in the `NavDestination` class or
-the `safeNavRoute()` function if we are using annotation.
+the `safeNavRoute()` function if we are using annotations.
 In the following code, we navigate to the `SettingsNavDestination`:
 
 ```kotlin
@@ -187,7 +187,7 @@ composable(navDestination = SettingsNavDestination) { navBackStackEntry ->
         userId = userId,
 ```
 
-If we use annotations processor, a `SafeNavArgs` class is generated with getters for each navigation argument:
+If we use annotations, a `SafeNavArgs` class is generated with getters for each navigation argument:
 
 ```kotlin
 composable(navDestination = SettingsNavDestination) { navBackStackEntry ->
@@ -195,7 +195,6 @@ composable(navDestination = SettingsNavDestination) { navBackStackEntry ->
     SettingsScreen(
         userId =  navArgs.userId ?: 0,
 ```
-
 
 ## Navigate with Deep Links
 
