@@ -130,7 +130,7 @@ private fun NavGraphBuilder.searchNavDestination(
                 navigateToSearchResult = { search, category ->
                     navAction.navigate(
                         SearchResultNavDestination.navRoute(
-                            SearchResultNavArgumentKeys.SearchNavArgumentKey to search
+                            SearchResultNavArgumentKeys.SearchNavArgumentKey to search,
                         ),
                     )
                 },
