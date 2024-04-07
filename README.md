@@ -9,6 +9,20 @@ more idiomatic way than using literals.
 Visit the [project website](https://sergiobelda.dev/navigation-compose-extended/) for documentation 
 and API Reference.
 
+## Download
+
+```kotlin
+dependencies {
+    // Add AndroidX Navigation Compose dependency.
+    implementation("androidx.navigation:navigation-compose:$NAV_VERSION")
+
+    implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended:$VERSION")
+    // Use KSP to generate NavDestinations.
+    implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended-compiler:$VERSION")
+    ksp("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended-compiler:$VERSION")
+}
+```
+
 ## License
 
 ```
