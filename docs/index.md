@@ -28,8 +28,8 @@ dependencies {
 
 ```kotlin
 @NavDestination(
-    name = "Settings",
     destinationId = "settings",
+    name = "Settings", // Optional: NavDestination name.
 )
 @Composable
 fun SettingsScreen(
