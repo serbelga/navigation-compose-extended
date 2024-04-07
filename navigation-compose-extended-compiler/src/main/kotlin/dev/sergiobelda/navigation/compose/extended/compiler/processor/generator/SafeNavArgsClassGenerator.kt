@@ -18,12 +18,14 @@ package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 
 import com.google.devtools.ksp.symbol.KSValueParameter
 import com.squareup.kotlinpoet.ClassName
-import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
+import com.squareup.kotlinpoet.MemberName
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
+import com.squareup.kotlinpoet.buildCodeBlock
+import com.squareup.kotlinpoet.ksp.toTypeName
 
 /**
  * TODO Add documentation
@@ -47,6 +49,7 @@ internal class SafeNavArgsClassGenerator(
             .addProperty(
                 navArgsProperty(),
             )
+            .addNavArgumentParametersGetters()
             .build()
 
     private fun navArgsProperty(): PropertySpec =
@@ -56,15 +59,46 @@ internal class SafeNavArgsClassGenerator(
                 ClassNames.NavArgs.parameterizedBy(navArgumentKeysClass),
             )
             .delegate(
-                CodeBlock.of(
-                    "lazy { %T.%N(%N) }",
-                    navDestinationClass,
-                    NAV_ARGS_PROPERTY_NAME,
-                    NAV_BACK_STACK_ENTRY_PARAMETER_NAME,
-                ),
+                buildCodeBlock {
+                    beginControlFlow("lazy")
+                    addStatement(
+                        "%T.%N(%N)",
+                        navDestinationClass,
+                        NAV_ARGS_PROPERTY_NAME,
+                        NAV_BACK_STACK_ENTRY_PARAMETER_NAME,
+                    )
+                    endControlFlow()
+                },
             )
             .addModifiers(KModifier.PRIVATE)
             .build()
+
+    private fun TypeSpec.Builder.addNavArgumentParametersGetters(): TypeSpec.Builder {
+        navArgumentParameters.forEach { navArgumentParameter ->
+            navArgumentParameter.name?.asString()?.let { name ->
+                val type = navArgumentParameter.type.resolve().toTypeName().copy(nullable = true)
+                val member: MemberName =
+                    navArgumentParameter.type.resolve().mapToNavTypeGetter() ?: return@forEach
+                addProperty(
+                    PropertySpec.builder(
+                        name,
+                        type,
+                    ).getter(
+                        FunSpec.getterBuilder()
+                            .addStatement(
+                                "return %N.%M(%T.%N)",
+                                NAV_ARGS_PROPERTY_NAME,
+                                member,
+                                navArgumentKeysClass,
+                                name.formatNavArgumentKey(),
+                            )
+                            .build(),
+                    ).build(),
+                )
+            }
+        }
+        return this
+    }
 
     companion object {
         private const val NAV_BACK_STACK_ENTRY_PARAMETER_NAME = "navBackStackEntry"

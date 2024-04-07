@@ -21,7 +21,6 @@ import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.LambdaTypeName
-import com.squareup.kotlinpoet.MemberName
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
@@ -29,13 +28,13 @@ import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.buildCodeBlock
 
 /**
- * TODO Add documentation
+ * NavDestination object generator.
  */
 internal class NavDestinationObjectGenerator(
     private val name: String,
-    private val navArgumentKeysClass: ClassName,
     private val isTopLevelNavDestination: Boolean,
     private val destinationId: String,
+    private val navArgumentKeysClass: ClassName,
     private val navArgumentParameters: List<KSValueParameter>,
 ) {
     fun generate(): TypeSpec {
@@ -81,7 +80,7 @@ internal class NavDestinationObjectGenerator(
         ).addModifiers(KModifier.OVERRIDE)
             .initializer(
                 buildCodeBlock {
-                    addStatement("%M(", MemberName("kotlin.collections", "mapOf"))
+                    addStatement("%M(", MemberNames.MapOf)
                     indent()
                     addNavArguments()
                     unindent()
@@ -106,18 +105,9 @@ internal class NavDestinationObjectGenerator(
 
     private fun CodeBlock.Builder.addNavArgumentBuilderProperties(parameter: KSValueParameter) {
         indent()
-        val type = parameter.type.resolve().declaration.qualifiedName?.asString()?.parseType()
+        val type = parameter.type.resolve().mapToNavType()
         addStatement("type = %T.$type", ClassNames.NavType)
         unindent()
-    }
-
-    private fun String.parseType(): String = when (this) {
-        "kotlin.String" -> "StringType"
-        "kotlin.Int" -> "IntType"
-        "kotlin.Boolean" -> "BoolType"
-        "kotlin.Float" -> "FloatType"
-        "kotlin.Long" -> "LongType"
-        else -> "StringType"
     }
 
     companion object {

@@ -19,5 +19,8 @@ package dev.sergiobelda.navigation.compose.extended.compiler.annotation
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.VALUE_PARAMETER)
 annotation class NavArgument(
+    // TODO: Add name to generator
     val name: String = "",
+    // TODO: Add name to generator
+    val defaultValue: String = "",
 )

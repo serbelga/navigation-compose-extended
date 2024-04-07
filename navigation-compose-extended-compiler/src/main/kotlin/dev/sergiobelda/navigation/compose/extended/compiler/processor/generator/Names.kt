@@ -17,6 +17,7 @@
 package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 
 import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.MemberName
 
 /**
  * TODO Add documentation
@@ -38,6 +39,16 @@ internal object ClassNames {
         ClassName(NAVIGATION_COMPOSE_EXTENDED_PACKAGE_NAME, "TopLevelNavDestination")
 }
 
+internal object MemberNames {
+    val MapOf = MemberName(KOTLIN_COLLECTIONS, "mapOf")
+    val NavArgsGetBoolean = MemberName("", "getBoolean")
+    val NavArgsGetFloat = MemberName("", "getFloat")
+    val NavArgsGetInt = MemberName("", "getInt")
+    val NavArgsGetLong = MemberName("", "getLong")
+    val NavArgsGetString = MemberName("", "getString")
+}
+
 private const val ANDROIDX_NAVIGATION_PACKAGE_NAME = "androidx.navigation"
+private const val KOTLIN_COLLECTIONS = "kotlin.collections"
 private const val NAVIGATION_COMPOSE_EXTENDED_PACKAGE_NAME =
     "dev.sergiobelda.navigation.compose.extended"

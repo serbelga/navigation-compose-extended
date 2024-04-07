@@ -21,6 +21,7 @@ import com.google.devtools.ksp.getAnnotationsByType
 import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.symbol.KSFunctionDeclaration
+import com.google.devtools.ksp.symbol.KSValueParameter
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.ksp.writeTo
@@ -51,6 +52,9 @@ internal class NavDestinationGenerator(
             .filter {
                 it.getAnnotationsByType(NavArgument::class).toList().isNotEmpty()
             }
+            .filter {
+                it.isValidNavArgumentType()
+            }
 
         val packageName = functionDeclaration.packageName.asString()
         val functionSimpleName = functionDeclaration.simpleName.asString()
@@ -77,9 +81,9 @@ internal class NavDestinationGenerator(
             addType(
                 NavDestinationObjectGenerator(
                     name = navDestinationName,
-                    navArgumentKeysClass = navArgumentKeysClass,
                     isTopLevelNavDestination = annotation.isTopLevelNavDestination,
                     destinationId = annotation.destinationId,
+                    navArgumentKeysClass = navArgumentKeysClass,
                     navArgumentParameters = navArgumentParameters,
                 ).generate(),
             )
@@ -95,4 +99,7 @@ internal class NavDestinationGenerator(
 
         fileSpec.writeTo(codeGenerator = codeGenerator, aggregating = false)
     }
+
+    private fun KSValueParameter.isValidNavArgumentType(): Boolean =
+        type.resolve().toNavArgumentType() != NavArgumentType.INVALID
 }
