@@ -26,9 +26,12 @@ dependencies {
 
 ## Usage
 
+> [!IMPORTANT]  
+> In the next explanation, we are using annotations to create navigation elements, but we can also create them programmatically.
+
 The `NavDestination` represents some Destination in the Navigation graph.
 
-### Create NavDestinations
+### Create a NavDestination
 
 ```kotlin
 @NavDestination(
@@ -40,7 +43,7 @@ The `NavDestination` represents some Destination in the Navigation graph.
 fun HomeScreen() {}
 ```
 
-The compiler will generate a NavDestination object associated with this destination.
+If we use the `@NavDestination` annotation as above, the compiler will generate a `NavDestination` object associated with this destination.
 
 ```kotlin
 public object HomeNavDestination : NavDestination<HomeNavArgumentKeys>() {
@@ -48,7 +51,7 @@ public object HomeNavDestination : NavDestination<HomeNavArgumentKeys>() {
 }
 ```
 
-### Using the `NavDestination` into the NavHost
+### Using the NavDestination into the NavHost
 
 ```kotlin
 NavHost(navController = navController, startNavDestination = HomeNavDestination) {
@@ -88,7 +91,7 @@ NavHost(navController = navController, startDestination = HomeNavDestination.rou
 ### Navigate
 
 We can navigate to some destination using the actions functions provided by the `NavAction` class.
-The `NavAction.navigate` function receive a `NavRoute` instance to navigate to some destination.
+The `NavAction.navigate()` function receive a `NavRoute` instance to navigate to some destination.
 This `NavRoute` associated with a destination can be obtained using the `navRoute()` function in the `NavDestination` class or 
 the `safeNavRoute()` function if we are using annotation.
 In the following code, we navigate to the `SettingsNavDestination`:
@@ -159,7 +162,7 @@ public object SettingsNavDestination : NavDestination<SettingsNavArgumentKeys>()
   )
 ```
 
-If we use the annotations, we can use the generated `safeNavRoute()` function with the navigation arguments as parameters:
+If we use annotations, we can use the generated `safeNavRoute()` function with the navigation arguments as parameters:
 
 ```kotlin
 composable(navDestination = HomeNavDestination) {
