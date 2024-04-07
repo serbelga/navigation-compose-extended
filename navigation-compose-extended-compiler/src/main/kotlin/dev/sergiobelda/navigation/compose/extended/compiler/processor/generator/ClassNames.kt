@@ -22,24 +22,22 @@ import com.squareup.kotlinpoet.ClassName
  * TODO Add documentation
  */
 internal object ClassNames {
+    val NavArgs =
+        ClassName(NAVIGATION_COMPOSE_EXTENDED_PACKAGE_NAME, "NavArgs")
     val NavArgumentKey =
-        ClassName(NavigationComposeExtendedPackageName, NavArgumentKeySimpleClassName)
+        ClassName(NAVIGATION_COMPOSE_EXTENDED_PACKAGE_NAME, "NavArgumentKey")
     val NavArgumentBuilder =
-        ClassName(AndroidXNavigationPackageName, NavArgumentBuilderSimpleClassName)
-
+        ClassName(ANDROIDX_NAVIGATION_PACKAGE_NAME, "NavArgumentBuilder")
+    val NavBackStackEntry =
+        ClassName(ANDROIDX_NAVIGATION_PACKAGE_NAME, "NavBackStackEntry")
     val NavDestination =
-        ClassName(NavigationComposeExtendedPackageName, NavDestinationSimpleClassName)
+        ClassName(NAVIGATION_COMPOSE_EXTENDED_PACKAGE_NAME, "NavDestination")
+    val NavType =
+        ClassName(ANDROIDX_NAVIGATION_PACKAGE_NAME, "NavType")
     val TopLevelNavDestination =
-        ClassName(NavigationComposeExtendedPackageName, TopLevelNavDestinationSimpleClassName)
+        ClassName(NAVIGATION_COMPOSE_EXTENDED_PACKAGE_NAME, "TopLevelNavDestination")
 }
 
-private const val AndroidXNavigationPackageName = "androidx.navigation"
-private const val NavigationComposeExtendedPackageName =
+private const val ANDROIDX_NAVIGATION_PACKAGE_NAME = "androidx.navigation"
+private const val NAVIGATION_COMPOSE_EXTENDED_PACKAGE_NAME =
     "dev.sergiobelda.navigation.compose.extended"
-
-private const val NavArgsSimpleClassName = "NavArgs"
-private const val NavArgumentKeySimpleClassName = "NavArgumentKey"
-private const val NavArgumentBuilderSimpleClassName = "NavArgumentBuilder"
-private const val NavBackStackEntrySimpleClassName = "NavBackStackEntry"
-private const val NavDestinationSimpleClassName = "NavDestination"
-private const val TopLevelNavDestinationSimpleClassName = "TopLevelNavDestination"

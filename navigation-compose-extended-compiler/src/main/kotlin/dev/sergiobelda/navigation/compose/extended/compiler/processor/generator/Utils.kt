@@ -25,3 +25,11 @@ internal fun String.formatName(): String =
     replaceFirstChar {
         if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString()
     }.trim()
+
+/**
+ * TODO Add documentation
+ */
+internal fun String.formatNavArgumentKey(): String =
+    formatName().plus(NAV_ARGUMENT_KEY_SUFFIX)
+
+private const val NAV_ARGUMENT_KEY_SUFFIX = "NavArgumentKey"

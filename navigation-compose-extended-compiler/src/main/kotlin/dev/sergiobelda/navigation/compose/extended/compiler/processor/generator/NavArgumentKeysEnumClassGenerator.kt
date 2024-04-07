@@ -25,7 +25,7 @@ import com.squareup.kotlinpoet.TypeSpec
 /**
  * TODO Add documentation
  */
-internal class NavArgumentsKeysEnumClassGenerator(
+internal class NavArgumentKeysEnumClassGenerator(
     private val name: String,
     private val navArgumentParameters: List<KSValueParameter>,
 ) {
@@ -57,7 +57,7 @@ internal class NavArgumentsKeysEnumClassGenerator(
             // TODO Add NavArgumentKey as const
             navArgumentParameter.name?.asString()?.let {
                 addEnumConstant(
-                    it.formatName().plus("NavArgumentKey"),
+                    it.formatNavArgumentKey(),
                     TypeSpec.anonymousClassBuilder()
                         .addSuperclassConstructorParameter("%S", it)
                         .build(),

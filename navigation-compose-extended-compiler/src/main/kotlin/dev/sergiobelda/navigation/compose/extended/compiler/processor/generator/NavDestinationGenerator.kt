@@ -21,6 +21,7 @@ import com.google.devtools.ksp.getAnnotationsByType
 import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.symbol.KSFunctionDeclaration
+import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.ksp.writeTo
 import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavArgument
@@ -37,9 +38,6 @@ internal class NavDestinationGenerator(
     fun generate(
         functionDeclaration: KSFunctionDeclaration,
     ) {
-        val packageName = functionDeclaration.packageName.asString()
-        val functionSimpleName = functionDeclaration.simpleName.asString()
-
         val annotation: NavDestination? = functionDeclaration
             .getAnnotationsByType(NavDestination::class)
             .firstOrNull()
@@ -54,12 +52,16 @@ internal class NavDestinationGenerator(
                 it.getAnnotationsByType(NavArgument::class).toList().isNotEmpty()
             }
 
+        val packageName = functionDeclaration.packageName.asString()
+        val functionSimpleName = functionDeclaration.simpleName.asString()
         val name =
             annotation.name.takeUnless { it.isBlank() }?.formatName() ?: functionSimpleName
         // TODO: Move to constants
         val fileName = "${name}Navigation"
         val navArgumentKeysName = "${name}NavArgumentKeys"
+        val navArgumentKeysClass = ClassName(packageName, navArgumentKeysName)
         val navDestinationName = "${name}NavDestination"
+        val navDestinationClass = ClassName(packageName, navDestinationName)
         val safeNavArgsName = "${name}SafeNavArgs"
 
         val fileSpec = FileSpec.builder(
@@ -67,16 +69,15 @@ internal class NavDestinationGenerator(
             fileName = fileName,
         ).apply {
             addType(
-                NavArgumentsKeysEnumClassGenerator(
+                NavArgumentKeysEnumClassGenerator(
                     name = navArgumentKeysName,
                     navArgumentParameters = navArgumentParameters,
                 ).generate(),
             )
             addType(
                 NavDestinationObjectGenerator(
-                    packageName = packageName,
                     name = navDestinationName,
-                    navArgumentKeysName = navArgumentKeysName,
+                    navArgumentKeysClass = navArgumentKeysClass,
                     isTopLevelNavDestination = annotation.isTopLevelNavDestination,
                     destinationId = annotation.destinationId,
                     navArgumentParameters = navArgumentParameters,
@@ -85,6 +86,9 @@ internal class NavDestinationGenerator(
             addType(
                 SafeNavArgsClassGenerator(
                     name = safeNavArgsName,
+                    navDestinationClass = navDestinationClass,
+                    navArgumentKeysClass = navArgumentKeysClass,
+                    navArgumentParameters = navArgumentParameters,
                 ).generate(),
             )
         }.build()

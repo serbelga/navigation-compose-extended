@@ -16,16 +16,58 @@
 
 package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 
+import com.google.devtools.ksp.symbol.KSValueParameter
+import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.CodeBlock
+import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.KModifier
+import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 
 /**
  * TODO Add documentation
  */
 internal class SafeNavArgsClassGenerator(
-    val name: String,
+    private val name: String,
+    private val navDestinationClass: ClassName,
+    private val navArgumentKeysClass: ClassName,
+    private val navArgumentParameters: List<KSValueParameter>,
 ) {
-
     fun generate(): TypeSpec =
         TypeSpec.classBuilder(name)
+            .primaryConstructor(
+                FunSpec.constructorBuilder()
+                    .addParameter(
+                        NAV_BACK_STACK_ENTRY_PARAMETER_NAME,
+                        ClassNames.NavBackStackEntry,
+                    )
+                    .build(),
+            )
+            .addProperty(
+                navArgsProperty(),
+            )
             .build()
+
+    private fun navArgsProperty(): PropertySpec =
+        PropertySpec
+            .builder(
+                NAV_ARGS_PROPERTY_NAME,
+                ClassNames.NavArgs.parameterizedBy(navArgumentKeysClass),
+            )
+            .delegate(
+                CodeBlock.of(
+                    "lazy { %T.%N(%N) }",
+                    navDestinationClass,
+                    NAV_ARGS_PROPERTY_NAME,
+                    NAV_BACK_STACK_ENTRY_PARAMETER_NAME,
+                ),
+            )
+            .addModifiers(KModifier.PRIVATE)
+            .build()
+
+    companion object {
+        private const val NAV_BACK_STACK_ENTRY_PARAMETER_NAME = "navBackStackEntry"
+        private const val NAV_ARGS_PROPERTY_NAME = "navArgs"
+    }
 }
