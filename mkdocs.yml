@@ -14,6 +14,7 @@ nav:
   - 'Overview': index.md
   - 'Usage': usage.md
   - 'API Reference': api/
+  - 'Sample App Annotations': https://github.com/serbelga/navigation-compose-extended/tree/main/sample-app-annotations
   - 'Sample App': https://github.com/serbelga/navigation-compose-extended/tree/main/sample-app
 
 theme:
