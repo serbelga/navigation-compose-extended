@@ -69,7 +69,7 @@ NavHost(navController = navController, startNavDestination = HomeNavDestination)
 > Visit the [API Reference](https://sergiobelda.dev/navigation-compose-extended/api/navigation-compose-extended/dev.sergiobelda.navigation.compose.extended/index.html) for 
 > more information.
 
-`NavDestination` class also offers variables for `route`, `arguments` and `deepLinks` that can be used as follows if we don't want to use these wrappers:
+`NavDestination` base class also offers `route`, `arguments` and `deepLinks` getters that can be used as follows if we don't want to use these wrappers:
 
 ```kotlin
 NavHost(navController = navController, startDestination = HomeNavDestination.route) {
@@ -112,7 +112,7 @@ NavHost(navController = navController, startNavDestination = HomeNavDestination)
 
 ### Navigate with arguments
 
-If we are using annotations, we can use the `@NavArgument` annotation in the function parameters as:
+If we are using annotations, we can use the `@NavArgument` annotation in the function parameters:
 
 ```kotlin
 @NavDestination(
