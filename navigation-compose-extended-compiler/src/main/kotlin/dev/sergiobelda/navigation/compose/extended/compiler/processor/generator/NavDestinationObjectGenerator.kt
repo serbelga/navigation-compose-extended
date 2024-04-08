@@ -130,7 +130,7 @@ internal class NavDestinationObjectGenerator(
             if (deepLinksUris.isNotEmpty()) {
                 addProperty(
                     PropertySpec.builder(
-                        DEEP_LINKS_URIS_PROPERTY_NAME,
+                        DEEP_LINK_URIS_PROPERTY_NAME,
                         List::class.asClassName().parameterizedBy(String::class.asClassName()),
                     ).addModifiers(KModifier.OVERRIDE)
                         .initializer(
@@ -210,6 +210,6 @@ internal class NavDestinationObjectGenerator(
     companion object {
         private const val ARGUMENTS_MAP_PROPERTY_NAME = "argumentsMap"
         private const val DESTINATION_ID_PROPERTY_NAME = "destinationId"
-        private const val DEEP_LINKS_URIS_PROPERTY_NAME = "deepLinkUris"
+        private const val DEEP_LINK_URIS_PROPERTY_NAME = "deepLinkUris"
     }
 }
