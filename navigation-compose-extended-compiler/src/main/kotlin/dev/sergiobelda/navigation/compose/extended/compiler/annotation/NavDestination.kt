@@ -33,6 +33,5 @@ annotation class NavDestination(
     val destinationId: String,
     val name: String = "",
     val isTopLevelNavDestination: Boolean = false,
-    // TODO: Add deepLinkUris to generator
     val deepLinkUris: Array<String> = [],
 )

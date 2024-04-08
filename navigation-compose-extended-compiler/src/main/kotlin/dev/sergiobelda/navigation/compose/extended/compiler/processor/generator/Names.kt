@@ -45,6 +45,7 @@ internal object ClassNames {
  * [MemberName]s used for navigation destination generation.
  */
 internal object MemberNames {
+    val ListOf = MemberName(KOTLIN_COLLECTIONS, "listOf")
     val MapOf = MemberName(KOTLIN_COLLECTIONS, "mapOf")
     val NavArgsGetBoolean = MemberName("", "getBoolean")
     val NavArgsGetFloat = MemberName("", "getFloat")

@@ -46,32 +46,34 @@ internal class SafeNavArgsClassGenerator(
                     )
                     .build(),
             )
-            .addProperty(
-                navArgsProperty(),
-            )
+            .addNavArgsProperty()
             .addNavArgumentParametersGetters()
             .build()
 
-    private fun navArgsProperty(): PropertySpec =
-        PropertySpec
-            .builder(
-                NAV_ARGS_PROPERTY_NAME,
-                ClassNames.NavArgs.parameterizedBy(navArgumentKeysClass),
-            )
-            .delegate(
-                buildCodeBlock {
-                    beginControlFlow("lazy")
-                    addStatement(
-                        "%T.%N(%N)",
-                        navDestinationClass,
+    private fun TypeSpec.Builder.addNavArgsProperty() =
+        apply {
+            addProperty(
+                PropertySpec
+                    .builder(
                         NAV_ARGS_PROPERTY_NAME,
-                        NAV_BACK_STACK_ENTRY_PARAMETER_NAME,
+                        ClassNames.NavArgs.parameterizedBy(navArgumentKeysClass),
                     )
-                    endControlFlow()
-                },
+                    .delegate(
+                        buildCodeBlock {
+                            beginControlFlow("lazy")
+                            addStatement(
+                                "%T.%N(%N)",
+                                navDestinationClass,
+                                NAV_ARGS_PROPERTY_NAME,
+                                NAV_BACK_STACK_ENTRY_PARAMETER_NAME,
+                            )
+                            endControlFlow()
+                        },
+                    )
+                    .addModifiers(KModifier.PRIVATE)
+                    .build()
             )
-            .addModifiers(KModifier.PRIVATE)
-            .build()
+        }
 
     private fun TypeSpec.Builder.addNavArgumentParametersGetters() =
         apply {
