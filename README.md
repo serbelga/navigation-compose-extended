@@ -224,6 +224,51 @@ composable(navDestination = SettingsNavDestination) { navBackStackEntry ->
         userId =  navArgs.userId ?: 0,
 ```
 
+## Navigate with Deep Links
+
+In the `AndroidManifest.xml`:
+
+```xml
+<activity
+    ...>
+    <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="sample" android:host="home" />
+    </intent-filter>
+</activity>
+```
+
+If we are defining the navigation destinations using the `@NavDestination` annotation, we can use the property `deepLinkUris` as follows:
+
+```kotlin
+@NavDestination(
+    destinationId = "home",
+    deepLinkUris = [
+        "sample://home",
+    ]
+)
+@Composable
+fun HomeScreen(navigateToSettings: () -> Unit) {}
+```
+
+otherwise, we should set the list of deepLink uris in the `NavDestination` object:
+
+```kotlin
+object HomeNavDestination : NavDestination<HomeNavArgumentKeys>() {
+  override val deepLinkUris: List<String> = listOf(
+    "sample://home",
+    "sample://home_secondary"
+  )
+```
+
+Trigger the deep link using adb:
+
+```shell
+adb shell am start -a android.intent.action.VIEW -d "sample://home"
+```
+
 ## License
 
 ```

@@ -38,6 +38,7 @@ internal class NavDestinationObjectGenerator(
     private val destinationId: String,
     private val navArgumentKeysClass: ClassName,
     private val navArgumentParameters: List<NavArgumentParameter>,
+    private val deepLinksUris: Array<String>,
 ) {
     fun generate(): TypeSpec {
         val superClass = if (isTopLevelNavDestination) {
@@ -61,35 +62,40 @@ internal class NavDestinationObjectGenerator(
                     .initializer("%S", destinationId)
                     .build(),
             )
-            .addProperty(
-                argumentsMapProperty(),
-            )
-            .addSafeNavRoute()
+            .addArgumentsMapProperty()
+            .addDeepLinksUrisProperty()
+            .addSafeNavRouteFunction()
             .build()
     }
 
-    private fun argumentsMapProperty(): PropertySpec =
-        PropertySpec.builder(
-            ARGUMENTS_MAP_PROPERTY_NAME,
-            Map::class.asClassName()
-                .parameterizedBy(
-                    navArgumentKeysClass,
-                    LambdaTypeName.get(
-                        receiver = ClassNames.NavArgumentBuilder,
-                        returnType = Unit::class.asClassName(),
-                    ),
-                ),
-        ).addModifiers(KModifier.OVERRIDE)
-            .initializer(
-                buildCodeBlock {
-                    addStatement("%M(", MemberNames.MapOf)
-                    indent()
-                    addNavArgumentsToMap()
-                    unindent()
-                    addStatement(")")
-                },
-            )
-            .build()
+    private fun TypeSpec.Builder.addArgumentsMapProperty() =
+        apply {
+            if (navArgumentParameters.isNotEmpty()) {
+                addProperty(
+                    PropertySpec.builder(
+                        ARGUMENTS_MAP_PROPERTY_NAME,
+                        Map::class.asClassName()
+                            .parameterizedBy(
+                                navArgumentKeysClass,
+                                LambdaTypeName.get(
+                                    receiver = ClassNames.NavArgumentBuilder,
+                                    returnType = Unit::class.asClassName(),
+                                ),
+                            ),
+                    ).addModifiers(KModifier.OVERRIDE)
+                        .initializer(
+                            buildCodeBlock {
+                                addStatement("%M(", MemberNames.MapOf)
+                                indent()
+                                addNavArgumentsToMap()
+                                unindent()
+                                add(")")
+                            },
+                        )
+                        .build(),
+                )
+            }
+        }
 
     private fun CodeBlock.Builder.addNavArgumentsToMap() {
         navArgumentParameters.forEach { navArgumentParameter ->
@@ -119,22 +125,24 @@ internal class NavDestinationObjectGenerator(
         unindent()
     }
 
-    private fun TypeSpec.Builder.addSafeNavRoute() =
+    private fun TypeSpec.Builder.addDeepLinksUrisProperty() =
         apply {
-            if (navArgumentParameters.isNotEmpty()) {
-                addFunction(
-                    FunSpec.builder("safeNavRoute")
-                        .addNavArgumentsToNavRouteFunctionParameters()
-                        .returns(
-                            ClassNames.NavRoute.parameterizedBy(
-                                navArgumentKeysClass,
-                            ),
-                        )
-                        .addCode(
+            if (deepLinksUris.isNotEmpty()) {
+                addProperty(
+                    PropertySpec.builder(
+                        DEEP_LINK_URIS_PROPERTY_NAME,
+                        List::class.asClassName().parameterizedBy(String::class.asClassName()),
+                    ).addModifiers(KModifier.OVERRIDE)
+                        .initializer(
                             buildCodeBlock {
-                                add("return %M(\n", MemberNames.NavRoute)
+                                addStatement("%M(", MemberNames.ListOf)
                                 indent()
-                                addNavArgumentsToNavRouteFunctionBody()
+                                add(
+                                    deepLinksUris.joinToString(
+                                        postfix = "\n",
+                                        separator = ",\n",
+                                    ) { "\"$it\"" },
+                                )
                                 unindent()
                                 add(")")
                             },
@@ -144,7 +152,32 @@ internal class NavDestinationObjectGenerator(
             }
         }
 
-    private fun FunSpec.Builder.addNavArgumentsToNavRouteFunctionParameters() =
+    private fun TypeSpec.Builder.addSafeNavRouteFunction() =
+        apply {
+            if (navArgumentParameters.isNotEmpty()) {
+                addFunction(
+                    FunSpec.builder("safeNavRoute")
+                        .addNavArgumentsToSafeNavRouteFunctionParameters()
+                        .returns(
+                            ClassNames.NavRoute.parameterizedBy(
+                                navArgumentKeysClass,
+                            ),
+                        )
+                        .addCode(
+                            buildCodeBlock {
+                                add("return %M(\n", MemberNames.NavRoute)
+                                indent()
+                                addNavArgumentsToSafeNavRouteFunctionBody()
+                                unindent()
+                                add(")")
+                            },
+                        )
+                        .build(),
+                )
+            }
+        }
+
+    private fun FunSpec.Builder.addNavArgumentsToSafeNavRouteFunctionParameters() =
         apply {
             navArgumentParameters.forEach { navArgumentParameter ->
                 val type = navArgumentParameter.parameter.type.resolve()
@@ -164,7 +197,7 @@ internal class NavDestinationObjectGenerator(
             }
         }
 
-    private fun CodeBlock.Builder.addNavArgumentsToNavRouteFunctionBody() =
+    private fun CodeBlock.Builder.addNavArgumentsToSafeNavRouteFunctionBody() =
         navArgumentParameters.forEach { navArgumentParameter ->
             addStatement(
                 "%T.%L to %L,",
@@ -177,5 +210,6 @@ internal class NavDestinationObjectGenerator(
     companion object {
         private const val ARGUMENTS_MAP_PROPERTY_NAME = "argumentsMap"
         private const val DESTINATION_ID_PROPERTY_NAME = "destinationId"
+        private const val DEEP_LINK_URIS_PROPERTY_NAME = "deepLinkUris"
     }
 }
