@@ -43,7 +43,7 @@ The `NavDestination` represents some Destination in the Navigation graph.
 fun HomeScreen() {}
 ```
 
-If we use the `@NavDestination` annotation as above, the compiler will generate a `NavDestination` object associated with this destination.
+The compiler will generate a `NavDestination` object associated with this destination.
 
 ```kotlin
 public object HomeNavDestination : NavDestination<HomeNavArgumentKeys>() {
@@ -92,8 +92,8 @@ NavHost(navController = navController, startDestination = HomeNavDestination.rou
 
 We can navigate to some destination using the actions functions provided by the `NavAction` class.
 The `NavAction.navigate()` function receive a `NavRoute` instance to navigate to some destination.
-This `NavRoute` associated with a destination can be obtained using the `navRoute()` function in the `NavDestination` class or 
-the `safeNavRoute()` function if we are using annotation.
+This `NavRoute` associated with a destination can be obtained using the `navRoute()` function in the `NavDestination` class or
+the `safeNavRoute()` function if we are using annotations.
 In the following code, we navigate to the `SettingsNavDestination`:
 
 ```kotlin
@@ -112,8 +112,7 @@ NavHost(navController = navController, startNavDestination = HomeNavDestination)
 
 ### Navigate with arguments
 
-The `NavArgumentKey` represents a navigation argument key in the Navigation graph.
-If we are using annotations, we can annotate function parameters as:
+If we are using annotations, we can use the `@NavArgument` annotation in the function parameters as:
 
 ```kotlin
 @NavDestination(
@@ -129,7 +128,7 @@ fun SettingsScreen(
 ) {}
 ```
 
-The compiler will generate an enum class containing the navigation arguments keys for this navigation destination.
+The compiler will generate an enum class containing the navigation arguments keys for this navigation destination. The `NavArgumentKey` represents the navigation argument's key.
 
 ```kotlin
 public enum class SettingsNavArgumentKeys(
@@ -142,7 +141,7 @@ public enum class SettingsNavArgumentKeys(
 }
 ```
 
-and will set the `argumentsMap` property in the `NavDestination` that associate each `NavArgumentKey` with its properties.
+The compiler also set the `argumentsMap` property in the `NavDestination` that associate each `NavArgumentKey` with its properties.
 
 ```kotlin
 public object SettingsNavDestination : NavDestination<SettingsNavArgumentKeys>() {
@@ -163,6 +162,9 @@ public object SettingsNavDestination : NavDestination<SettingsNavArgumentKeys>()
     },
   )
 ```
+
+> [!NOTE]  
+> If we don't use annotations, we should create this enum class and set the `argumentsMap` programmatically.
 
 If we use annotations, we can use the generated `safeNavRoute()` function with the navigation arguments as parameters:
 
@@ -213,7 +215,7 @@ composable(navDestination = SettingsNavDestination) { navBackStackEntry ->
         userId = userId,
 ```
 
-If we use annotations processor, a `SafeNavArgs` class is generated with getters for each navigation argument:
+If we use annotations, a `SafeNavArgs` class is generated with getters for each navigation argument:
 
 ```kotlin
 composable(navDestination = SettingsNavDestination) { navBackStackEntry ->
