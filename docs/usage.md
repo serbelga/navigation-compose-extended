@@ -210,42 +210,38 @@ In the `AndroidManifest.xml`:
         <action android:name="android.intent.action.VIEW" />
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" />
-        <data android:host="searchresult" android:scheme="sample" />
+        <data android:scheme="sample" android:host="home" />
     </intent-filter>
 </activity>
 ```
 
-Next, we define the deep link uri in the `NavDestination` `deepLinkUris` property:
+If we are defining the navigation destinations using the `@NavDestination` annotation, we can use the property `deepLinkUris` as follows:
 
 ```kotlin
-object SearchResultNavDestination : NavDestination<SearchResultNavArgumentKeys>() {
-    
-    // ...
-    
-    override val deepLinkUris: List<String> =
-        listOf(
-            "sample://searchresult",
-        )
-}
+@NavDestination(
+    destinationId = "home",
+    deepLinkUris = [
+        "sample://home",
+    ]
+)
+@Composable
+fun HomeScreen(navigateToSettings: () -> Unit) {}
 ```
 
-Set the deep links in the `NavHost`:
+otherwise, we should set the list of deepLink uris in the `NavDestination` object:
 
 ```kotlin
-NavHost {
-    composable(
-        route = SearchResultNavDestination.route,
-        deepLinks = SearchResultNavDestination.deepLinks,
-    ) {
-        ...
-    }
-}
+object HomeNavDestination : NavDestination<HomeNavArgumentKeys>() {
+  override val deepLinkUris: List<String> = listOf(
+    "sample://home",
+    "sample://home_secondary"
+  )
 ```
 
 Trigger the deep link using adb:
 
 ```shell
-adb shell am start -a android.intent.action.VIEW -d "sample://searchresult"
+adb shell am start -a android.intent.action.VIEW -d "sample://home"
 ```
 
 ## Create Top Level Destinations
