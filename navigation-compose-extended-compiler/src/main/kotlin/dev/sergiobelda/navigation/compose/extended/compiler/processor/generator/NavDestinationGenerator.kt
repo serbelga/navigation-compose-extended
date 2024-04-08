@@ -95,7 +95,7 @@ internal class NavDestinationGenerator(
                     destinationId = annotation.destinationId,
                     navArgumentKeysClass = navArgumentKeysClass,
                     navArgumentParameters = navArgumentParameters,
-                    deepLinksUris = annotation.deepLinkUris
+                    deepLinksUris = annotation.deepLinkUris,
                 ).generate(),
             )
             addType(

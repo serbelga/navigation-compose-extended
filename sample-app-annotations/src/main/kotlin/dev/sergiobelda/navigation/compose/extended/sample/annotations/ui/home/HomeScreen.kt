@@ -30,8 +30,8 @@ import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavDestin
     destinationId = "home",
     deepLinkUris = [
         "sample://home",
-        "sample://home_secondary"
-    ]
+        "sample://home_secondary",
+    ],
 )
 @Composable
 fun HomeScreen(navigateToSettings: () -> Unit) {

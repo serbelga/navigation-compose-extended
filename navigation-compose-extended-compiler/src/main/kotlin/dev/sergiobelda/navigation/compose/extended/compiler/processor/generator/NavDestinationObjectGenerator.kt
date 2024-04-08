@@ -92,7 +92,7 @@ internal class NavDestinationObjectGenerator(
                                 add(")")
                             },
                         )
-                        .build()
+                        .build(),
                 )
             }
         }
@@ -131,7 +131,7 @@ internal class NavDestinationObjectGenerator(
                 addProperty(
                     PropertySpec.builder(
                         DEEP_LINKS_URIS_PROPERTY_NAME,
-                        List::class.asClassName().parameterizedBy(String::class.asClassName())
+                        List::class.asClassName().parameterizedBy(String::class.asClassName()),
                     ).addModifiers(KModifier.OVERRIDE)
                         .initializer(
                             buildCodeBlock {
@@ -140,14 +140,14 @@ internal class NavDestinationObjectGenerator(
                                 add(
                                     deepLinksUris.joinToString(
                                         postfix = "\n",
-                                        separator = ",\n"
-                                    ) { "\"$it\"" }
+                                        separator = ",\n",
+                                    ) { "\"$it\"" },
                                 )
                                 unindent()
                                 add(")")
-                            }
+                            },
                         )
-                        .build()
+                        .build(),
                 )
             }
         }

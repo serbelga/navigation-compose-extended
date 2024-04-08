@@ -71,7 +71,7 @@ internal class SafeNavArgsClassGenerator(
                         },
                     )
                     .addModifiers(KModifier.PRIVATE)
-                    .build()
+                    .build(),
             )
         }
 
