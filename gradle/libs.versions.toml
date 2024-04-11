@@ -1,30 +1,34 @@
 [versions]
 activityCompose = "1.8.2"
 androidCompileSdk = "34"
-androidGradlePlugin = "8.3.1"
+androidGradlePlugin = "8.3.2"
 androidMinSdk = "24"
 composeBom = "2024.04.00"
 composeCompiler = "1.5.11"
+composeMultiplatform = "1.6.10-dev1578"
 coreKtx = "1.12.0"
 dokka = "1.9.20"
 espressoCore = "3.5.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 kotlin = "1.9.23"
+kotlinCoroutines = "1.8.0"
 kotlinpoet = "1.16.0"
 ksp = "1.9.23-1.0.20"
 ktlint = "0.50.0"
 lifecycleRuntimeKtx = "2.7.0"
-navigationCompose = "2.7.7"
+material3 = "1.3.0-alpha04"
+navigationCompose = "2.8.0-alpha06"
 navigationComposeExtended = "0.3.0"
 spotless = "6.25.0"
 vanniktechMavenPublishPlugin = "0.28.0"
+navigationCommonKtx = "2.7.7"
 
 [libraries]
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
-androidx-compose-material3 = { module = "androidx.compose.material3:material3" }
+androidx-compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
 androidx-compose-ui = { module = "androidx.compose.ui:ui" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
 androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
@@ -37,10 +41,13 @@ ksp-symbolProcessingApi = { module = "com.google.devtools.ksp:symbol-processing-
 spotless-gradlePlugin = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotless" }
 squareup-kotlinpoet = { module = "com.squareup:kotlinpoet", version.ref = "kotlinpoet" }
 squareup-kotlinpoetKsp = { module = "com.squareup:kotlinpoet-ksp", version.ref = "kotlinpoet" }
+androidx-navigation-common-ktx = { group = "androidx.navigation", name = "navigation-common-ktx", version.ref = "navigationCommonKtx" }
+kotlin-coroutinesSwing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinCoroutines" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 androidLibrary = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
