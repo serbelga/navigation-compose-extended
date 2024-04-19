@@ -26,7 +26,11 @@ kotlin {
             }
         }
         val commonTest by getting
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation(libs.androidx.wearCompose.navigation)
+            }
+        }
         val androidUnitTest by getting
         val desktopMain by getting
         val desktopTest by getting
