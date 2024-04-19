@@ -14,16 +14,20 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.theme
+package dev.sergiobelda.navigation.compose.extended.sample.ui.main
 
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import dev.sergiobelda.navigation.compose.extended.sample.ui.SampleAppNavHost
 
-@Composable
-fun SampleTheme(
-    content: @Composable () -> Unit,
-) {
-    MaterialTheme(
-        content = content,
-    )
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            SampleAppNavHost()
+        }
+    }
 }

@@ -14,16 +14,12 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.theme
+package dev.sergiobelda.navigation.compose.extended.sample.ui.main
 
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
+import androidx.compose.ui.window.ComposeUIViewController
+import dev.sergiobelda.navigation.compose.extended.sample.ui.SampleAppNavHost
+import platform.UIKit.UIViewController
 
-@Composable
-fun SampleTheme(
-    content: @Composable () -> Unit,
-) {
-    MaterialTheme(
-        content = content,
-    )
+fun MainViewController(): UIViewController = ComposeUIViewController {
+    SampleAppNavHost()
 }

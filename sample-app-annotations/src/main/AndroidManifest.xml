@@ -21,15 +21,23 @@
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="sample" android:host="home" />
+
+                <data
+                    android:scheme="sample"
+                    android:host="home" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="sample" android:host="home_secondary" />
+
+                <data
+                    android:scheme="sample"
+                    android:host="home_secondary" />
             </intent-filter>
         </activity>
     </application>

@@ -14,16 +14,18 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.theme
+package dev.sergiobelda.navigation.compose.extended.sample.ui.main
 
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.application
+import dev.sergiobelda.navigation.compose.extended.sample.ui.SampleAppNavHost
 
-@Composable
-fun SampleTheme(
-    content: @Composable () -> Unit,
-) {
-    MaterialTheme(
-        content = content,
-    )
+fun main() = application {
+    Window(
+        resizable = false,
+        onCloseRequest = ::exitApplication,
+        title = "Sample App",
+    ) {
+        SampleAppNavHost()
+    }
 }
