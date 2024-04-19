@@ -13,7 +13,7 @@ kotlin {
     jvm("desktop") {
         compilations.all {
             kotlin {
-                jvmToolchain(21)
+                jvmToolchain(17)
             }
         }
     }
@@ -25,23 +25,22 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.navigationComposeExtended)
+                implementation(compose.foundation)
                 implementation(compose.material3)
+                implementation(compose.runtime)
                 implementation(compose.ui)
 
-                implementation("org.jetbrains.compose.navigation-internal:navigation-common:0.0.0-nav-dev1535")
-                implementation("org.jetbrains.compose.navigation-internal:navigation-compose:0.0.0-nav-dev1535")
+                implementation(libs.jetbrains.navigation.compose)
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation(libs.androidx.activity.compose)
                 implementation(libs.androidx.compose.material3)
             }
         }
         val desktopMain by getting {
             dependencies {
                 implementation(compose.desktop.currentOs)
-                implementation(libs.kotlin.coroutinesSwing)
             }
         }
     }

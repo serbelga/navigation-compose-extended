@@ -22,5 +22,5 @@ import com.google.devtools.ksp.processing.SymbolProcessorProvider
 
 internal class NavDestinationProcessorProvider : SymbolProcessorProvider {
     override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor =
-        NavDestinationProcessor(environment.logger, environment.codeGenerator)
+        NavDestinationProcessor(environment.codeGenerator)
 }

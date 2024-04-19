@@ -19,7 +19,6 @@ package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 import com.google.devtools.ksp.KspExperimental
 import com.google.devtools.ksp.getAnnotationsByType
 import com.google.devtools.ksp.processing.CodeGenerator
-import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.symbol.KSFunctionDeclaration
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
@@ -31,7 +30,6 @@ import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavDestin
  * Generate code for functions annotated with [NavDestination] and [NavArgument] parameters.
  */
 internal class NavDestinationGenerator(
-    private val logger: KSPLogger,
     private val codeGenerator: CodeGenerator,
 ) {
     @OptIn(KspExperimental::class)
@@ -110,7 +108,6 @@ internal class NavDestinationGenerator(
             )
         }.build()
 
-        logger.info("Generate file")
         fileSpec.writeTo(codeGenerator = codeGenerator, aggregating = false)
     }
 

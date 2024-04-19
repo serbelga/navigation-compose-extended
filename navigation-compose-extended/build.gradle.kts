@@ -22,8 +22,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.compose.navigation-internal:navigation-common:0.0.0-nav-dev1535")
-                implementation("org.jetbrains.compose.navigation-internal:navigation-compose:0.0.0-nav-dev1535")
+                implementation(libs.jetbrains.navigation.compose)
             }
         }
         val commonTest by getting
@@ -57,9 +56,6 @@ android {
     kotlin {
         jvmToolchain(17)
     }
-}
-dependencies {
-    implementation(libs.androidx.navigation.common.ktx)
 }
 
 mavenPublishing {

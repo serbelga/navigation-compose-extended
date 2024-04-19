@@ -1,57 +1,53 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-
 plugins {
-    kotlin("multiplatform")
-    alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.ksp)
+    alias(libs.plugins.androidApplication)
+    kotlin("android")
     id("dev.sergiobelda.gradle.spotless")
+    alias(libs.plugins.ksp)
 }
 
-kotlin {
-    jvm("desktop")
+android {
+    namespace = "dev.sergiobelda.navigation.compose.extended.sample.annotations"
+    compileSdk = libs.versions.androidCompileSdk.get().toInt()
 
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(projects.navigationComposeExtended)
-                implementation(compose.material3)
-                implementation(compose.ui)
+    defaultConfig {
+        applicationId = "dev.sergiobelda.navigation.compose.extended.sample.annotations"
+        minSdk = libs.versions.androidMinSdk.get().toInt()
+        versionCode = 1
+        versionName = "1.0"
 
-                implementation("org.jetbrains.compose.navigation-internal:navigation-common:0.0.0-nav-dev1535")
-                implementation("org.jetbrains.compose.navigation-internal:navigation-compose:0.0.0-nav-dev1535")
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
 
-                implementation(projects.navigationComposeExtendedCompiler)
-            }
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
-        val desktopMain by getting {
-            dependencies {
-                implementation(compose.desktop.currentOs)
-            }
-        }
+    }
+    kotlin {
+        jvmToolchain(17)
+    }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
 }
 
 dependencies {
-    add("kspCommonMainMetadata", project(":navigation-compose-extended-compiler"))
-}
+    implementation(libs.androidx.navigation.compose)
+    implementation(projects.navigationComposeExtended)
+    implementation(projects.navigationComposeExtendedCompiler)
+    ksp(projects.navigationComposeExtendedCompiler)
 
-// Workaround for KSP only in Common Main.
-// https://github.com/google/ksp/issues/567
-tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().all {
-    if (name != "kspCommonMainKotlinMetadata") {
-        dependsOn("kspCommonMainKotlinMetadata")
-    }
-}
-
-kotlin.sourceSets.commonMain {
-    kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
-}
-
-compose.desktop {
-    application {
-        mainClass = "dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.main.MainKt"
-        nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-        }
-    }
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
 }
