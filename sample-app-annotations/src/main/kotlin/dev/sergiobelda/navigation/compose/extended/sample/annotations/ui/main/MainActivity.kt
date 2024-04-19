@@ -21,6 +21,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
 import dev.sergiobelda.navigation.compose.extended.NavHost
+import dev.sergiobelda.navigation.compose.extended.composable
 import dev.sergiobelda.navigation.compose.extended.rememberNavAction
 import dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.home.HomeNavDestination
 import dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.home.HomeScreen
@@ -28,7 +29,6 @@ import dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.setting
 import dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.settings.SettingsSafeNavArgs
 import dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.settings.SettingsScreen
 import dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.theme.SampleTheme
-import dev.sergiobelda.navigation.compose.extended.wear.composable
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val navAction = rememberNavAction(navController)
                 NavHost(navController = navController, startNavDestination = HomeNavDestination) {
-                    dev.sergiobelda.navigation.compose.extended.wear.composable(navDestination = HomeNavDestination) {
+                    composable(navDestination = HomeNavDestination) {
                         HomeScreen(
                             navigateToSettings = {
                                 navAction.navigate(
@@ -49,7 +49,7 @@ class MainActivity : ComponentActivity() {
                             },
                         )
                     }
-                    dev.sergiobelda.navigation.compose.extended.wear.composable(navDestination = SettingsNavDestination) { navBackStackEntry ->
+                    composable(navDestination = SettingsNavDestination) { navBackStackEntry ->
                         val safeNavArgs = SettingsSafeNavArgs(navBackStackEntry)
                         SettingsScreen(
                             userId = safeNavArgs.userId ?: 0,
