@@ -16,16 +16,17 @@
 
 package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 
-import com.google.devtools.ksp.symbol.KSValueParameter
+import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavArgumentType
 
 /**
  * Represents a navigation argument in a navigation destination. It is defined by the
- * navigation argument's [name], [defaultValue] and [parameter] data.
+ * navigation argument's [name], [defaultValue] and [type] data.
  */
-internal data class NavArgumentParameter(
+internal data class NavArgument(
     val name: String,
+    val type: NavArgumentType,
+    val nullable: Boolean,
     val defaultValue: String,
-    val parameter: KSValueParameter,
 ) {
 
     /**

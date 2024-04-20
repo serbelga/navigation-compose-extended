@@ -33,5 +33,31 @@ annotation class NavDestination(
     val destinationId: String,
     val name: String = "",
     val isTopLevelNavDestination: Boolean = false,
+    val arguments: Array<NavArgument> = [],
     val deepLinkUris: Array<String> = [],
 )
+
+/**
+ * Represents a navigation argument in a navigation destination. Using this
+ * annotation will generate a `NavArgumentKey` entry in the navigation destination and will register
+ * this argument in the navigation destination's arguments list.
+ */
+@Retention(AnnotationRetention.BINARY)
+@Target(AnnotationTarget.ANNOTATION_CLASS)
+annotation class NavArgument(
+    val name: String,
+    val type: NavArgumentType,
+    val nullable: Boolean = false,
+    val defaultValue: String = "",
+)
+
+/**
+ * NavArgument valid types.
+ */
+enum class NavArgumentType {
+    Boolean,
+    Float,
+    Int,
+    Long,
+    String,
+}

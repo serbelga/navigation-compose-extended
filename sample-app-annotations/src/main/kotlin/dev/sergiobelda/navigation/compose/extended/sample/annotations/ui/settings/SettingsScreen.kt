@@ -23,20 +23,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavArgument
+import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavArgumentType
 import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavDestination
 
 @NavDestination(
     name = "Settings",
     destinationId = "settings",
+    arguments = [
+        NavArgument(name = "userId", type = NavArgumentType.Int),
+        NavArgument(name = "text", type = NavArgumentType.String, defaultValue = "Default"),
+        NavArgument(name = "result", type = NavArgumentType.Boolean, defaultValue = "true"),
+    ],
 )
 @Composable
 fun SettingsScreen(
-    @NavArgument userId: Int,
-    @NavArgument(defaultValue = "Default") text: String?, // Set default value for the NavArgument.
-    @NavArgument(
-        name = "custom-name",
-        defaultValue = "true",
-    ) result: Boolean, // Set a custom NavArgument name.
+    userId: Int,
+    text: String?,
+    result: Boolean,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column {

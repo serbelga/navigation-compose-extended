@@ -16,84 +16,56 @@
 
 package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 
-import com.google.devtools.ksp.symbol.KSType
 import com.squareup.kotlinpoet.MemberName
+import com.squareup.kotlinpoet.TypeName
+import com.squareup.kotlinpoet.asTypeName
+import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavArgumentType
 
 /**
- * Kotlin Primitive types.
+ * Converts a [NavArgumentType] to a NavType definition.
  */
-private object KotlinTypeName {
-    const val BOOLEAN = "kotlin.Boolean"
-    const val FLOAT = "kotlin.Float"
-    const val INT = "kotlin.Int"
-    const val LONG = "kotlin.Long"
-    const val STRING = "kotlin.String"
-}
-
-/**
- * NavArgument valid types.
- */
-internal enum class NavArgumentType {
-    BOOLEAN,
-    FLOAT,
-    INT,
-    LONG,
-    STRING,
-}
-
-/**
- * Convert a [KSType] to a [NavArgumentType].
- *
- * @throws RuntimeException if the type is invalid.
- */
-internal fun KSType.toNavArgumentType(): NavArgumentType =
-    when (this.declaration.qualifiedName?.asString()) {
-        KotlinTypeName.BOOLEAN -> NavArgumentType.BOOLEAN
-        KotlinTypeName.FLOAT -> NavArgumentType.FLOAT
-        KotlinTypeName.INT -> NavArgumentType.INT
-        KotlinTypeName.LONG -> NavArgumentType.LONG
-        KotlinTypeName.STRING -> NavArgumentType.STRING
-        else -> throw RuntimeException("Invalid type, $this cannot be used a NavArgument type.")
+internal fun NavArgumentType.toNavType(): String =
+    when (this) {
+        NavArgumentType.Boolean -> "BoolType"
+        NavArgumentType.Float -> "FloatType"
+        NavArgumentType.Int -> "IntType"
+        NavArgumentType.Long -> "LongType"
+        NavArgumentType.String -> "StringType"
     }
 
 /**
- * Converts a [KSType] to a NavType definition.
+ * Converts a [NavArgumentType] to a NavArgs getter function name.
  */
-internal fun KSType.mapToNavType(): String {
-    val navArgumentType = toNavArgumentType()
-    return when (navArgumentType) {
-        NavArgumentType.BOOLEAN -> "BoolType"
-        NavArgumentType.FLOAT -> "FloatType"
-        NavArgumentType.INT -> "IntType"
-        NavArgumentType.LONG -> "LongType"
-        NavArgumentType.STRING -> "StringType"
+internal fun NavArgumentType.toNavArgsGetter(): MemberName =
+    when (this) {
+        NavArgumentType.Boolean -> MemberNames.NavArgsGetBoolean
+        NavArgumentType.Float -> MemberNames.NavArgsGetFloat
+        NavArgumentType.Int -> MemberNames.NavArgsGetInt
+        NavArgumentType.Long -> MemberNames.NavArgsGetLong
+        NavArgumentType.String -> MemberNames.NavArgsGetString
     }
-}
 
 /**
- * Converts a [KSType] to a NavArgs getter function name.
+ * Converts a [NavArgumentType] to a [TypeName].
  */
-internal fun KSType.mapToNavArgsGetter(): MemberName {
-    val navArgumentType = toNavArgumentType()
-    return when (navArgumentType) {
-        NavArgumentType.BOOLEAN -> MemberNames.NavArgsGetBoolean
-        NavArgumentType.FLOAT -> MemberNames.NavArgsGetFloat
-        NavArgumentType.INT -> MemberNames.NavArgsGetInt
-        NavArgumentType.LONG -> MemberNames.NavArgsGetLong
-        NavArgumentType.STRING -> MemberNames.NavArgsGetString
+internal fun NavArgumentType.asTypeName(): TypeName =
+    when (this) {
+        NavArgumentType.Boolean -> Boolean::class.asTypeName()
+        NavArgumentType.Float -> Float::class.asTypeName()
+        NavArgumentType.Int -> Int::class.asTypeName()
+        NavArgumentType.Long -> Long::class.asTypeName()
+        NavArgumentType.String -> String::class.asTypeName()
     }
-}
 
 /**
- * Converts a [String] to a value based on a given [KSType].
+ * Converts a [String] to a value based on a given [NavArgumentType].
  */
-internal fun String.toValue(type: KSType): Any {
-    val navArgumentType = type.toNavArgumentType()
-    return when (navArgumentType) {
-        NavArgumentType.BOOLEAN -> this.trim().toBoolean()
-        NavArgumentType.FLOAT -> this.trim().toFloat()
-        NavArgumentType.INT -> this.trim().toInt()
-        NavArgumentType.LONG -> this.trim().toLong()
-        NavArgumentType.STRING -> "\"$this\""
-    }
+internal fun String.toValue(
+    navArgumentType: NavArgumentType,
+): Any = when (navArgumentType) {
+    NavArgumentType.Boolean -> this.trim().toBoolean()
+    NavArgumentType.Float -> this.trim().toFloat()
+    NavArgumentType.Int -> this.trim().toInt()
+    NavArgumentType.Long -> this.trim().toLong()
+    NavArgumentType.String -> "\"$this\""
 }

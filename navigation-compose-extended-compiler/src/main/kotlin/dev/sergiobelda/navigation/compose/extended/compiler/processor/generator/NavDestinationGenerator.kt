@@ -23,11 +23,10 @@ import com.google.devtools.ksp.symbol.KSFunctionDeclaration
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.ksp.writeTo
-import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavArgument
 import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavDestination
 
 /**
- * Generate code for functions annotated with [NavDestination] and [NavArgument] parameters.
+ * Generate code for functions annotated with [NavDestination] parameter.
  */
 internal class NavDestinationGenerator(
     private val codeGenerator: CodeGenerator,
@@ -44,26 +43,18 @@ internal class NavDestinationGenerator(
             "NavDestination annotation not found in $functionDeclaration function."
         }
 
-        val navArgumentParameters = functionDeclaration
-            .parameters
-            .mapNotNull {
-                val parameterName = it.name?.asString()
-                val navArgumentAnnotation =
-                    it.getAnnotationsByType(NavArgument::class).firstOrNull()
-                if (parameterName != null && navArgumentAnnotation != null) {
-                    NavArgumentParameter(
-                        name = navArgumentAnnotation.name.ifBlank { parameterName }
-                            .toKotlinPropertyName(),
-                        defaultValue = navArgumentAnnotation.defaultValue,
-                        parameter = it,
-                    )
-                } else {
-                    null
-                }
+        val navArguments = annotation
+            .arguments
+            .map {
+                NavArgument(
+                    name = it.name,
+                    type = it.type,
+                    nullable = it.nullable,
+                    defaultValue = it.defaultValue,
+                )
             }
 
-        val navArgumentNames =
-            navArgumentParameters.groupBy { it.name }.values.filter { it.size > 1 }
+        val navArgumentNames = navArguments.groupBy { it.name }.values.filter { it.size > 1 }
         require(navArgumentNames.isEmpty()) {
             "NavArgument names must be unique. Duplicated names: ${navArgumentNames.joinToString { it.first().name }}"
         }
@@ -85,7 +76,7 @@ internal class NavDestinationGenerator(
             addType(
                 NavArgumentKeysEnumClassGenerator(
                     name = navArgumentKeysName,
-                    navArgumentParameters = navArgumentParameters,
+                    navArguments = navArguments,
                 ).generate(),
             )
             addType(
@@ -94,7 +85,7 @@ internal class NavDestinationGenerator(
                     isTopLevelNavDestination = annotation.isTopLevelNavDestination,
                     destinationId = annotation.destinationId,
                     navArgumentKeysClass = navArgumentKeysClass,
-                    navArgumentParameters = navArgumentParameters,
+                    navArguments = navArguments,
                     deepLinksUris = annotation.deepLinkUris,
                 ).generate(),
             )
@@ -103,7 +94,7 @@ internal class NavDestinationGenerator(
                     name = safeNavArgsName,
                     navDestinationClass = navDestinationClass,
                     navArgumentKeysClass = navArgumentKeysClass,
-                    navArgumentParameters = navArgumentParameters,
+                    navArguments = navArguments,
                 ).generate(),
             )
         }.build()
