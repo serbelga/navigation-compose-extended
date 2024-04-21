@@ -12,7 +12,13 @@ group = "dev.sergiobelda.navigation.compose.extended"
 version = libs.versions.navigationComposeExtended.get()
 
 kotlin {
-    jvm()
+    jvm {
+        compilations.all {
+            kotlin {
+                jvmToolchain(17)
+            }
+        }
+    }
 
     sourceSets {
 

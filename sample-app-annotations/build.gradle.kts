@@ -23,7 +23,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "sample_app_annotations"
+            baseName = "sample_app"
             isStatic = true
         }
     }
