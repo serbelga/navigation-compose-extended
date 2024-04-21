@@ -14,18 +14,6 @@ keys, and functions to retrieve arguments values in a more secure way.
 
 [![Maven Central](https://img.shields.io/maven-central/v/dev.sergiobelda.navigation.compose.extended/navigation-compose-extended)](https://search.maven.org/search?q=g:dev.sergiobelda.navigation.compose.extended)
 
-```kotlin
-dependencies {
-    // Add AndroidX Navigation Compose dependency.
-    implementation("androidx.navigation:navigation-compose:$nav_version")
-
-    implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended:$version")
-    // Use KSP to generate NavDestinations with annotations.
-    implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended-compiler:$version")
-    ksp("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended-compiler:$version")
-}
-```
-
 ??? note "Android only"
 
     ```kotlin
