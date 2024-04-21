@@ -27,6 +27,14 @@ import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.buildCodeBlock
+import dev.sergiobelda.navigation.compose.extended.annotation.NavArgument
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.extensions.hasDefaultValue
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.mapper.asTypeName
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.mapper.toNavType
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.mapper.toValue
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.names.ClassNames
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.names.MemberNames
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.utils.formatNavArgumentKey
 
 /**
  * Generates the NavDestination object for the navigation destination.
@@ -36,7 +44,7 @@ internal class NavDestinationObjectGenerator(
     private val isTopLevelNavDestination: Boolean,
     private val destinationId: String,
     private val navArgumentKeysClass: ClassName,
-    private val navArguments: List<NavArgument>,
+    private val navArguments: Array<NavArgument>,
     private val deepLinksUris: Array<String>,
 ) {
     fun generate(): TypeSpec {

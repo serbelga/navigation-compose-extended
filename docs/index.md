@@ -26,6 +26,58 @@ dependencies {
 }
 ```
 
+??? note "Android only"
+
+    ```kotlin
+    dependencies {
+        // Add AndroidX Navigation Compose dependency.
+        implementation("androidx.navigation:navigation-compose:$nav_version")
+    
+        implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended:$version") 
+        
+        // Optional: Use Annotations to generate NavDestinations.
+        implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended-annotation:$version")
+        ksp("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended-compiler:$version")
+    }
+    ```
+
+??? note "Multiplatform"
+
+    ```kotlin
+    kotlin {
+    
+        sourceSets {
+            val commonMain by getting {
+                dependencies {
+                    // Add Jetbrains Navigation Compose Multiplatform dependency.
+                    implementation("org.jetbrains.androidx.navigation:navigation-compose:$jetbrains_nav_version")
+    
+                    implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended:$version")
+                    // Optional: Use Annotations to generate NavDestinations.
+                    implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended-annotation:$version")
+                }
+            }
+        }
+    }
+    
+    // If use Annotations, add compiler dependency.
+    dependencies {
+        add("kspCommonMainMetadata", "dev.sergiobelda.navigation.compose.extended:navigation-compose-extended-compiler:$version")
+    }
+    
+    // Workaround for KSP only in Common Main.
+    // https://github.com/google/ksp/issues/567
+    tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().all {
+        if (name != "kspCommonMainKotlinMetadata") {
+            dependsOn("kspCommonMainKotlinMetadata")
+        }
+    }
+    
+    kotlin.sourceSets.commonMain {
+        kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
+    }
+    ```
+
 ```kotlin
 @NavDestination(
     destinationId = "settings",
