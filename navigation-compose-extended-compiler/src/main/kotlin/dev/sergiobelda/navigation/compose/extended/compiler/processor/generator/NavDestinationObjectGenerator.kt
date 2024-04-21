@@ -161,27 +161,25 @@ internal class NavDestinationObjectGenerator(
 
     private fun TypeSpec.Builder.addSafeNavRouteFunction() =
         apply {
-            if (navArguments.isNotEmpty()) {
-                addFunction(
-                    FunSpec.builder("safeNavRoute")
-                        .addNavArgumentsToSafeNavRouteFunctionParameters()
-                        .returns(
-                            ClassNames.NavRoute.parameterizedBy(
-                                navArgumentKeysClass,
-                            ),
-                        )
-                        .addCode(
-                            buildCodeBlock {
-                                add("return %M(\n", MemberNames.NavRoute)
-                                indent()
-                                addNavArgumentsToSafeNavRouteFunctionBody()
-                                unindent()
-                                add(")")
-                            },
-                        )
-                        .build(),
-                )
-            }
+            addFunction(
+                FunSpec.builder("safeNavRoute")
+                    .addNavArgumentsToSafeNavRouteFunctionParameters()
+                    .returns(
+                        ClassNames.NavRoute.parameterizedBy(
+                            navArgumentKeysClass,
+                        ),
+                    )
+                    .addCode(
+                        buildCodeBlock {
+                            add("return %M(\n", MemberNames.NavRoute)
+                            indent()
+                            addNavArgumentsToSafeNavRouteFunctionBody()
+                            unindent()
+                            add(")")
+                        },
+                    )
+                    .build(),
+            )
         }
 
     private fun FunSpec.Builder.addNavArgumentsToSafeNavRouteFunctionParameters() =
