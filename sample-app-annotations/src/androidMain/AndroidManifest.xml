@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SampleApp">
         <activity
-            android:name="dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.main.MainActivity"
+            android:name=".main.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.SampleApp">
             <intent-filter>

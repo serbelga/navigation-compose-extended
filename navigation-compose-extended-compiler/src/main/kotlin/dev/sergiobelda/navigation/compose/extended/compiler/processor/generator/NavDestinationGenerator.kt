@@ -23,6 +23,7 @@ import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.ksp.writeTo
 import dev.sergiobelda.navigation.compose.extended.annotation.NavDestination
 import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.mapper.toNavDestination
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.utils.formatName
 
 /**
  * Generate code for functions annotated with [NavDestination] parameter.

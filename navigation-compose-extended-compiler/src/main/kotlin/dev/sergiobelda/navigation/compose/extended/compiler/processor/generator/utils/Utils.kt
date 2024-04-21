@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
+package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.utils
 
 /**
  * Apply a Kotlin Property format to the given [String].

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
+package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.names
 
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.MemberName

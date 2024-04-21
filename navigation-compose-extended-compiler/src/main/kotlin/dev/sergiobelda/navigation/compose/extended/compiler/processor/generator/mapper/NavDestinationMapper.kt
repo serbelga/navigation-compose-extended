@@ -23,6 +23,9 @@ import dev.sergiobelda.navigation.compose.extended.annotation.NavArgument
 import dev.sergiobelda.navigation.compose.extended.annotation.NavArgumentType
 import dev.sergiobelda.navigation.compose.extended.annotation.NavDestination
 
+/**
+ * Map a [KSAnnotated] to the [NavDestination].
+ */
 internal fun KSAnnotated.toNavDestination(): NavDestination? =
     this.annotations.firstOrNull {
         it.shortName.getShortName() == NavDestination::class.simpleName &&
@@ -32,14 +35,14 @@ internal fun KSAnnotated.toNavDestination(): NavDestination? =
 private fun KSAnnotation.toNavDestination(): NavDestination =
     with(arguments) {
         NavDestination(
-            name = (firstOrNull { it.name?.asString() == NavDestination::name.name }?.value as? String).orEmpty(),
             destinationId = first { it.name?.asString() == NavDestination::destinationId.name }.value as String,
+            name = (firstOrNull { it.name?.asString() == NavDestination::name.name }?.value as? String).orEmpty(),
             isTopLevelNavDestination = firstOrNull { it.name?.asString() == NavDestination::isTopLevelNavDestination.name }?.value as? Boolean ?: false,
-            deepLinkUris = (firstOrNull { it.name?.asString() == NavDestination::deepLinkUris.name }?.value as? List<*>)?.mapNotNull {
-                it as? String
-            }?.toTypedArray() ?: emptyArray(),
             arguments = (firstOrNull { it.name?.asString() == NavDestination::arguments.name }?.value as? List<*>)?.mapNotNull {
                 (it as? KSAnnotation)?.toNavArguments()
+            }?.toTypedArray() ?: emptyArray(),
+            deepLinkUris = (firstOrNull { it.name?.asString() == NavDestination::deepLinkUris.name }?.value as? List<*>)?.mapNotNull {
+                it as? String
             }?.toTypedArray() ?: emptyArray(),
         )
     }

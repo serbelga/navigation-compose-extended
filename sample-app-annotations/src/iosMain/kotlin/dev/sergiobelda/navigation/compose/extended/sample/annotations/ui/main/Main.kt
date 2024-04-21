@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.navigation.compose.extended.sample.ui.settings
+package dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.main
 
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
+import androidx.compose.ui.window.ComposeUIViewController
+import dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.SampleAppNavHost
+import platform.UIKit.UIViewController
 
-@Composable
-fun SettingsScreen() {
-    Scaffold {
-    }
+fun MainViewController(): UIViewController = ComposeUIViewController {
+    SampleAppNavHost()
 }

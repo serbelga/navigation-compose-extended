@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
+package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.extensions
 
 import dev.sergiobelda.navigation.compose.extended.annotation.NavArgument
 

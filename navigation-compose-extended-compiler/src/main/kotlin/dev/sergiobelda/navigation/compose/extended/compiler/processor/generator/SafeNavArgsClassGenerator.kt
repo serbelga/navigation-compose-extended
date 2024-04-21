@@ -27,6 +27,8 @@ import com.squareup.kotlinpoet.buildCodeBlock
 import dev.sergiobelda.navigation.compose.extended.annotation.NavArgument
 import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.mapper.asTypeName
 import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.mapper.toNavArgsGetter
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.names.ClassNames
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.utils.formatNavArgumentKey
 
 /**
  * Generates the SafeNavArgs class for the navigation destination. This class provides as

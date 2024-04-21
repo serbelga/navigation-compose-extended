@@ -21,6 +21,8 @@ import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 import dev.sergiobelda.navigation.compose.extended.annotation.NavArgument
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.names.ClassNames
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.utils.formatNavArgumentKey
 
 /**
  * Generates an enum class that contains the navigation arguments keys. The enum class inherits
