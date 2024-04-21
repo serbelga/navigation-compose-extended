@@ -21,9 +21,10 @@ dependencies {
     // Add AndroidX Navigation Compose dependency.
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
-    implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended:$version")
+    implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended:$version") 
     
-    
+    // Optional: Use Annotations to generate NavDestinations.
+    implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended-annotation:$version")
     ksp("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended-compiler:$version")
 }
 ```
