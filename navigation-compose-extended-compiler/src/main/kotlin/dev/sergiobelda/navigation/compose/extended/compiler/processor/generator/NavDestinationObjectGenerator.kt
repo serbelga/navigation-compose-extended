@@ -27,7 +27,14 @@ import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
 import com.squareup.kotlinpoet.buildCodeBlock
-import com.squareup.kotlinpoet.ksp.toTypeName
+import dev.sergiobelda.navigation.compose.extended.annotation.NavArgument
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.extensions.hasDefaultValue
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.mapper.asTypeName
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.mapper.toNavType
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.mapper.toValue
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.names.ClassNames
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.names.MemberNames
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.utils.formatNavArgumentKey
 
 /**
  * Generates the NavDestination object for the navigation destination.
@@ -37,7 +44,7 @@ internal class NavDestinationObjectGenerator(
     private val isTopLevelNavDestination: Boolean,
     private val destinationId: String,
     private val navArgumentKeysClass: ClassName,
-    private val navArgumentParameters: List<NavArgumentParameter>,
+    private val navArguments: Array<NavArgument>,
     private val deepLinksUris: Array<String>,
 ) {
     fun generate(): TypeSpec {
@@ -70,7 +77,7 @@ internal class NavDestinationObjectGenerator(
 
     private fun TypeSpec.Builder.addArgumentsMapProperty() =
         apply {
-            if (navArgumentParameters.isNotEmpty()) {
+            if (navArguments.isNotEmpty()) {
                 addProperty(
                     PropertySpec.builder(
                         ARGUMENTS_MAP_PROPERTY_NAME,
@@ -98,28 +105,28 @@ internal class NavDestinationObjectGenerator(
         }
 
     private fun CodeBlock.Builder.addNavArgumentsToMap() {
-        navArgumentParameters.forEach { navArgumentParameter ->
+        navArguments.forEach { navArgument ->
             addStatement(
                 "%T.%L to {",
                 navArgumentKeysClass,
-                navArgumentParameter.name.formatNavArgumentKey(),
+                navArgument.name.formatNavArgumentKey(),
             )
-            addNavArgumentBuilderProperties(navArgumentParameter)
+            addNavArgumentBuilderProperties(navArgument)
             addStatement("},")
         }
     }
 
     private fun CodeBlock.Builder.addNavArgumentBuilderProperties(
-        navArgumentParameter: NavArgumentParameter,
+        navArgument: NavArgument,
     ) {
         indent()
-        val type = navArgumentParameter.parameter.type.resolve()
-        addStatement("type = %T.${type.mapToNavType()}", ClassNames.NavType)
-        if (type.isMarkedNullable) {
+        val type = navArgument.type
+        addStatement("type = %T.${type.toNavType()}", ClassNames.NavType)
+        if (navArgument.nullable) {
             addStatement("nullable = true")
         }
-        if (navArgumentParameter.hasDefaultValue) {
-            val defaultValue = navArgumentParameter.defaultValue.toValue(type)
+        if (navArgument.hasDefaultValue) {
+            val defaultValue = navArgument.defaultValue.toValue(type)
             addStatement("defaultValue = %L", defaultValue)
         }
         unindent()
@@ -154,42 +161,41 @@ internal class NavDestinationObjectGenerator(
 
     private fun TypeSpec.Builder.addSafeNavRouteFunction() =
         apply {
-            if (navArgumentParameters.isNotEmpty()) {
-                addFunction(
-                    FunSpec.builder("safeNavRoute")
-                        .addNavArgumentsToSafeNavRouteFunctionParameters()
-                        .returns(
-                            ClassNames.NavRoute.parameterizedBy(
-                                navArgumentKeysClass,
-                            ),
-                        )
-                        .addCode(
-                            buildCodeBlock {
-                                add("return %M(\n", MemberNames.NavRoute)
-                                indent()
-                                addNavArgumentsToSafeNavRouteFunctionBody()
-                                unindent()
-                                add(")")
-                            },
-                        )
-                        .build(),
-                )
-            }
+            addFunction(
+                FunSpec.builder("safeNavRoute")
+                    .addNavArgumentsToSafeNavRouteFunctionParameters()
+                    .returns(
+                        ClassNames.NavRoute.parameterizedBy(
+                            navArgumentKeysClass,
+                        ),
+                    )
+                    .addCode(
+                        buildCodeBlock {
+                            add("return %M(\n", MemberNames.NavRoute)
+                            indent()
+                            addNavArgumentsToSafeNavRouteFunctionBody()
+                            unindent()
+                            add(")")
+                        },
+                    )
+                    .build(),
+            )
         }
 
     private fun FunSpec.Builder.addNavArgumentsToSafeNavRouteFunctionParameters() =
         apply {
-            navArgumentParameters.forEach { navArgumentParameter ->
-                val type = navArgumentParameter.parameter.type.resolve()
+            navArguments.forEach { navArgument ->
                 addParameter(
                     ParameterSpec.builder(
-                        navArgumentParameter.name,
-                        type.toTypeName(),
+                        navArgument.name,
+                        navArgument.type.asTypeName(),
                     ).apply {
-                        navArgumentParameter.takeIf { it.hasDefaultValue }?.let {
+                        navArgument.takeIf { it.hasDefaultValue }?.let {
                             defaultValue(
                                 "%L",
-                                it.defaultValue.toValue(type),
+                                it.defaultValue.toValue(
+                                    navArgument.type,
+                                ),
                             )
                         }
                     }.build(),
@@ -198,12 +204,12 @@ internal class NavDestinationObjectGenerator(
         }
 
     private fun CodeBlock.Builder.addNavArgumentsToSafeNavRouteFunctionBody() =
-        navArgumentParameters.forEach { navArgumentParameter ->
+        navArguments.forEach { navArgument ->
             addStatement(
                 "%T.%L to %L,",
                 navArgumentKeysClass,
-                navArgumentParameter.name.formatNavArgumentKey(),
-                navArgumentParameter.name,
+                navArgument.name.formatNavArgumentKey(),
+                navArgument.name,
             )
         }
 

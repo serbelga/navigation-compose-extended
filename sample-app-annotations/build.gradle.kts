@@ -1,8 +1,57 @@
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+
 plugins {
+    kotlin("multiplatform")
+    alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.androidApplication)
-    kotlin("android")
     id("dev.sergiobelda.gradle.spotless")
     alias(libs.plugins.ksp)
+}
+
+kotlin {
+    androidTarget()
+    jvm("desktop") {
+        compilations.all {
+            kotlin {
+                jvmToolchain(17)
+            }
+        }
+    }
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
+            baseName = "sample_app"
+            isStatic = true
+        }
+    }
+
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(projects.navigationComposeExtended)
+                implementation(projects.navigationComposeExtendedAnnotation)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.runtime)
+                implementation(compose.ui)
+
+                implementation(libs.jetbrains.navigation.compose)
+            }
+        }
+        val androidMain by getting {
+            dependencies {
+                implementation(libs.androidx.compose.material3)
+            }
+        }
+        val desktopMain by getting {
+            dependencies {
+                implementation(compose.desktop.currentOs)
+            }
+        }
+    }
 }
 
 android {
@@ -30,24 +79,29 @@ android {
     kotlin {
         jvmToolchain(17)
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
+}
+
+compose.desktop {
+    application {
+        mainClass = "dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.main.MainKt"
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+        }
     }
 }
 
 dependencies {
-    implementation(libs.androidx.navigation.compose)
-    implementation(projects.navigationComposeExtended)
-    implementation(projects.navigationComposeExtendedCompiler)
-    ksp(projects.navigationComposeExtendedCompiler)
+    add("kspCommonMainMetadata", projects.navigationComposeExtendedCompiler)
+}
 
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
+// Workaround for KSP only in Common Main.
+// https://github.com/google/ksp/issues/567
+tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().all {
+    if (name != "kspCommonMainKotlinMetadata") {
+        dependsOn("kspCommonMainKotlinMetadata")
+    }
+}
+
+kotlin.sourceSets.commonMain {
+    kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
 }

@@ -86,18 +86,20 @@ NavHost(navController = navController, startNavDestination = HomeNavDestination)
 
 ## Navigate with arguments
 
-If we are using annotations, we can use the `@NavArgument` annotation in the function parameters:
+If we are using annotations, we can use the `arguments` parameter in `@NavDestination` annotation:
 
 ```kotlin
 @NavDestination(
     name = "Settings",
     destinationId = "settings",
+    arguments = [
+        NavArgument(name = "userId", type = NavArgumentType.Int),
+        NavArgument(name = "text", type = NavArgumentType.String, defaultValue = "Default"),
+        NavArgument(name = "result", type = NavArgumentType.Boolean, defaultValue = "true"),
+    ],
 )
 @Composable
 fun SettingsScreen(
-    @NavArgument userId: Int,
-    @NavArgument(defaultValue = "Default") text: String?, // Set default value for the NavArgument.
-    @NavArgument(name = "custom-name", defaultValue = "true") result: Boolean, // Set a custom NavArgument name.
     viewModel: SettingsViewModel
 ) {}
 ```
@@ -110,7 +112,7 @@ public enum class SettingsNavArgumentKeys(
 ) : NavArgumentKey {
   UserIdNavArgumentKey("userId"),
   TextNavArgumentKey("text"),
-  CustomNameNavArgumentKey("customName"),
+  ResultNavArgumentKey("result"),
   ;
 }
 ```
@@ -130,7 +132,7 @@ public object SettingsNavDestination : NavDestination<SettingsNavArgumentKeys>()
       nullable = true
       defaultValue = "Default"
     },
-    SettingsNavArgumentKeys.CustomNameNavArgumentKey to {
+    SettingsNavArgumentKeys.ResultNavArgumentKey to {
       type = NavType.BoolType
       defaultValue = true
     },
@@ -151,7 +153,7 @@ composable(navDestination = HomeNavDestination) {
                 SettingsNavDestination.safeNavRoute(
                     userId = 1,
                     text = "Text",
-                    customName = true
+                    result = true
                 )
             )
         },
@@ -169,7 +171,7 @@ composable(navDestination = HomeNavDestination) {
                 SettingsNavDestination.navRoute(
                     SettingsNavArgumentKeys.UserIdNavArgumentKey to 1,
                     SettingsNavArgumentKeys.TextNavArgumentKey to "Text",
-                    SettingsNavArgumentKeys.CustomNameNavArgumentKey to true
+                    SettingsNavArgumentKeys.ResultNavArgumentKey to true
                 )
             )
         },

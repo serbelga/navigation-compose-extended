@@ -16,54 +16,38 @@
 
 package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 
-import com.google.devtools.ksp.KspExperimental
-import com.google.devtools.ksp.getAnnotationsByType
 import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.symbol.KSFunctionDeclaration
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.ksp.writeTo
-import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavArgument
-import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavDestination
+import dev.sergiobelda.navigation.compose.extended.annotation.NavDestination
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.mapper.toNavDestination
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.utils.formatName
 
 /**
- * Generate code for functions annotated with [NavDestination] and [NavArgument] parameters.
+ * Generate code for functions annotated with [NavDestination] parameter.
  */
 internal class NavDestinationGenerator(
     private val codeGenerator: CodeGenerator,
 ) {
-    @OptIn(KspExperimental::class)
     fun generate(
         functionDeclaration: KSFunctionDeclaration,
     ) {
-        val annotation: NavDestination? = functionDeclaration
-            .getAnnotationsByType(NavDestination::class)
-            .firstOrNull()
+        // New API was causing java.lang.IllegalStateException: unhandled value type on Multiplatform
+        // val annotation: NavDestination? = functionDeclaration
+        //    .getAnnotationsByType(NavDestination::class)
+        //    .firstOrNull()
+        // As a workaround, we must map the [KSAnnotated] manually to [NavDestination].
+        val annotation: NavDestination? = functionDeclaration.toNavDestination()
 
         requireNotNull(annotation) {
             "NavDestination annotation not found in $functionDeclaration function."
         }
 
-        val navArgumentParameters = functionDeclaration
-            .parameters
-            .mapNotNull {
-                val parameterName = it.name?.asString()
-                val navArgumentAnnotation =
-                    it.getAnnotationsByType(NavArgument::class).firstOrNull()
-                if (parameterName != null && navArgumentAnnotation != null) {
-                    NavArgumentParameter(
-                        name = navArgumentAnnotation.name.ifBlank { parameterName }
-                            .toKotlinPropertyName(),
-                        defaultValue = navArgumentAnnotation.defaultValue,
-                        parameter = it,
-                    )
-                } else {
-                    null
-                }
-            }
+        val navArguments = annotation.arguments
 
-        val navArgumentNames =
-            navArgumentParameters.groupBy { it.name }.values.filter { it.size > 1 }
+        val navArgumentNames = navArguments.groupBy { it.name }.values.filter { it.size > 1 }
         require(navArgumentNames.isEmpty()) {
             "NavArgument names must be unique. Duplicated names: ${navArgumentNames.joinToString { it.first().name }}"
         }
@@ -85,7 +69,7 @@ internal class NavDestinationGenerator(
             addType(
                 NavArgumentKeysEnumClassGenerator(
                     name = navArgumentKeysName,
-                    navArgumentParameters = navArgumentParameters,
+                    navArguments = navArguments,
                 ).generate(),
             )
             addType(
@@ -94,7 +78,7 @@ internal class NavDestinationGenerator(
                     isTopLevelNavDestination = annotation.isTopLevelNavDestination,
                     destinationId = annotation.destinationId,
                     navArgumentKeysClass = navArgumentKeysClass,
-                    navArgumentParameters = navArgumentParameters,
+                    navArguments = navArguments,
                     deepLinksUris = annotation.deepLinkUris,
                 ).generate(),
             )
@@ -103,7 +87,7 @@ internal class NavDestinationGenerator(
                     name = safeNavArgsName,
                     navDestinationClass = navDestinationClass,
                     navArgumentKeysClass = navArgumentKeysClass,
-                    navArgumentParameters = navArgumentParameters,
+                    navArguments = navArguments,
                 ).generate(),
             )
         }.build()

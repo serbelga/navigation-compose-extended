@@ -12,17 +12,65 @@ Visit the [project website](https://sergiobelda.dev/navigation-compose-extended/
 
 ## Download
 
+<details>
+
+<summary>Android only</summary>
+
 ```kotlin
 dependencies {
     // Add AndroidX Navigation Compose dependency.
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
-    implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended:$version")
-    // Use KSP to generate NavDestinations with annotations.
-    implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended-compiler:$version")
+    implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended:$version") 
+    
+    // Optional: Use Annotations to generate NavDestinations.
+    implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended-annotation:$version")
     ksp("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended-compiler:$version")
 }
 ```
+
+</details>
+
+<details>
+
+<summary>Multiplatform</summary>
+
+```kotlin
+kotlin {
+
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                // Add Jetbrains Navigation Compose Multiplatform dependency.
+                implementation("org.jetbrains.androidx.navigation:navigation-compose:$jetbrains_nav_version")
+
+                implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended:$version")
+                // Optional: Use Annotations to generate NavDestinations.
+                implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended-annotation:$version")
+            }
+        }
+    }
+}
+
+// If use Annotations, add compiler dependency.
+dependencies {
+    add("kspCommonMainMetadata", "dev.sergiobelda.navigation.compose.extended:navigation-compose-extended-compiler:$version")
+}
+
+// Workaround for KSP only in Common Main.
+// https://github.com/google/ksp/issues/567
+tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().all {
+    if (name != "kspCommonMainKotlinMetadata") {
+        dependsOn("kspCommonMainKotlinMetadata")
+    }
+}
+
+kotlin.sourceSets.commonMain {
+    kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
+}
+```
+
+</details>
 
 ## Usage
 
@@ -112,18 +160,20 @@ NavHost(navController = navController, startNavDestination = HomeNavDestination)
 
 ### Navigate with arguments
 
-If we are using annotations, we can use the `@NavArgument` annotation in the function parameters:
+If we are using annotations, we can use the `arguments` parameter in `@NavDestination` annotation:
 
 ```kotlin
 @NavDestination(
     name = "Settings",
     destinationId = "settings",
+    arguments = [
+        NavArgument(name = "userId", type = NavArgumentType.Int),
+        NavArgument(name = "text", type = NavArgumentType.String, defaultValue = "Default"),
+        NavArgument(name = "result", type = NavArgumentType.Boolean, defaultValue = "true"),
+    ],
 )
 @Composable
 fun SettingsScreen(
-    @NavArgument userId: Int,
-    @NavArgument(defaultValue = "Default") text: String?, // Set default value for the NavArgument.
-    @NavArgument(name = "custom-name", defaultValue = "true") result: Boolean, // Set a custom NavArgument name.
     viewModel: SettingsViewModel
 ) {}
 ```
@@ -136,7 +186,7 @@ public enum class SettingsNavArgumentKeys(
 ) : NavArgumentKey {
   UserIdNavArgumentKey("userId"),
   TextNavArgumentKey("text"),
-  CustomNameNavArgumentKey("customName"),
+  ResultNavArgumentKey("result"),
   ;
 }
 ```
@@ -156,7 +206,7 @@ public object SettingsNavDestination : NavDestination<SettingsNavArgumentKeys>()
       nullable = true
       defaultValue = "Default"
     },
-    SettingsNavArgumentKeys.CustomNameNavArgumentKey to {
+    SettingsNavArgumentKeys.ResultNavArgumentKey to {
       type = NavType.BoolType
       defaultValue = true
     },
@@ -176,7 +226,7 @@ composable(navDestination = HomeNavDestination) {
                 SettingsNavDestination.safeNavRoute(
                     userId = 1,
                     text = "Text",
-                    customName = true
+                    result = true
                 )
             )
         },
@@ -194,7 +244,7 @@ composable(navDestination = HomeNavDestination) {
                 SettingsNavDestination.navRoute(
                     SettingsNavArgumentKeys.UserIdNavArgumentKey to 1,
                     SettingsNavArgumentKeys.TextNavArgumentKey to "Text",
-                    SettingsNavArgumentKeys.CustomNameNavArgumentKey to true
+                    SettingsNavArgumentKeys.ResultNavArgumentKey to true
                 )
             )
         },

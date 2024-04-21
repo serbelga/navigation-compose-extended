@@ -20,14 +20,17 @@ import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
+import dev.sergiobelda.navigation.compose.extended.annotation.NavArgument
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.names.ClassNames
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.utils.formatNavArgumentKey
 
 /**
  * Generates an enum class that contains the navigation arguments keys. The enum class inherits
- * from NavArgumentKey contains as many entries as [navArgumentParameters].
+ * from NavArgumentKey contains as many entries as [navArguments].
  */
 internal class NavArgumentKeysEnumClassGenerator(
     private val name: String,
-    private val navArgumentParameters: List<NavArgumentParameter>,
+    private val navArguments: Array<NavArgument>,
 ) {
     fun generate(): TypeSpec =
         TypeSpec.enumBuilder(name)
@@ -48,16 +51,16 @@ internal class NavArgumentKeysEnumClassGenerator(
             .addSuperinterface(
                 ClassNames.NavArgumentKey,
             )
-            .addNavArgumentParameters()
+            .addNavArguments()
             .build()
 
-    private fun TypeSpec.Builder.addNavArgumentParameters() =
+    private fun TypeSpec.Builder.addNavArguments() =
         apply {
-            navArgumentParameters.forEach { navArgumentParameter ->
+            navArguments.forEach { navArgument ->
                 addEnumConstant(
-                    navArgumentParameter.name.formatNavArgumentKey(),
+                    navArgument.name.formatNavArgumentKey(),
                     TypeSpec.anonymousClassBuilder()
-                        .addSuperclassConstructorParameter("%S", navArgumentParameter.name)
+                        .addSuperclassConstructorParameter("%S", navArgument.name)
                         .build(),
                 )
             }
