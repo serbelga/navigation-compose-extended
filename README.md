@@ -41,8 +41,8 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                // Add AndroidX Navigation Compose dependency.
-                implementation("androidx.navigation:navigation-compose:$nav_version")
+                // Add Jetbrains Navigation Compose Multiplatform dependency.
+                implementation("org.jetbrains.androidx.navigation:navigation-compose:$jetbrains_nav_version")
 
                 implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended:$version")
                 // Optional: Use Annotations to generate NavDestinations.
