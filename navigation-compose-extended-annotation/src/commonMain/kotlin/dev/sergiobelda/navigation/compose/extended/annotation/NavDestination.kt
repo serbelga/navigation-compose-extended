@@ -46,7 +46,7 @@ annotation class NavDestination(
 @Target(AnnotationTarget.ANNOTATION_CLASS)
 annotation class NavArgument(
     val name: String,
-    val type: NavArgumentType,
+    val type: NavArgumentType = NavArgumentType.String,
     val nullable: Boolean = false,
     val defaultValue: String = "",
 )

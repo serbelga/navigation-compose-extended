@@ -31,7 +31,7 @@ import dev.sergiobelda.navigation.compose.extended.annotation.NavDestination
     destinationId = "settings",
     arguments = [
         NavArgument(name = "userId", type = NavArgumentType.Int),
-        NavArgument(name = "text", type = NavArgumentType.String, defaultValue = "Default"),
+        NavArgument(name = "text", defaultValue = "Default"),
         NavArgument(name = "result", type = NavArgumentType.Boolean, defaultValue = "true"),
     ],
 )

@@ -51,7 +51,7 @@ private fun KSAnnotation.toNavArguments(): NavArgument =
     with(arguments) {
         NavArgument(
             name = first { it.name?.asString() == NavArgument::name.name }.value as String,
-            type = (first { it.name?.asString() == NavArgument::type.name }.value as KSType).toNavArgumentType(),
+            type = (firstOrNull { it.name?.asString() == NavArgument::type.name }?.value as? KSType)?.toNavArgumentType() ?: NavArgumentType.String,
             nullable = firstOrNull { it.name?.asString() == NavArgument::nullable.name }?.value as? Boolean ?: false,
             defaultValue = (firstOrNull { it.name?.asString() == NavArgument::defaultValue.name }?.value as? String).orEmpty(),
         )
