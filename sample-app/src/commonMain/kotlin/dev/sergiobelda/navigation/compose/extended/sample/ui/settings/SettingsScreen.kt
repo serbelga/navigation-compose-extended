@@ -18,10 +18,16 @@ package dev.sergiobelda.navigation.compose.extended.sample.ui.settings
 
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import dev.sergiobelda.navigation.compose.extended.annotation.NavArgument
+import dev.sergiobelda.navigation.compose.extended.annotation.NavArgumentType
 import dev.sergiobelda.navigation.compose.extended.annotation.NavDestination
 
 @NavDestination(
     destinationId = "settings",
+    arguments = [
+        NavArgument(name = "arg1", type = NavArgumentType.Int),
+    ],
+    deepLinkUris = ["https://sergiobelda.dev/settings"],
 )
 @Composable
 fun SettingsScreen() {

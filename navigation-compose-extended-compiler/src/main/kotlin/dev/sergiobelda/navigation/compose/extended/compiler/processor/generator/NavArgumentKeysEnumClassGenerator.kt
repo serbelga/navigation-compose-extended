@@ -20,6 +20,7 @@ import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
+import dev.sergiobelda.navigation.compose.extended.annotation.NavArgument
 
 /**
  * Generates an enum class that contains the navigation arguments keys. The enum class inherits
@@ -27,7 +28,7 @@ import com.squareup.kotlinpoet.TypeSpec
  */
 internal class NavArgumentKeysEnumClassGenerator(
     private val name: String,
-    private val navArguments: List<NavArgument>,
+    private val navArguments: Array<NavArgument>,
 ) {
     fun generate(): TypeSpec =
         TypeSpec.enumBuilder(name)

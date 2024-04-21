@@ -16,22 +16,10 @@
 
 package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 
-import dev.sergiobelda.navigation.compose.extended.annotation.NavArgumentType
+import dev.sergiobelda.navigation.compose.extended.annotation.NavArgument
 
 /**
- * Represents a navigation argument in a navigation destination. It is defined by the
- * navigation argument's [name], [defaultValue] and [type] data.
+ * Returns true if the navigation argument has a default value.
  */
-internal data class NavArgument(
-    val name: String,
-    val type: NavArgumentType,
-    val nullable: Boolean,
-    val defaultValue: String,
-) {
-
-    /**
-     * Returns true if the navigation argument has a default value.
-     */
-    val hasDefaultValue: Boolean
-        get() = defaultValue.isNotBlank()
-}
+internal val NavArgument.hasDefaultValue: Boolean
+    get() = defaultValue.isNotBlank()

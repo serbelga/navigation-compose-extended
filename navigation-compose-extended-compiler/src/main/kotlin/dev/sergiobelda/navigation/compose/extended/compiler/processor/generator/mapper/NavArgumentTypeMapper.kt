@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
+package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.mapper
 
 import com.squareup.kotlinpoet.MemberName
 import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.asTypeName
 import dev.sergiobelda.navigation.compose.extended.annotation.NavArgumentType
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.MemberNames
 
 /**
  * Converts a [NavArgumentType] to a NavType definition.

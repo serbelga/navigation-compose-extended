@@ -24,6 +24,9 @@ import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.buildCodeBlock
+import dev.sergiobelda.navigation.compose.extended.annotation.NavArgument
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.mapper.asTypeName
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.mapper.toNavArgsGetter
 
 /**
  * Generates the SafeNavArgs class for the navigation destination. This class provides as
@@ -33,7 +36,7 @@ internal class SafeNavArgsClassGenerator(
     private val name: String,
     private val navDestinationClass: ClassName,
     private val navArgumentKeysClass: ClassName,
-    private val navArguments: List<NavArgument>,
+    private val navArguments: Array<NavArgument>,
 ) {
     fun generate(): TypeSpec =
         TypeSpec.classBuilder(name)
