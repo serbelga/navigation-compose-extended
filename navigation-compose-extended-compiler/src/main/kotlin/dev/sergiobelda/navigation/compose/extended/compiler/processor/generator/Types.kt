@@ -19,7 +19,7 @@ package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 import com.squareup.kotlinpoet.MemberName
 import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.asTypeName
-import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavArgumentType
+import dev.sergiobelda.navigation.compose.extended.annotation.NavArgumentType
 
 /**
  * Converts a [NavArgumentType] to a NavType definition.

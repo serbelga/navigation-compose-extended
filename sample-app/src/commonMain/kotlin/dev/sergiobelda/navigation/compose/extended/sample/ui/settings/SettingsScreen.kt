@@ -18,7 +18,11 @@ package dev.sergiobelda.navigation.compose.extended.sample.ui.settings
 
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import dev.sergiobelda.navigation.compose.extended.annotation.NavDestination
 
+@NavDestination(
+    destinationId = "settings",
+)
 @Composable
 fun SettingsScreen() {
     Scaffold {

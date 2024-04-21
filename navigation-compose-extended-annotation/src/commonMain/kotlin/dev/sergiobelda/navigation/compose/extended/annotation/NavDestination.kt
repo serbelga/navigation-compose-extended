@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.navigation.compose.extended.compiler.annotation
+package dev.sergiobelda.navigation.compose.extended.annotation
 
 /**
  * Represents a navigation destination in the Navigation graph. Annotating a function or expression

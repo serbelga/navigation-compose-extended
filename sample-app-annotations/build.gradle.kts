@@ -41,7 +41,7 @@ android {
 dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(projects.navigationComposeExtended)
-    implementation(projects.navigationComposeExtendedCompiler)
+    implementation(projects.navigationComposeExtendedAnnotation)
     ksp(projects.navigationComposeExtendedCompiler)
 
     implementation(platform(libs.androidx.compose.bom))

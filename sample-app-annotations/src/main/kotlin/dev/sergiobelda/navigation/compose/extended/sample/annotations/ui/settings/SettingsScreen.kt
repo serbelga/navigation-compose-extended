@@ -22,9 +22,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavArgument
-import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavArgumentType
-import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavDestination
+import dev.sergiobelda.navigation.compose.extended.annotation.NavArgument
+import dev.sergiobelda.navigation.compose.extended.annotation.NavArgumentType
+import dev.sergiobelda.navigation.compose.extended.annotation.NavDestination
 
 @NavDestination(
     name = "Settings",

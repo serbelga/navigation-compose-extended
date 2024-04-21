@@ -16,7 +16,7 @@
 
 package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 
-import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavArgumentType
+import dev.sergiobelda.navigation.compose.extended.annotation.NavArgumentType
 
 /**
  * Represents a navigation argument in a navigation destination. It is defined by the

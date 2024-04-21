@@ -23,7 +23,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavDestination
+import dev.sergiobelda.navigation.compose.extended.annotation.NavDestination
 
 @NavDestination(
     name = "Home",

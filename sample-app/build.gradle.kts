@@ -32,6 +32,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.navigationComposeExtended)
+                implementation(projects.navigationComposeExtendedAnnotation)
                 implementation(compose.foundation)
                 implementation(compose.material3)
                 implementation(compose.runtime)
@@ -87,4 +88,20 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
         }
     }
+}
+
+dependencies {
+    add("kspCommonMainMetadata", projects.navigationComposeExtendedCompiler)
+}
+
+// Workaround for KSP only in Common Main.
+// https://github.com/google/ksp/issues/567
+tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().all {
+    if (name != "kspCommonMainKotlinMetadata") {
+        dependsOn("kspCommonMainKotlinMetadata")
+    }
+}
+
+kotlin.sourceSets.commonMain {
+    kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
 }

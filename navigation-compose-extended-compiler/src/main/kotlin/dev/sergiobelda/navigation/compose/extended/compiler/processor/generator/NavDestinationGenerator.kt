@@ -23,7 +23,7 @@ import com.google.devtools.ksp.symbol.KSFunctionDeclaration
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.ksp.writeTo
-import dev.sergiobelda.navigation.compose.extended.compiler.annotation.NavDestination
+import dev.sergiobelda.navigation.compose.extended.annotation.NavDestination
 
 /**
  * Generate code for functions annotated with [NavDestination] parameter.
