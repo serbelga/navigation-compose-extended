@@ -16,3 +16,4 @@ local.properties
 /.idea/
 /site/
 /navigation-compose-extended-annotation/build/
+/navigation-compose-extended-wear/build/
