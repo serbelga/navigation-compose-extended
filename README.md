@@ -2,9 +2,9 @@
 
 [![Maven Central](https://img.shields.io/maven-central/v/dev.sergiobelda.navigation.compose.extended/navigation-compose-extended)](https://search.maven.org/search?q=g:dev.sergiobelda.navigation.compose.extended)
 
-Navigation Compose Extended is a complementary library for AndroidX Jetpack Navigation Compose to
+Navigation Compose Extended is a complementary multiplataform library for Jetpack Navigation Compose to
 improve creation of navigation elements, as destination routes, arguments, deep links, … in a
-more idiomatic way than using literals.
+more idiomatic way than using literals. It also provides Safe navigation routes and Safe navigation arguments.
 
 Take a look at the [sample-app-annotations](https://github.com/serbelga/navigation-compose-extended/tree/main/sample-app-annotations) and [sample-app](https://github.com/serbelga/navigation-compose-extended/tree/main/sample-app) for working examples.
 
@@ -17,6 +17,11 @@ Visit the [project website](https://sergiobelda.dev/navigation-compose-extended/
 <summary>Android only</summary>
 
 ```kotlin
+// Optional: Use Annotations to generate NavDestinations.
+plugins {
+    id("com.google.devtools.ksp")
+}
+
 dependencies {
     // Add AndroidX Navigation Compose dependency.
     implementation("androidx.navigation:navigation-compose:$nav_version")
@@ -36,6 +41,11 @@ dependencies {
 <summary>Multiplatform</summary>
 
 ```kotlin
+// Optional: Use Annotations to generate NavDestinations.
+plugins {
+    id("com.google.devtools.ksp")
+}
+
 kotlin {
 
     sourceSets {

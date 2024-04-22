@@ -188,7 +188,7 @@ internal class NavDestinationObjectGenerator(
                 addParameter(
                     ParameterSpec.builder(
                         navArgument.name,
-                        navArgument.type.asTypeName(),
+                        navArgument.type.asTypeName().copy(nullable = navArgument.nullable),
                     ).apply {
                         navArgument.takeIf { it.hasDefaultValue }?.let {
                             defaultValue(
