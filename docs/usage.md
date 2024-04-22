@@ -10,7 +10,6 @@ The `NavDestination` represents some Destination in the Navigation graph.
 @NavDestination(
     destinationId = "home",
     name = "Home", // Optional: NavDestination name.
-    isTopLevelNavDestination = true, // Optional: Mark NavDestination as a top-level destination.
 )
 @Composable
 fun HomeScreen() {}
@@ -253,6 +252,17 @@ This is useful for destinations associated to items in a BottomNavigationBar whe
 different screens by clicking on each navigation bar item. To avoid building up a large stack of destinations
 on the back stack when we click on navigation items and to avoid multiple copies of the same destination 
 when we reselect the same item, we can use this kind of destination.
+
+```kotlin
+@NavDestination(
+    ...
+    isTopLevelNavDestination = true, // Mark NavDestination as a top-level destination.
+)
+@Composable
+fun SearchScreen() {}
+```
+
+or programmatically:
 
 ```kotlin
 object SearchNavDestination : TopLevelNavDestination<NavArgumentKey>() {
