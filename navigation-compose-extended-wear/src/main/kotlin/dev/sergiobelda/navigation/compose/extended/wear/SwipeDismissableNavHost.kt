@@ -17,6 +17,7 @@
 package dev.sergiobelda.navigation.compose.extended.wear
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -26,7 +27,24 @@ import androidx.wear.compose.navigation.rememberSwipeDismissableNavHostState
 import dev.sergiobelda.navigation.compose.extended.NavDestination
 
 /**
- * TODO
+ * Provides a place in the Compose hierarchy for self-contained navigation to occur,
+ * with backwards navigation provided by a swipe gesture.
+ *
+ * Once this is called, any Composable within the given [NavGraphBuilder] can be navigated to from
+ * the provided [navController].
+ *
+ * The builder passed into this method is [remember]ed. This means that for this NavHost, the
+ * contents of the builder cannot be changed.
+ *
+ * This function wraps [androidx.wear.compose.navigation.SwipeDismissableNavHost].
+ *
+ * @param navController The navController for this host
+ * @param startNavDestination The start [NavDestination]
+ * @param modifier The modifier to be applied to the layout
+ * @param userSwipeEnabled [Boolean] Whether swipe-to-dismiss gesture is enabled.
+ * @param state State containing information about ongoing swipe and animation.
+ * @param route The route for the graph
+ * @param builder The builder used to construct the graph
  */
 @Composable
 fun SwipeDismissableNavHost(

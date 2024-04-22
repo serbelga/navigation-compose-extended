@@ -21,17 +21,23 @@ import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
+import androidx.wear.compose.navigation.WearNavigator
 import androidx.wear.compose.navigation.composable
 import dev.sergiobelda.navigation.compose.extended.NavDestination
 
 /**
- * TODO
+ * Adds the content composable to the [NavGraphBuilder] as a [WearNavigator.Destination].
+ *
+ * @param navDestination navigation destination associated with the composable
+ * @param arguments list of arguments to associate with destination
+ * @param deepLinks list of deep links to associate with the destinations
+ * @param content composable for the destination
  */
 @Composable
 fun NavGraphBuilder.composable(
     navDestination: NavDestination<*>,
-    arguments: List<NamedNavArgument> = emptyList(),
-    deepLinks: List<NavDeepLink> = emptyList(),
+    arguments: List<NamedNavArgument> = navDestination.arguments,
+    deepLinks: List<NavDeepLink> = navDestination.deepLinks,
     content: @Composable (NavBackStackEntry) -> Unit,
 ) {
     composable(
