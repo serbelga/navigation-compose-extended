@@ -17,6 +17,11 @@ Visit the [project website](https://sergiobelda.dev/navigation-compose-extended/
 <summary>Android only</summary>
 
 ```kotlin
+// Optional: Use Annotations to generate NavDestinations.
+plugins {
+    id("com.google.devtools.ksp")
+}
+
 dependencies {
     // Add AndroidX Navigation Compose dependency.
     implementation("androidx.navigation:navigation-compose:$nav_version")
@@ -36,6 +41,11 @@ dependencies {
 <summary>Multiplatform</summary>
 
 ```kotlin
+// Optional: Use Annotations to generate NavDestinations.
+plugins {
+    id("com.google.devtools.ksp")
+}
+
 kotlin {
 
     sourceSets {

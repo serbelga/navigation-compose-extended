@@ -17,6 +17,11 @@ keys, and functions to retrieve arguments values in a more secure way.
 ??? note "Android only"
 
     ```kotlin
+    // Optional: Use Annotations to generate NavDestinations.
+    plugins {
+        id("com.google.devtools.ksp")
+    }
+
     dependencies {
         // Add AndroidX Navigation Compose dependency.
         implementation("androidx.navigation:navigation-compose:$nav_version")
@@ -32,6 +37,11 @@ keys, and functions to retrieve arguments values in a more secure way.
 ??? note "Multiplatform"
 
     ```kotlin
+    // Optional: Use Annotations to generate NavDestinations.
+    plugins {
+        id("com.google.devtools.ksp")
+    }
+
     kotlin {
     
         sourceSets {
