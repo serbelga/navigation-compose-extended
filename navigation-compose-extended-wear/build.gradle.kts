@@ -8,6 +8,9 @@ plugins {
     id("dev.sergiobelda.gradle.spotless")
 }
 
+group = "dev.sergiobelda.navigation.compose.extended"
+version = libs.versions.navigationComposeExtended.get()
+
 android {
     namespace = "dev.sergiobelda.navigation.compose.extended.wear"
     compileSdk = libs.versions.androidCompileSdk.get().toInt()
