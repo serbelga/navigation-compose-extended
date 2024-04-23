@@ -2,7 +2,7 @@
 
 [![Maven Central](https://img.shields.io/maven-central/v/dev.sergiobelda.navigation.compose.extended/navigation-compose-extended)](https://search.maven.org/search?q=g:dev.sergiobelda.navigation.compose.extended)
 
-Navigation Compose Extended is a complementary multiplataform library for Jetpack Navigation Compose to
+Navigation Compose Extended is a complementary multiplatform library for Jetpack Navigation Compose to
 improve creation of navigation elements, as destination routes, arguments, deep links, … in a
 more idiomatic way than using literals. It also provides Safe navigation routes and Safe navigation arguments.
 
