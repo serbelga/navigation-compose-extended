@@ -25,6 +25,12 @@ android {
     kotlin {
         jvmToolchain(17)
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
+    }
 }
 
 dependencies {
