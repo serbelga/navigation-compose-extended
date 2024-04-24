@@ -33,7 +33,6 @@ import dev.sergiobelda.navigation.compose.extended.NavDestination
  * @param deepLinks list of deep links to associate with the destinations
  * @param content composable for the destination
  */
-@Composable
 fun NavGraphBuilder.composable(
     navDestination: NavDestination<*>,
     arguments: List<NamedNavArgument> = navDestination.arguments,
