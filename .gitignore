@@ -17,3 +17,4 @@ local.properties
 /site/
 /navigation-compose-extended-annotation/build/
 /navigation-compose-extended-wear/build/
+/.kotlin/
