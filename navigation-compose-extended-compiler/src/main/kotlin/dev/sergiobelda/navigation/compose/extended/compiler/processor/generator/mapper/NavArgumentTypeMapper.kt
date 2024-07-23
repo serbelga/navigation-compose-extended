@@ -16,11 +16,9 @@
 
 package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.mapper
 
-import com.squareup.kotlinpoet.MemberName
 import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.asTypeName
 import dev.sergiobelda.navigation.compose.extended.annotation.NavArgumentType
-import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.names.MemberNames
 
 /**
  * Converts a [NavArgumentType] to a NavType definition.
@@ -37,13 +35,13 @@ internal fun NavArgumentType.toNavType(): String =
 /**
  * Converts a [NavArgumentType] to a NavArgs getter function name.
  */
-internal fun NavArgumentType.toNavArgsGetter(): MemberName =
+internal fun NavArgumentType.toNavArgsGetter(): String =
     when (this) {
-        NavArgumentType.Boolean -> MemberNames.NavArgsGetBoolean
-        NavArgumentType.Float -> MemberNames.NavArgsGetFloat
-        NavArgumentType.Int -> MemberNames.NavArgsGetInt
-        NavArgumentType.Long -> MemberNames.NavArgsGetLong
-        NavArgumentType.String -> MemberNames.NavArgsGetString
+        NavArgumentType.Boolean -> "getBoolean"
+        NavArgumentType.Float -> "getFloat"
+        NavArgumentType.Int -> "getInt"
+        NavArgumentType.Long -> "getLong"
+        NavArgumentType.String -> "getString"
     }
 
 /**
