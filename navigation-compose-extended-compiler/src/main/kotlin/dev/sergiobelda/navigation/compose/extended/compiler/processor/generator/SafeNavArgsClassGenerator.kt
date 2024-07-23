@@ -19,7 +19,6 @@ package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
-import com.squareup.kotlinpoet.MemberName
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
@@ -83,7 +82,7 @@ internal class SafeNavArgsClassGenerator(
         apply {
             navArguments.forEach { navArgument ->
                 val typeName = navArgument.type.asTypeName().copy(nullable = true)
-                val memberName: MemberName = navArgument.type.toNavArgsGetter()
+                val getterFunName: String = navArgument.type.toNavArgsGetter()
                 addProperty(
                     PropertySpec.builder(
                         navArgument.name,
@@ -91,9 +90,9 @@ internal class SafeNavArgsClassGenerator(
                     ).getter(
                         FunSpec.getterBuilder()
                             .addStatement(
-                                "return %N.%M(%T.%N)",
+                                "return %N.%N(%T.%N)",
                                 NAV_ARGS_PROPERTY_NAME,
-                                memberName,
+                                getterFunName,
                                 navArgumentKeysClass,
                                 navArgument.name.formatNavArgumentKey(),
                             )

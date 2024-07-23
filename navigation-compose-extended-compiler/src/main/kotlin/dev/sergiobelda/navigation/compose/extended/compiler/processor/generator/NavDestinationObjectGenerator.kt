@@ -162,7 +162,7 @@ internal class NavDestinationObjectGenerator(
     private fun TypeSpec.Builder.addSafeNavRouteFunction() =
         apply {
             addFunction(
-                FunSpec.builder("safeNavRoute")
+                FunSpec.builder(SAFE_NAV_ROUTE_FUNCTION_NAME)
                     .addNavArgumentsToSafeNavRouteFunctionParameters()
                     .returns(
                         ClassNames.NavRoute.parameterizedBy(
@@ -171,7 +171,7 @@ internal class NavDestinationObjectGenerator(
                     )
                     .addCode(
                         buildCodeBlock {
-                            add("return %M(\n", MemberNames.NavRoute)
+                            add("return %N(\n", NAV_ROUTE_FUNCTION_NAME)
                             indent()
                             addNavArgumentsToSafeNavRouteFunctionBody()
                             unindent()
@@ -217,5 +217,7 @@ internal class NavDestinationObjectGenerator(
         private const val ARGUMENTS_MAP_PROPERTY_NAME = "argumentsMap"
         private const val DESTINATION_ID_PROPERTY_NAME = "destinationId"
         private const val DEEP_LINK_URIS_PROPERTY_NAME = "deepLinkUris"
+        private const val NAV_ROUTE_FUNCTION_NAME = "navRoute"
+        private const val SAFE_NAV_ROUTE_FUNCTION_NAME = "safeNavRoute"
     }
 }

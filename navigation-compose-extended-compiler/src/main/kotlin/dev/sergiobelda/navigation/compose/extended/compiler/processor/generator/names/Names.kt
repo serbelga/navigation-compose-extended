@@ -47,12 +47,6 @@ internal object ClassNames {
 internal object MemberNames {
     val ListOf = MemberName(KOTLIN_COLLECTIONS, "listOf")
     val MapOf = MemberName(KOTLIN_COLLECTIONS, "mapOf")
-    val NavArgsGetBoolean = MemberName("", "getBoolean")
-    val NavArgsGetFloat = MemberName("", "getFloat")
-    val NavArgsGetInt = MemberName("", "getInt")
-    val NavArgsGetLong = MemberName("", "getLong")
-    val NavArgsGetString = MemberName("", "getString")
-    val NavRoute = MemberName("", "navRoute")
 }
 
 private const val ANDROIDX_NAVIGATION_PACKAGE_NAME = "androidx.navigation"
