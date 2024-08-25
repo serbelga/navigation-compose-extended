@@ -42,11 +42,6 @@ kotlin {
                 implementation(libs.jetbrains.navigation.compose)
             }
         }
-        val androidMain by getting {
-            dependencies {
-                implementation(libs.androidx.compose.material3)
-            }
-        }
         val desktopMain by getting {
             dependencies {
                 implementation(compose.desktop.currentOs)
