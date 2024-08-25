@@ -1,7 +1,7 @@
 [versions]
 activityCompose = "1.9.1"
 androidCompileSdk = "34"
-androidGradlePlugin = "8.5.1"
+androidGradlePlugin = "8.5.2"
 androidMinSdk = "24"
 androidWearMinSdk = "25"
 composeBom = "2024.08.00"
