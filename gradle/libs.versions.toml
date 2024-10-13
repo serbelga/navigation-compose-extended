@@ -12,7 +12,7 @@ ksp = "2.0.20-1.0.25"
 ktlint = "0.50.0"
 navigationComposeExtended = "0.8.5"
 spotless = "6.25.0"
-vanniktechMavenPublishPlugin = "0.29.0"
+vanniktechMavenPublishPlugin = "0.30.0"
 wearCompose = "1.4.0"
 
 [libraries]
