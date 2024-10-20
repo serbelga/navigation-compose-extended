@@ -138,8 +138,8 @@ NavHost(navController = navController, startDestination = HomeNavDestination.rou
         HomeScreen()
     }
     composable(
-        route = HomeNavDestination.route,
-        arguments = HomeNavDestination.arguments
+        route = SettingsNavDestination.route,
+        arguments = SettingsNavDestination.arguments
     ) {
         SettingsScreen()
     }
