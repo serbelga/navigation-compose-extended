@@ -1,5 +1,5 @@
 [versions]
-androidCompileSdk = "34"
+androidCompileSdk = "35"
 androidGradlePlugin = "8.7.3"
 androidMinSdk = "24"
 androidWearMinSdk = "25"
