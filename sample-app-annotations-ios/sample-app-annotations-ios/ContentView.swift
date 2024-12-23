@@ -1,8 +1,8 @@
 //
 //  ContentView.swift
-//  iosSampleAppAnnotations
+//  sample-app-annotations-ios
 //
-//  Created by Sergio Belda Galbis on 21/4/24.
+//  Created by Sergio Belda Galbis on 24/12/24.
 //
 
 import SwiftUI
