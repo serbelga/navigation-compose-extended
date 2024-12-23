@@ -1,14 +1,14 @@
 //
-//  iosSampleAppApp.swift
-//  iosSampleApp
+//  SampleApp.swift
+//  SampleApp
 //
-//  Created by Sergio Belda Galbis on 21/4/24.
+//  Created by Sergio Belda Galbis on 23/12/24.
 //
 
 import SwiftUI
 
 @main
-struct iosSampleAppApp: App {
+struct SampleApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
