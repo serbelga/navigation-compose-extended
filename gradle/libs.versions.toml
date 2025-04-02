@@ -6,14 +6,14 @@ androidWearMinSdk = "25"
 composeMultiplatform = "1.7.3"
 dokka = "2.0.0"
 jetbrainsNavigation = "2.8.0-alpha12"
-kotlin = "2.1.0"
+kotlin = "2.1.20"
 kotlinpoet = "2.1.0"
-ksp = "2.1.0-1.0.29"
+ksp = "2.1.20-1.0.32"
 ktlint = "0.50.0"
 navigationComposeExtended = "1.0.0"
-spotless = "7.0.1"
+spotless = "7.0.2"
 vanniktechMavenPublishPlugin = "0.31.0"
-wearCompose = "1.4.0"
+wearCompose = "1.4.1"
 
 [libraries]
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
