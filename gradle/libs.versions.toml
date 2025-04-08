@@ -11,7 +11,7 @@ kotlinpoet = "2.1.0"
 ksp = "2.1.20-1.0.32"
 ktlint = "0.50.0"
 navigationComposeExtended = "1.1.0"
-spotless = "7.0.2"
+spotless = "7.0.3"
 vanniktechMavenPublishPlugin = "0.30.0"
 wearCompose = "1.4.1"
 
