@@ -1,6 +1,6 @@
 [versions]
 androidCompileSdk = "35"
-androidGradlePlugin = "8.9.2"
+androidGradlePlugin = "8.10.1"
 androidMinSdk = "24"
 androidWearMinSdk = "25"
 composeMultiplatform = "1.7.3"
