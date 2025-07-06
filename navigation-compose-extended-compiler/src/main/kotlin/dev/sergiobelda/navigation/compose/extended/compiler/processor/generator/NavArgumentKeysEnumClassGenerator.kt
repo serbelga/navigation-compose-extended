@@ -32,7 +32,7 @@ internal class NavArgumentKeysEnumClassGenerator(
     private val name: String,
     private val navArguments: Array<NavArgument>,
 ) {
-    fun generate(): TypeSpec =
+    fun builder(): TypeSpec.Builder =
         TypeSpec.enumBuilder(name)
             .primaryConstructor(
                 FunSpec.constructorBuilder()
@@ -52,7 +52,9 @@ internal class NavArgumentKeysEnumClassGenerator(
                 ClassNames.NavArgumentKey,
             )
             .addNavArguments()
-            .build()
+
+    fun generate(): TypeSpec =
+        builder().build()
 
     private fun TypeSpec.Builder.addNavArguments() =
         apply {

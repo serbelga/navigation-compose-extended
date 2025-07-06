@@ -20,6 +20,7 @@ import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.symbol.KSFunctionDeclaration
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.ksp.addOriginatingKSFile
 import com.squareup.kotlinpoet.ksp.writeTo
 import dev.sergiobelda.navigation.compose.extended.annotation.NavDestination
 import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.mapper.toNavDestination
@@ -62,6 +63,8 @@ internal class NavDestinationGenerator(
         val navDestinationClass = ClassName(packageName, navDestinationName)
         val safeNavArgsName = name + SAFE_NAV_ARGS
 
+        val containingFile = functionDeclaration.containingFile ?: return
+
         val fileSpec = FileSpec.builder(
             packageName = packageName,
             fileName = name + NAVIGATION_FILE_NAME_SUFFIX,
@@ -70,7 +73,7 @@ internal class NavDestinationGenerator(
                 NavArgumentKeysEnumClassGenerator(
                     name = navArgumentKeysName,
                     navArguments = navArguments,
-                ).generate(),
+                ).builder().addOriginatingKSFile(containingFile).build(),
             )
             addType(
                 NavDestinationObjectGenerator(
@@ -80,7 +83,7 @@ internal class NavDestinationGenerator(
                     navArgumentKeysClass = navArgumentKeysClass,
                     navArguments = navArguments,
                     deepLinksUris = annotation.deepLinkUris,
-                ).generate(),
+                ).builder().addOriginatingKSFile(containingFile).build(),
             )
             addType(
                 SafeNavArgsClassGenerator(
@@ -88,7 +91,7 @@ internal class NavDestinationGenerator(
                     navDestinationClass = navDestinationClass,
                     navArgumentKeysClass = navArgumentKeysClass,
                     navArguments = navArguments,
-                ).generate(),
+                ).builder().addOriginatingKSFile(containingFile).build(),
             )
         }.build()
 

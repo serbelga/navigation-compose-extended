@@ -47,7 +47,7 @@ internal class NavDestinationObjectGenerator(
     private val navArguments: Array<NavArgument>,
     private val deepLinksUris: Array<String>,
 ) {
-    fun generate(): TypeSpec {
+    fun builder(): TypeSpec.Builder {
         val superClass = if (isTopLevelNavDestination) {
             ClassNames.TopLevelNavDestination
         } else {
@@ -72,8 +72,10 @@ internal class NavDestinationObjectGenerator(
             .addArgumentsMapProperty()
             .addDeepLinksUrisProperty()
             .addSafeNavRouteFunction()
-            .build()
     }
+
+    fun generate(): TypeSpec =
+        builder().build()
 
     private fun TypeSpec.Builder.addArgumentsMapProperty() =
         apply {

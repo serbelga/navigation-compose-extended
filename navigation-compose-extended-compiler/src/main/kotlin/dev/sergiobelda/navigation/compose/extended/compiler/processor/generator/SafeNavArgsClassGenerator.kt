@@ -39,7 +39,7 @@ internal class SafeNavArgsClassGenerator(
     private val navArgumentKeysClass: ClassName,
     private val navArguments: Array<NavArgument>,
 ) {
-    fun generate(): TypeSpec =
+    fun builder(): TypeSpec.Builder =
         TypeSpec.classBuilder(name)
             .primaryConstructor(
                 FunSpec.constructorBuilder()
@@ -51,7 +51,9 @@ internal class SafeNavArgsClassGenerator(
             )
             .addNavArgsProperty()
             .addNavArgumentGetters()
-            .build()
+
+    fun generate(): TypeSpec =
+        builder().build()
 
     private fun TypeSpec.Builder.addNavArgsProperty() =
         apply {

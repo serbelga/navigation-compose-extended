@@ -18,7 +18,7 @@ package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 
 import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSAnnotation
-import com.google.devtools.ksp.symbol.KSType
+import com.google.devtools.ksp.symbol.KSClassDeclaration
 import dev.sergiobelda.navigation.compose.extended.annotation.NavArgument
 import dev.sergiobelda.navigation.compose.extended.annotation.NavArgumentType
 import dev.sergiobelda.navigation.compose.extended.annotation.NavDestination
@@ -51,18 +51,18 @@ private fun KSAnnotation.toNavArguments(): NavArgument =
     with(arguments) {
         NavArgument(
             name = first { it.name?.asString() == NavArgument::name.name }.value as String,
-            type = (firstOrNull { it.name?.asString() == NavArgument::type.name }?.value as? KSType)?.toNavArgumentType() ?: NavArgumentType.String,
+            type = (firstOrNull { it.name?.asString() == NavArgument::type.name }?.value as? KSClassDeclaration)?.toNavArgumentType() ?: NavArgumentType.String,
             nullable = firstOrNull { it.name?.asString() == NavArgument::nullable.name }?.value as? Boolean ?: false,
             defaultValue = (firstOrNull { it.name?.asString() == NavArgument::defaultValue.name }?.value as? String).orEmpty(),
         )
     }
 
-private fun KSType.toNavArgumentType(): NavArgumentType =
-    when (declaration.simpleName.asString()) {
+private fun KSClassDeclaration.toNavArgumentType(): NavArgumentType =
+    when (simpleName.asString()) {
         NavArgumentType.Boolean.name -> NavArgumentType.Boolean
         NavArgumentType.Float.name -> NavArgumentType.Float
         NavArgumentType.Int.name -> NavArgumentType.Int
         NavArgumentType.Long.name -> NavArgumentType.Long
         NavArgumentType.String.name -> NavArgumentType.String
-        else -> throw IllegalArgumentException("Unknown NavArgumentType: $declaration}")
+        else -> throw IllegalArgumentException("Unknown NavArgumentType: $this}")
     }
