@@ -22,6 +22,7 @@ import androidx.navigation.NavType.Companion.FloatType
 import androidx.navigation.NavType.Companion.IntType
 import androidx.navigation.NavType.Companion.LongType
 import androidx.navigation.NavType.Companion.StringType
+import androidx.savedstate.read
 
 /**
  * It resolves the argument values for given a [navBackStackEntry] for the [navDestination].
@@ -35,7 +36,7 @@ class NavArgs<K> internal constructor(
 
     private fun buildArgumentValuesMap(): Map<String, Any?> {
         val map = mutableMapOf<String, Any?>()
-        navBackStackEntry.arguments?.apply {
+        navBackStackEntry.arguments?.read {
             navDestination.arguments.forEach { namedNavArgument ->
                 map[namedNavArgument.name] = when (namedNavArgument.argument.type) {
                     BoolType -> getBoolean(namedNavArgument.name)
