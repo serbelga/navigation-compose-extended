@@ -37,7 +37,7 @@ dependencies {
 }
 
 mavenPublishing {
-    publishToMavenCentral(SonatypeHost.S01, true)
+    publishToMavenCentral(true)
 
     signAllPublications()
 }

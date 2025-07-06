@@ -54,7 +54,7 @@ android {
 }
 
 mavenPublishing {
-    publishToMavenCentral(SonatypeHost.S01, true)
+    publishToMavenCentral(true)
 
     signAllPublications()
 }

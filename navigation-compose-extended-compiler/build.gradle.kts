@@ -1,5 +1,3 @@
-import com.vanniktech.maven.publish.SonatypeHost
-
 plugins {
     kotlin("multiplatform")
     alias(libs.plugins.ksp)
@@ -36,7 +34,7 @@ kotlin {
 }
 
 mavenPublishing {
-    publishToMavenCentral(SonatypeHost.S01, true)
+    publishToMavenCentral(true)
 
     signAllPublications()
 }
