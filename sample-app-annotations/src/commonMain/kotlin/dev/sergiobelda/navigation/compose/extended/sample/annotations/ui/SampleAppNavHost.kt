@@ -45,7 +45,7 @@ fun SampleAppNavHost() {
         }
         composable(navDestination = SettingsNavDestination) { navBackStackEntry ->
             val safeNavArgs = SettingsSafeNavArgs(navBackStackEntry)
-            SettingsScreen.Content(
+            SettingsScreen(
                 userId = safeNavArgs.userId ?: 0,
                 text = safeNavArgs.text,
                 result = safeNavArgs.result ?: false,

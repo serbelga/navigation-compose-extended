@@ -17,7 +17,7 @@
 package dev.sergiobelda.navigation.compose.extended.compiler.processor.generator
 
 import com.google.devtools.ksp.processing.CodeGenerator
-import com.google.devtools.ksp.symbol.KSDeclaration
+import com.google.devtools.ksp.symbol.KSFunctionDeclaration
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.ksp.addOriginatingKSFile
@@ -33,17 +33,17 @@ internal class NavDestinationGenerator(
     private val codeGenerator: CodeGenerator,
 ) {
     fun generate(
-        declaration: KSDeclaration,
+        functionDeclaration: KSFunctionDeclaration,
     ) {
         // New API was causing java.lang.IllegalStateException: unhandled value type on Multiplatform
         // val annotation: NavDestination? = functionDeclaration
         //    .getAnnotationsByType(NavDestination::class)
         //    .firstOrNull()
         // As a workaround, we must map the [KSAnnotated] manually to [NavDestination].
-        val annotation: NavDestination? = declaration.toNavDestination()
+        val annotation: NavDestination? = functionDeclaration.toNavDestination()
 
         requireNotNull(annotation) {
-            "NavDestination annotation not found in $declaration."
+            "NavDestination annotation not found in $functionDeclaration function."
         }
 
         val navArguments = annotation.arguments
@@ -53,8 +53,8 @@ internal class NavDestinationGenerator(
             "NavArgument names must be unique. Duplicated names: ${navArgumentNames.joinToString { it.first().name }}"
         }
 
-        val packageName = declaration.packageName.asString()
-        val functionSimpleName = declaration.simpleName.asString()
+        val packageName = functionDeclaration.packageName.asString()
+        val functionSimpleName = functionDeclaration.simpleName.asString()
         val name =
             annotation.name.takeUnless { it.isBlank() }?.formatName() ?: functionSimpleName
         val navArgumentKeysName = name + NAV_ARGUMENT_KEYS
@@ -63,7 +63,7 @@ internal class NavDestinationGenerator(
         val navDestinationClass = ClassName(packageName, navDestinationName)
         val safeNavArgsName = name + SAFE_NAV_ARGS
 
-        val containingFile = declaration.containingFile ?: return
+        val containingFile = functionDeclaration.containingFile ?: return
 
         val fileSpec = FileSpec.builder(
             packageName = packageName,

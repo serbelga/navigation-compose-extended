@@ -17,7 +17,6 @@
 package dev.sergiobelda.navigation.compose.extended.compiler.processor
 
 import com.google.devtools.ksp.processing.CodeGenerator
-import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.symbol.KSFunctionDeclaration
 import com.google.devtools.ksp.symbol.KSVisitorVoid
 import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.NavDestinationGenerator
@@ -29,13 +28,7 @@ internal class NavDestinationVisitor(
 
     override fun visitFunctionDeclaration(function: KSFunctionDeclaration, data: Unit) {
         navDestinationGenerator.generate(
-            declaration = function,
-        )
-    }
-
-    override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: Unit) {
-        navDestinationGenerator.generate(
-            declaration = classDeclaration,
+            functionDeclaration = function,
         )
     }
 }
