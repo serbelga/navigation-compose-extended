@@ -28,7 +28,7 @@ package dev.sergiobelda.navigation.compose.extended.annotation
  * a SafeNavArgs class to access to the argument values.
  */
 @Retention(AnnotationRetention.BINARY)
-@Target(AnnotationTarget.FUNCTION)
+@Target(AnnotationTarget.FUNCTION, AnnotationTarget.CLASS)
 annotation class NavDestination(
     val destinationId: String,
     val name: String = "",
