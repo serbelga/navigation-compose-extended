@@ -39,11 +39,11 @@ class NavArgs<K> internal constructor(
         navBackStackEntry.arguments?.read {
             navDestination.arguments.forEach { namedNavArgument ->
                 map[namedNavArgument.name] = when (namedNavArgument.argument.type) {
-                    BoolType -> getBoolean(namedNavArgument.name)
-                    FloatType -> getFloat(namedNavArgument.name)
-                    IntType -> getInt(namedNavArgument.name)
-                    LongType -> getLong(namedNavArgument.name)
-                    StringType -> getString(namedNavArgument.name)
+                    BoolType -> getBooleanOrNull(namedNavArgument.name)
+                    FloatType -> getFloatOrNull(namedNavArgument.name)
+                    IntType -> getIntOrNull(namedNavArgument.name)
+                    LongType -> getLongOrNull(namedNavArgument.name)
+                    StringType -> getStringOrNull(namedNavArgument.name)
                     else -> null
                 }
             }
@@ -54,65 +54,100 @@ class NavArgs<K> internal constructor(
     /**
      * Get the [Boolean] value of the argument the given its [key].
      */
-    fun getBoolean(key: K): Boolean? =
-        argumentValues.getValue(key.argumentKey) as? Boolean
+    fun getBoolean(key: K): Boolean =
+        argumentValues.getValue(key.argumentKey) as Boolean
 
     /**
-     * Get the [Boolean] value of the argument the given its [key], or
-     * [defaultValue] if the argument is not present.
+     * Get the [Boolean] value of the argument given its [key], or null
+     * if the argument is not present or value is not a [Boolean].
+     */
+    fun getBooleanOrNull(key: K): Boolean? =
+        argumentValues[key.argumentKey] as? Boolean
+
+    /**
+     * Get the [Boolean] value of the argument given its [key], or [defaultValue]
+     * if the argument is not present or value is not a [Boolean].
      */
     fun getBooleanOrDefault(key: K, defaultValue: Boolean): Boolean =
-        getBoolean(key) ?: defaultValue
+        getBooleanOrNull(key) ?: defaultValue
 
     /**
-     * Get the [Float] value of the argument the given its [key].
+     * Get the [Float] value of the argument given its [key].
      */
-    fun getFloat(key: K): Float? =
-        argumentValues.getValue(key.argumentKey) as? Float
+    fun getFloat(key: K): Float =
+        argumentValues.getValue(key.argumentKey) as Float
 
     /**
-     * Get the [Float] value of the argument the given its [key], or
-     * [defaultValue] if the argument is not present.
+     * Get the [Float] value of the argument given its [key], or null
+     * if the argument is not present or the key or value is not a [Float].
+     */
+    fun getFloatOrNull(key: K): Float? =
+        argumentValues[key.argumentKey] as? Float
+
+    /**
+     * Get the [Float] value of the argument given its [key], or [defaultValue]
+     * if the argument is not present.
      */
     fun getFloatOrDefault(key: K, defaultValue: Float): Float =
-        getFloat(key) ?: defaultValue
+        getFloatOrNull(key) ?: defaultValue
 
     /**
-     * Get the [Int] value of the argument the given its [key].
+     * Get the [Int] value of the argument given its [key].
      */
-    fun getInt(key: K): Int? =
-        argumentValues.getValue(key.argumentKey) as? Int
+    fun getInt(key: K): Int =
+        argumentValues.getValue(key.argumentKey) as Int
 
     /**
-     * Get the [Int] value of the argument the given its [key], or
-     * [defaultValue] if the argument is not present.
+     * Get the [Int] value of the argument given its [key], or null
+     * if the argument is not present or the key or value is not a [Int].
+     */
+    fun getIntOrNull(key: K): Int? =
+        argumentValues[key.argumentKey] as? Int
+
+    /**
+     * Get the [Int] value of the argument the given its [key], or [defaultValue]
+     * if the argument is not present or the key or value is not a [Int].
      */
     fun getIntOrDefault(key: K, defaultValue: Int): Int =
-        getInt(key) ?: defaultValue
+        getIntOrNull(key) ?: defaultValue
 
     /**
-     * Get the [Long] value of the argument the given its [key].
+     * Get the [Long] value of the argument given its [key].
      */
-    fun getLong(key: K): Long? =
-        argumentValues.getValue(key.argumentKey) as? Long
+    fun getLong(key: K): Long =
+        argumentValues.getValue(key.argumentKey) as Long
 
     /**
-     * Get the [Long] value of the argument the given its [key], or
-     * [defaultValue] if the argument is not present.
+     * Get the [Long] value of the argument given its [key], or null
+     * if the argument is not present or the key or value is not a [Long].
+     */
+    fun getLongOrNull(key: K): Long? =
+        argumentValues[key.argumentKey] as? Long
+
+    /**
+     * Get the [Long] value of the argument given its [key], or [defaultValue]
+     * if the argument is not present or the key or value is not a [Long].
      */
     fun getLongOrDefault(key: K, defaultValue: Long): Long =
-        getLong(key) ?: defaultValue
+        getLongOrNull(key) ?: defaultValue
 
     /**
-     * Get the [String] value of the argument the given its [key].
+     * Get the [String] value of the argument given its [key].
      */
-    fun getString(key: K): String? =
-        argumentValues.getValue(key.argumentKey) as? String
+    fun getString(key: K): String =
+        argumentValues.getValue(key.argumentKey) as String
 
     /**
-     * Get the [String] value of the argument the given its [key], or
-     * [defaultValue] if the argument is not present.
+     * Get the [String] value of the argument given its [key], or null
+     * if the argument is not present or the key or value is not a [String].
+     */
+    fun getStringOrNull(key: K): String? =
+        argumentValues[key.argumentKey] as? String
+
+    /**
+     * Get the [String] value of the argument given its [key], or [defaultValue]
+     * if the argument is not present or the key or value is not a [String].
      */
     fun getStringOrDefault(key: K, defaultValue: String): String =
-        getString(key) ?: defaultValue
+        getStringOrNull(key) ?: defaultValue
 }
