@@ -27,8 +27,8 @@ package dev.sergiobelda.navigation.compose.extended.annotation
  * In addition, an enum class that contains the navigation arguments keys will be generated and
  * a SafeNavArgs class to access to the argument values.
  */
-@Retention(AnnotationRetention.BINARY)
-@Target(AnnotationTarget.FUNCTION)
+@Retention(AnnotationRetention.SOURCE)
+@Target(AnnotationTarget.FUNCTION, AnnotationTarget.CLASS)
 annotation class NavDestination(
     val destinationId: String,
     val name: String = "",

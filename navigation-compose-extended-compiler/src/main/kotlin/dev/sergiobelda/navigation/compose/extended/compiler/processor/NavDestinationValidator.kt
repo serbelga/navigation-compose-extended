@@ -17,11 +17,12 @@
 package dev.sergiobelda.navigation.compose.extended.compiler.processor
 
 import com.google.devtools.ksp.symbol.KSAnnotated
+import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.symbol.KSFunctionDeclaration
 import com.google.devtools.ksp.validate
 
 internal class NavDestinationValidator {
 
     fun isValid(symbol: KSAnnotated): Boolean =
-        symbol is KSFunctionDeclaration && symbol.validate()
+        (symbol is KSFunctionDeclaration || symbol is KSClassDeclaration) && symbol.validate()
 }

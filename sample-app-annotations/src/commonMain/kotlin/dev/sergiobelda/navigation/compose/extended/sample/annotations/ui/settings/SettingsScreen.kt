@@ -35,18 +35,21 @@ import dev.sergiobelda.navigation.compose.extended.annotation.NavDestination
         NavArgument(name = "result", type = NavArgumentType.Boolean, defaultValue = "true"),
     ],
 )
-@Composable
-fun SettingsScreen(
-    userId: Int,
-    text: String?,
-    result: Boolean,
-) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Column {
-            Text(text = "Settings Screen")
-            Text(text = "User ID: $userId")
-            Text(text = "Text: $text")
-            Text(text = "Result: $result")
+data object SettingsScreen {
+
+    @Composable
+    fun Content(
+        userId: Int,
+        text: String?,
+        result: Boolean,
+    ) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Column {
+                Text(text = "Settings Screen")
+                Text(text = "User ID: $userId")
+                Text(text = "Text: $text")
+                Text(text = "Result: $result")
+            }
         }
     }
 }
