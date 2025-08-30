@@ -37,7 +37,8 @@ fun SampleAppNavHost() {
                 navigateToSettings = {
                     navAction.navigate(
                         SettingsNavDestination.safeNavRoute(
-                            userId = 1,
+                            userId = 10,
+                            text = "Hello Settings",
                         ),
                     )
                 },
@@ -46,9 +47,9 @@ fun SampleAppNavHost() {
         composable(navDestination = SettingsNavDestination) { navBackStackEntry ->
             val safeNavArgs = SettingsSafeNavArgs(navBackStackEntry)
             SettingsScreen.Content(
-                userId = safeNavArgs.userId ?: 0,
+                userId = safeNavArgs.userId,
                 text = safeNavArgs.text,
-                result = safeNavArgs.result ?: false,
+                result = safeNavArgs.result,
             )
         }
     }

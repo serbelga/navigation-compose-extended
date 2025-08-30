@@ -24,8 +24,10 @@ import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.buildCodeBlock
 import dev.sergiobelda.navigation.compose.extended.annotation.NavArgument
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.extensions.hasDefaultValue
 import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.mapper.asTypeName
 import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.mapper.toNavArgsGetter
+import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.mapper.toValue
 import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.names.ClassNames
 import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.utils.formatNavArgumentKey
 
@@ -83,7 +85,7 @@ internal class SafeNavArgsClassGenerator(
     private fun TypeSpec.Builder.addNavArgumentGetters() =
         apply {
             navArguments.forEach { navArgument ->
-                val typeName = navArgument.type.asTypeName().copy(nullable = true)
+                val typeName = navArgument.type.asTypeName().copy(nullable = navArgument.nullable)
                 val getterFunName: String = navArgument.type.toNavArgsGetter()
                 addProperty(
                     PropertySpec.builder(
@@ -92,17 +94,38 @@ internal class SafeNavArgsClassGenerator(
                     ).getter(
                         FunSpec.getterBuilder()
                             .addStatement(
-                                "return %N.%N(%T.%N)",
+                                getterFormat(
+                                    navArgument.nullable,
+                                    navArgument.hasDefaultValue,
+                                ),
                                 NAV_ARGS_PROPERTY_NAME,
                                 getterFunName,
                                 navArgumentKeysClass,
                                 navArgument.name.formatNavArgumentKey(),
+                                if (navArgument.hasDefaultValue) {
+                                    navArgument.defaultValue.toValue(navArgument.type)
+                                } else {
+                                    ""
+                                },
                             )
                             .build(),
                     ).build(),
                 )
             }
         }
+
+    private fun getterFormat(
+        nullable: Boolean,
+        hasDefaultValue: Boolean,
+    ): String {
+        return "return " + if (hasDefaultValue) {
+            "%N.%NOrDefault(%T.%N, %L)"
+        } else if (nullable) {
+            "%N.%NOrNull(%T.%N%L)"
+        } else {
+            "%N.%N(%T.%N%L)"
+        }
+    }
 
     companion object {
         private const val NAV_BACK_STACK_ENTRY_PARAMETER_NAME = "navBackStackEntry"
