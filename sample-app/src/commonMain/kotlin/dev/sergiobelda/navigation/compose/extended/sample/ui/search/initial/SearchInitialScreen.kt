@@ -41,9 +41,7 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchInitialScreen(
-    navigateToSearchResult: (search: String, category: String) -> Unit,
-) {
+fun SearchInitialScreen(navigateToSearchResult: (search: String, category: String) -> Unit) {
     var search by rememberSaveable { mutableStateOf("") }
     var isError by rememberSaveable { mutableStateOf(false) }
     Scaffold(
@@ -54,18 +52,20 @@ fun SearchInitialScreen(
         },
     ) { paddingValues ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(horizontal = 8.dp),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(horizontal = 8.dp),
             horizontalAlignment = Alignment.End,
         ) {
             OutlinedTextField(
                 value = search,
                 onValueChange = { search = it },
                 placeholder = { Text(text = "Search and discover Music") },
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier =
+                    Modifier
+                        .fillMaxWidth(),
                 isError = isError,
                 leadingIcon = {
                     Icon(

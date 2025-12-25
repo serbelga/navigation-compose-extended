@@ -46,20 +46,22 @@ abstract class NavDestination<K> where K : NavArgumentKey {
      * List of [NamedNavArgument] associated with destination.
      */
     val arguments: List<NamedNavArgument>
-        get() = argumentsMap.map {
-            navArgument(it.key.argumentKey, it.value)
-        }
+        get() =
+            argumentsMap.map {
+                navArgument(it.key.argumentKey, it.value)
+            }
 
     /**
      * List of [NavDeepLink] associated with destination.
      */
     val deepLinks: List<NavDeepLink>
-        get() = deepLinkUris.map {
-            //  navDeepLink {
-            //      uriPattern = it + argumentsRoute
-            //  }
-            NavDeepLink.Builder().setUriPattern(it + argumentsRoute).build()
-        }
+        get() =
+            deepLinkUris.map {
+                //  navDeepLink {
+                //      uriPattern = it + argumentsRoute
+                //  }
+                NavDeepLink.Builder().setUriPattern(it + argumentsRoute).build()
+            }
 
     /**
      * Route to this destination. It consists of [destinationId] and [arguments].
@@ -81,23 +83,25 @@ abstract class NavDestination<K> where K : NavArgumentKey {
                 separator = PARAM_SEPARATOR,
             ) {
                 "{${it.name}}"
-            } + optionalParameters.takeIf { it.isNotEmpty() }?.joinToString(
-                prefix = QUERY_PARAM_PREFIX,
-                separator = QUERY_PARAM_SEPARATOR,
-            ) { "${it.name}={${it.name}}" }.orEmpty()
+            } +
+                optionalParameters
+                    .takeIf { it.isNotEmpty() }
+                    ?.joinToString(
+                        prefix = QUERY_PARAM_PREFIX,
+                        separator = QUERY_PARAM_SEPARATOR,
+                    ) { "${it.name}={${it.name}}" }
+                    .orEmpty()
         }
 
     /**
      * Returns the [NavRoute] associated with this destination given some [arguments].
      */
-    fun navRoute(vararg arguments: Pair<K, Any?>): NavRoute<K> =
-        NavRoute(this, arguments.toMap())
+    fun navRoute(vararg arguments: Pair<K, Any?>): NavRoute<K> = NavRoute(this, arguments.toMap())
 
     /**
      * Returns a [NavArgs] instance for this destination.
      */
-    fun navArgs(navBackStackEntry: NavBackStackEntry): NavArgs<K> =
-        NavArgs(this, navBackStackEntry)
+    fun navArgs(navBackStackEntry: NavBackStackEntry): NavArgs<K> = NavArgs(this, navBackStackEntry)
 
     override fun toString(): String = destinationId
 }

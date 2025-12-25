@@ -27,13 +27,19 @@ internal class NavDestinationVisitor(
 ) : KSVisitorVoid() {
     private val navDestinationGenerator = NavDestinationGenerator(codeGenerator)
 
-    override fun visitFunctionDeclaration(function: KSFunctionDeclaration, data: Unit) {
+    override fun visitFunctionDeclaration(
+        function: KSFunctionDeclaration,
+        data: Unit,
+    ) {
         navDestinationGenerator.generate(
             declaration = function,
         )
     }
 
-    override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: Unit) {
+    override fun visitClassDeclaration(
+        classDeclaration: KSClassDeclaration,
+        data: Unit,
+    ) {
         navDestinationGenerator.generate(
             declaration = classDeclaration,
         )

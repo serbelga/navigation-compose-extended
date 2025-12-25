@@ -48,50 +48,51 @@ internal class NavDestinationObjectGenerator(
     private val deepLinksUris: Array<String>,
 ) {
     fun builder(): TypeSpec.Builder {
-        val superClass = if (isTopLevelNavDestination) {
-            ClassNames.TopLevelNavDestination
-        } else {
-            ClassNames.NavDestination
-        }
+        val superClass =
+            if (isTopLevelNavDestination) {
+                ClassNames.TopLevelNavDestination
+            } else {
+                ClassNames.NavDestination
+            }
 
-        return TypeSpec.objectBuilder(name)
+        return TypeSpec
+            .objectBuilder(name)
             .superclass(
                 superClass.parameterizedBy(
                     navArgumentKeysClass,
                 ),
-            )
-            .addProperty(
-                PropertySpec.builder(
-                    DESTINATION_ID_PROPERTY_NAME,
-                    String::class,
-                    KModifier.OVERRIDE,
-                )
-                    .initializer("%S", destinationId)
+            ).addProperty(
+                PropertySpec
+                    .builder(
+                        DESTINATION_ID_PROPERTY_NAME,
+                        String::class,
+                        KModifier.OVERRIDE,
+                    ).initializer("%S", destinationId)
                     .build(),
-            )
-            .addArgumentsMapProperty()
+            ).addArgumentsMapProperty()
             .addDeepLinksUrisProperty()
             .addSafeNavRouteFunction()
     }
 
-    fun generate(): TypeSpec =
-        builder().build()
+    fun generate(): TypeSpec = builder().build()
 
     private fun TypeSpec.Builder.addArgumentsMapProperty() =
         apply {
             if (navArguments.isNotEmpty()) {
                 addProperty(
-                    PropertySpec.builder(
-                        ARGUMENTS_MAP_PROPERTY_NAME,
-                        Map::class.asClassName()
-                            .parameterizedBy(
-                                navArgumentKeysClass,
-                                LambdaTypeName.get(
-                                    receiver = ClassNames.NavArgumentBuilder,
-                                    returnType = Unit::class.asClassName(),
+                    PropertySpec
+                        .builder(
+                            ARGUMENTS_MAP_PROPERTY_NAME,
+                            Map::class
+                                .asClassName()
+                                .parameterizedBy(
+                                    navArgumentKeysClass,
+                                    LambdaTypeName.get(
+                                        receiver = ClassNames.NavArgumentBuilder,
+                                        returnType = Unit::class.asClassName(),
+                                    ),
                                 ),
-                            ),
-                    ).addModifiers(KModifier.OVERRIDE)
+                        ).addModifiers(KModifier.OVERRIDE)
                         .initializer(
                             buildCodeBlock {
                                 addStatement("%M(", MemberNames.MapOf)
@@ -100,8 +101,7 @@ internal class NavDestinationObjectGenerator(
                                 unindent()
                                 add(")")
                             },
-                        )
-                        .build(),
+                        ).build(),
                 )
             }
         }
@@ -118,9 +118,7 @@ internal class NavDestinationObjectGenerator(
         }
     }
 
-    private fun CodeBlock.Builder.addNavArgumentBuilderProperties(
-        navArgument: NavArgument,
-    ) {
+    private fun CodeBlock.Builder.addNavArgumentBuilderProperties(navArgument: NavArgument) {
         indent()
         val type = navArgument.type
         addStatement("type = %T.${type.toNavType()}", ClassNames.NavType)
@@ -138,10 +136,11 @@ internal class NavDestinationObjectGenerator(
         apply {
             if (deepLinksUris.isNotEmpty()) {
                 addProperty(
-                    PropertySpec.builder(
-                        DEEP_LINK_URIS_PROPERTY_NAME,
-                        List::class.asClassName().parameterizedBy(String::class.asClassName()),
-                    ).addModifiers(KModifier.OVERRIDE)
+                    PropertySpec
+                        .builder(
+                            DEEP_LINK_URIS_PROPERTY_NAME,
+                            List::class.asClassName().parameterizedBy(String::class.asClassName()),
+                        ).addModifiers(KModifier.OVERRIDE)
                         .initializer(
                             buildCodeBlock {
                                 addStatement("%M(", MemberNames.ListOf)
@@ -155,8 +154,7 @@ internal class NavDestinationObjectGenerator(
                                 unindent()
                                 add(")")
                             },
-                        )
-                        .build(),
+                        ).build(),
                 )
             }
         }
@@ -164,14 +162,14 @@ internal class NavDestinationObjectGenerator(
     private fun TypeSpec.Builder.addSafeNavRouteFunction() =
         apply {
             addFunction(
-                FunSpec.builder(SAFE_NAV_ROUTE_FUNCTION_NAME)
+                FunSpec
+                    .builder(SAFE_NAV_ROUTE_FUNCTION_NAME)
                     .addNavArgumentsToSafeNavRouteFunctionParameters()
                     .returns(
                         ClassNames.NavRoute.parameterizedBy(
                             navArgumentKeysClass,
                         ),
-                    )
-                    .addCode(
+                    ).addCode(
                         buildCodeBlock {
                             add("return %N(\n", NAV_ROUTE_FUNCTION_NAME)
                             indent()
@@ -179,8 +177,7 @@ internal class NavDestinationObjectGenerator(
                             unindent()
                             add(")")
                         },
-                    )
-                    .build(),
+                    ).build(),
             )
         }
 
@@ -188,19 +185,20 @@ internal class NavDestinationObjectGenerator(
         apply {
             navArguments.forEach { navArgument ->
                 addParameter(
-                    ParameterSpec.builder(
-                        navArgument.name,
-                        navArgument.type.asTypeName().copy(nullable = navArgument.nullable),
-                    ).apply {
-                        navArgument.takeIf { it.hasDefaultValue }?.let {
-                            defaultValue(
-                                "%L",
-                                it.defaultValue.toValue(
-                                    navArgument.type,
-                                ),
-                            )
-                        }
-                    }.build(),
+                    ParameterSpec
+                        .builder(
+                            navArgument.name,
+                            navArgument.type.asTypeName().copy(nullable = navArgument.nullable),
+                        ).apply {
+                            navArgument.takeIf { it.hasDefaultValue }?.let {
+                                defaultValue(
+                                    "%L",
+                                    it.defaultValue.toValue(
+                                        navArgument.type,
+                                    ),
+                                )
+                            }
+                        }.build(),
                 )
             }
         }

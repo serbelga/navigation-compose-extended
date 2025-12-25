@@ -20,12 +20,13 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.SampleAppNavHost
 
-fun main() = application {
-    Window(
-        resizable = false,
-        onCloseRequest = ::exitApplication,
-        title = "Sample App",
-    ) {
-        SampleAppNavHost()
+fun main() =
+    application {
+        Window(
+            resizable = false,
+            onCloseRequest = ::exitApplication,
+            title = "Sample App",
+        ) {
+            SampleAppNavHost()
+        }
     }
-}

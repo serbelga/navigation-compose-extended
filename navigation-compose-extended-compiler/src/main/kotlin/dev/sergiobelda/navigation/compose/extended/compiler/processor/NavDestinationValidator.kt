@@ -22,7 +22,5 @@ import com.google.devtools.ksp.symbol.KSFunctionDeclaration
 import com.google.devtools.ksp.validate
 
 internal class NavDestinationValidator {
-
-    fun isValid(symbol: KSAnnotated): Boolean =
-        (symbol is KSFunctionDeclaration || symbol is KSClassDeclaration) && symbol.validate()
+    fun isValid(symbol: KSAnnotated): Boolean = (symbol is KSFunctionDeclaration || symbol is KSClassDeclaration) && symbol.validate()
 }

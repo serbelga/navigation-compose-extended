@@ -20,6 +20,7 @@ import androidx.compose.ui.window.ComposeUIViewController
 import dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.SampleAppNavHost
 import platform.UIKit.UIViewController
 
-fun MainViewController(): UIViewController = ComposeUIViewController {
-    SampleAppNavHost()
-}
+fun mainViewController(): UIViewController =
+    ComposeUIViewController {
+        SampleAppNavHost()
+    }

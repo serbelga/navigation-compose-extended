@@ -59,12 +59,11 @@ internal fun NavArgumentType.asTypeName(): TypeName =
 /**
  * Converts a [String] to a value based on a given [NavArgumentType].
  */
-internal fun String.toValue(
-    navArgumentType: NavArgumentType,
-): Any = when (navArgumentType) {
-    NavArgumentType.Boolean -> this.trim().toBoolean()
-    NavArgumentType.Float -> this.trim().toFloat()
-    NavArgumentType.Int -> this.trim().toInt()
-    NavArgumentType.Long -> this.trim().toLong()
-    NavArgumentType.String -> "\"$this\""
-}
+internal fun String.toValue(navArgumentType: NavArgumentType): Any =
+    when (navArgumentType) {
+        NavArgumentType.Boolean -> this.trim().toBoolean()
+        NavArgumentType.Float -> this.trim().toFloat()
+        NavArgumentType.Int -> this.trim().toInt()
+        NavArgumentType.Long -> this.trim().toLong()
+        NavArgumentType.String -> "\"$this\""
+    }

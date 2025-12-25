@@ -33,35 +33,34 @@ internal class NavArgumentKeysEnumClassGenerator(
     private val navArguments: Array<NavArgument>,
 ) {
     fun builder(): TypeSpec.Builder =
-        TypeSpec.enumBuilder(name)
+        TypeSpec
+            .enumBuilder(name)
             .primaryConstructor(
-                FunSpec.constructorBuilder()
+                FunSpec
+                    .constructorBuilder()
                     .addParameter(
                         ARGUMENT_KEY_PARAM_NAME,
                         String::class,
-                    )
-                    .build(),
-            )
-            .addProperty(
-                PropertySpec.builder(ARGUMENT_KEY_PARAM_NAME, String::class)
+                    ).build(),
+            ).addProperty(
+                PropertySpec
+                    .builder(ARGUMENT_KEY_PARAM_NAME, String::class)
                     .initializer(ARGUMENT_KEY_PARAM_NAME)
                     .addModifiers(KModifier.OVERRIDE)
                     .build(),
-            )
-            .addSuperinterface(
+            ).addSuperinterface(
                 ClassNames.NavArgumentKey,
-            )
-            .addNavArguments()
+            ).addNavArguments()
 
-    fun generate(): TypeSpec =
-        builder().build()
+    fun generate(): TypeSpec = builder().build()
 
     private fun TypeSpec.Builder.addNavArguments() =
         apply {
             navArguments.forEach { navArgument ->
                 addEnumConstant(
                     navArgument.name.formatNavArgumentKey(),
-                    TypeSpec.anonymousClassBuilder()
+                    TypeSpec
+                        .anonymousClassBuilder()
                         .addSuperclassConstructorParameter("%S", navArgument.name)
                         .build(),
                 )

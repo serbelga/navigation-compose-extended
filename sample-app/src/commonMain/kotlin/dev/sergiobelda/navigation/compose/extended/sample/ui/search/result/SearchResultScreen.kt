@@ -54,9 +54,10 @@ fun SearchResultScreen(
         },
     ) { paddingValues ->
         Column(
-            modifier = Modifier
-                .padding(paddingValues)
-                .padding(4.dp),
+            modifier =
+                Modifier
+                    .padding(paddingValues)
+                    .padding(4.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(text = category)

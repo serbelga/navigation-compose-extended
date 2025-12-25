@@ -32,9 +32,7 @@ import dev.sergiobelda.navigation.compose.extended.compiler.processor.generator.
 internal class NavDestinationGenerator(
     private val codeGenerator: CodeGenerator,
 ) {
-    fun generate(
-        declaration: KSDeclaration,
-    ) {
+    fun generate(declaration: KSDeclaration) {
         // New API was causing java.lang.IllegalStateException: unhandled value type on Multiplatform
         // val annotation: NavDestination? = functionDeclaration
         //    .getAnnotationsByType(NavDestination::class)
@@ -65,35 +63,37 @@ internal class NavDestinationGenerator(
 
         val containingFile = declaration.containingFile ?: return
 
-        val fileSpec = FileSpec.builder(
-            packageName = packageName,
-            fileName = name + NAVIGATION_FILE_NAME_SUFFIX,
-        ).apply {
-            addType(
-                NavArgumentKeysEnumClassGenerator(
-                    name = navArgumentKeysName,
-                    navArguments = navArguments,
-                ).builder().addOriginatingKSFile(containingFile).build(),
-            )
-            addType(
-                NavDestinationObjectGenerator(
-                    name = navDestinationName,
-                    isTopLevelNavDestination = annotation.isTopLevelNavDestination,
-                    destinationId = annotation.destinationId,
-                    navArgumentKeysClass = navArgumentKeysClass,
-                    navArguments = navArguments,
-                    deepLinksUris = annotation.deepLinkUris,
-                ).builder().addOriginatingKSFile(containingFile).build(),
-            )
-            addType(
-                SafeNavArgsClassGenerator(
-                    name = safeNavArgsName,
-                    navDestinationClass = navDestinationClass,
-                    navArgumentKeysClass = navArgumentKeysClass,
-                    navArguments = navArguments,
-                ).builder().addOriginatingKSFile(containingFile).build(),
-            )
-        }.build()
+        val fileSpec =
+            FileSpec
+                .builder(
+                    packageName = packageName,
+                    fileName = name + NAVIGATION_FILE_NAME_SUFFIX,
+                ).apply {
+                    addType(
+                        NavArgumentKeysEnumClassGenerator(
+                            name = navArgumentKeysName,
+                            navArguments = navArguments,
+                        ).builder().addOriginatingKSFile(containingFile).build(),
+                    )
+                    addType(
+                        NavDestinationObjectGenerator(
+                            name = navDestinationName,
+                            isTopLevelNavDestination = annotation.isTopLevelNavDestination,
+                            destinationId = annotation.destinationId,
+                            navArgumentKeysClass = navArgumentKeysClass,
+                            navArguments = navArguments,
+                            deepLinksUris = annotation.deepLinkUris,
+                        ).builder().addOriginatingKSFile(containingFile).build(),
+                    )
+                    addType(
+                        SafeNavArgsClassGenerator(
+                            name = safeNavArgsName,
+                            navDestinationClass = navDestinationClass,
+                            navArgumentKeysClass = navArgumentKeysClass,
+                            navArguments = navArguments,
+                        ).builder().addOriginatingKSFile(containingFile).build(),
+                    )
+                }.build()
 
         fileSpec.writeTo(codeGenerator = codeGenerator, aggregating = false)
     }

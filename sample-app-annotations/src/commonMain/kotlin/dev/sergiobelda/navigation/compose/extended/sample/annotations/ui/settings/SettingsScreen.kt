@@ -36,7 +36,6 @@ import dev.sergiobelda.navigation.compose.extended.annotation.NavDestination
     ],
 )
 data object SettingsScreen {
-
     @Composable
     fun Content(
         userId: Int,

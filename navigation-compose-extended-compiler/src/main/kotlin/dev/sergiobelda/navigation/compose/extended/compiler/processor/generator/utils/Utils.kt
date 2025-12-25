@@ -23,13 +23,14 @@ internal fun String.toKotlinPropertyName(): String {
     // Replace any "_" or "-" followed by a letter or digit with the uppercase letter.
     // e.g. "_a" -> "A", "--a" -> "A", "__1" -> "_1", "--1" -> "_1"
     val pattern = "[_-]+[a-zA-Z0-9]".toRegex()
-    val name = replace(pattern) { match ->
-        if (match.value.last().isDigit()) {
-            "_${match.value.last()}"
-        } else {
-            match.value.last().uppercase()
+    val name =
+        replace(pattern) { match ->
+            if (match.value.last().isDigit()) {
+                "_${match.value.last()}"
+            } else {
+                match.value.last().uppercase()
+            }
         }
-    }
 
     // If the first character is a digit, prefix the name with an "_".
     return name.let {
@@ -37,19 +38,15 @@ internal fun String.toKotlinPropertyName(): String {
     }
 }
 
-internal fun String.formatName(): String =
-    uppercaseFirstChar().trim()
+internal fun String.formatName(): String = uppercaseFirstChar().trim()
 
-private fun String.lowercaseFirstChar(): String =
-    replaceFirstChar(Char::lowercase)
+private fun String.lowercaseFirstChar(): String = replaceFirstChar(Char::lowercase)
 
-private fun String.uppercaseFirstChar(): String =
-    replaceFirstChar(Char::titlecase)
+private fun String.uppercaseFirstChar(): String = replaceFirstChar(Char::titlecase)
 
 /**
  * Add the "NavArgumentKey" suffix to the given [String].
  */
-internal fun String.formatNavArgumentKey(): String =
-    formatName().plus(NAV_ARGUMENT_KEY_SUFFIX)
+internal fun String.formatNavArgumentKey(): String = formatName().plus(NAV_ARGUMENT_KEY_SUFFIX)
 
 private const val NAV_ARGUMENT_KEY_SUFFIX = "NavArgumentKey"

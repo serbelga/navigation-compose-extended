@@ -65,9 +65,7 @@ private enum class HomeNavigationBarItem(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(
-    navigateToSettings: () -> Unit,
-) {
+fun HomeScreen(navigateToSettings: () -> Unit) {
     val navController = rememberNavController()
     val navAction = rememberNavAction(navController)
     Scaffold(
@@ -101,9 +99,10 @@ fun HomeScreen(
         NavHost(
             navController = navController,
             startNavDestination = SearchNavDestination,
-            modifier = Modifier
-                .padding(paddingValues)
-                .consumeWindowInsets(paddingValues),
+            modifier =
+                Modifier
+                    .padding(paddingValues)
+                    .consumeWindowInsets(paddingValues),
         ) {
             searchNavDestination(navAction)
             yourLibraryNavDestination()
@@ -111,9 +110,7 @@ fun HomeScreen(
     }
 }
 
-private fun NavGraphBuilder.searchNavDestination(
-    navAction: NavAction,
-) {
+private fun NavGraphBuilder.searchNavDestination(navAction: NavAction) {
     navigation(
         navDestination = SearchNavDestination,
         startNavDestination = SearchInitialNavDestination,
@@ -136,14 +133,16 @@ private fun NavGraphBuilder.searchNavDestination(
             navDestination = SearchResultNavDestination,
         ) {
             val navArgs = SearchResultNavDestination.navArgs(it)
-            val search = navArgs.getStringOrDefault(
-                SearchResultNavArgumentKeys.SearchNavArgumentKey,
-                "",
-            )
-            val category = navArgs.getStringOrDefault(
-                SearchResultNavArgumentKeys.CategoryNavArgumentKey,
-                "",
-            )
+            val search =
+                navArgs.getStringOrDefault(
+                    SearchResultNavArgumentKeys.SearchNavArgumentKey,
+                    "",
+                )
+            val category =
+                navArgs.getStringOrDefault(
+                    SearchResultNavArgumentKeys.CategoryNavArgumentKey,
+                    "",
+                )
             SearchResultScreen(
                 navigateBack = { navAction.navigateUp() },
                 search = search,

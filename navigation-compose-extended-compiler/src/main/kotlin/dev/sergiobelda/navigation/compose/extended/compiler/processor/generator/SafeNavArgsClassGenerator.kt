@@ -42,20 +42,19 @@ internal class SafeNavArgsClassGenerator(
     private val navArguments: Array<NavArgument>,
 ) {
     fun builder(): TypeSpec.Builder =
-        TypeSpec.classBuilder(name)
+        TypeSpec
+            .classBuilder(name)
             .primaryConstructor(
-                FunSpec.constructorBuilder()
+                FunSpec
+                    .constructorBuilder()
                     .addParameter(
                         NAV_BACK_STACK_ENTRY_PARAMETER_NAME,
                         ClassNames.NavBackStackEntry,
-                    )
-                    .build(),
-            )
-            .addNavArgsProperty()
+                    ).build(),
+            ).addNavArgsProperty()
             .addNavArgumentGetters()
 
-    fun generate(): TypeSpec =
-        builder().build()
+    fun generate(): TypeSpec = builder().build()
 
     private fun TypeSpec.Builder.addNavArgsProperty() =
         apply {
@@ -64,8 +63,7 @@ internal class SafeNavArgsClassGenerator(
                     .builder(
                         NAV_ARGS_PROPERTY_NAME,
                         ClassNames.NavArgs.parameterizedBy(navArgumentKeysClass),
-                    )
-                    .delegate(
+                    ).delegate(
                         buildCodeBlock {
                             beginControlFlow("lazy")
                             addStatement(
@@ -76,8 +74,7 @@ internal class SafeNavArgsClassGenerator(
                             )
                             endControlFlow()
                         },
-                    )
-                    .addModifiers(KModifier.PRIVATE)
+                    ).addModifiers(KModifier.PRIVATE)
                     .build(),
             )
         }
@@ -88,28 +85,29 @@ internal class SafeNavArgsClassGenerator(
                 val typeName = navArgument.type.asTypeName().copy(nullable = navArgument.nullable)
                 val getterFunName: String = navArgument.type.toNavArgsGetter()
                 addProperty(
-                    PropertySpec.builder(
-                        navArgument.name,
-                        typeName,
-                    ).getter(
-                        FunSpec.getterBuilder()
-                            .addStatement(
-                                getterFormat(
-                                    navArgument.nullable,
-                                    navArgument.hasDefaultValue,
-                                ),
-                                NAV_ARGS_PROPERTY_NAME,
-                                getterFunName,
-                                navArgumentKeysClass,
-                                navArgument.name.formatNavArgumentKey(),
-                                if (navArgument.hasDefaultValue) {
-                                    navArgument.defaultValue.toValue(navArgument.type)
-                                } else {
-                                    ""
-                                },
-                            )
-                            .build(),
-                    ).build(),
+                    PropertySpec
+                        .builder(
+                            navArgument.name,
+                            typeName,
+                        ).getter(
+                            FunSpec
+                                .getterBuilder()
+                                .addStatement(
+                                    getterFormat(
+                                        navArgument.nullable,
+                                        navArgument.hasDefaultValue,
+                                    ),
+                                    NAV_ARGS_PROPERTY_NAME,
+                                    getterFunName,
+                                    navArgumentKeysClass,
+                                    navArgument.name.formatNavArgumentKey(),
+                                    if (navArgument.hasDefaultValue) {
+                                        navArgument.defaultValue.toValue(navArgument.type)
+                                    } else {
+                                        ""
+                                    },
+                                ).build(),
+                        ).build(),
                 )
             }
         }
@@ -117,15 +115,15 @@ internal class SafeNavArgsClassGenerator(
     private fun getterFormat(
         nullable: Boolean,
         hasDefaultValue: Boolean,
-    ): String {
-        return "return " + if (hasDefaultValue) {
-            "%N.%NOrDefault(%T.%N, %L)"
-        } else if (nullable) {
-            "%N.%NOrNull(%T.%N%L)"
-        } else {
-            "%N.%N(%T.%N%L)"
-        }
-    }
+    ): String =
+        "return " +
+            if (hasDefaultValue) {
+                "%N.%NOrDefault(%T.%N, %L)"
+            } else if (nullable) {
+                "%N.%NOrNull(%T.%N%L)"
+            } else {
+                "%N.%N(%T.%N%L)"
+            }
 
     companion object {
         private const val NAV_BACK_STACK_ENTRY_PARAMETER_NAME = "navBackStackEntry"

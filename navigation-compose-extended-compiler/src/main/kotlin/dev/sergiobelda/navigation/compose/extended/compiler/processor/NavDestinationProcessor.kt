@@ -26,7 +26,6 @@ import dev.sergiobelda.navigation.compose.extended.annotation.NavDestination
 internal class NavDestinationProcessor(
     codeGenerator: CodeGenerator,
 ) : SymbolProcessor {
-
     private val navDestinationValidator = NavDestinationValidator()
 
     private val navDestinationVisitor = NavDestinationVisitor(codeGenerator)
@@ -35,15 +34,15 @@ internal class NavDestinationProcessor(
         var symbols: List<KSAnnotated> = emptyList()
         val annotationName = NavDestination::class.qualifiedName
         if (annotationName != null) {
-            val resolvedSymbols = resolver
-                .getSymbolsWithAnnotation(annotationName)
-                .toList()
+            val resolvedSymbols =
+                resolver
+                    .getSymbolsWithAnnotation(annotationName)
+                    .toList()
             val validatedSymbols = resolvedSymbols.filter { it.validate() }.toList()
             validatedSymbols
                 .filter {
                     navDestinationValidator.isValid(it)
-                }
-                .forEach {
+                }.forEach {
                     it.accept(navDestinationVisitor, Unit)
                 }
             symbols = resolvedSymbols - validatedSymbols.toSet()

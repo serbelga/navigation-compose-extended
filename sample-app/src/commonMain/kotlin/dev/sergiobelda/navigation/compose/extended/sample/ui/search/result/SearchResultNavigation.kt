@@ -21,7 +21,9 @@ import androidx.navigation.NavType
 import dev.sergiobelda.navigation.compose.extended.NavArgumentKey
 import dev.sergiobelda.navigation.compose.extended.NavDestination
 
-enum class SearchResultNavArgumentKeys(override val argumentKey: String) : NavArgumentKey {
+enum class SearchResultNavArgumentKeys(
+    override val argumentKey: String,
+) : NavArgumentKey {
     SearchNavArgumentKey("search"),
     CategoryNavArgumentKey("category"),
 }
