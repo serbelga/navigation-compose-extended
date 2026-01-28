@@ -49,15 +49,13 @@ plugins {
 kotlin {
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                // Add Jetbrains Navigation Compose Multiplatform dependency.
-                implementation("org.jetbrains.androidx.navigation:navigation-compose:$jetbrains_nav_version")
+        commonMain.dependencies {
+            // Add Jetbrains Navigation Compose Multiplatform dependency.
+            implementation("org.jetbrains.androidx.navigation:navigation-compose:$jetbrains_nav_version")
 
-                implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended:$version")
-                // Optional: Use Annotations to generate NavDestinations.
-                implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended-annotation:$version")
-            }
+            implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended:$version")
+            // Optional: Use Annotations to generate NavDestinations.
+            implementation("dev.sergiobelda.navigation.compose.extended:navigation-compose-extended-annotation:$version")
         }
     }
 }

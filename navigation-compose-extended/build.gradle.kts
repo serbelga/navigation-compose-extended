@@ -1,10 +1,10 @@
-import com.vanniktech.maven.publish.SonatypeHost
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     kotlin("multiplatform")
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.android.kotlinMultiplatformLibrary)
     id("dev.sergiobelda.gradle.spotless")
     alias(libs.plugins.dokka)
     alias(libs.plugins.vanniktechMavenPublish)
@@ -14,48 +14,28 @@ group = "dev.sergiobelda.navigation.compose.extended"
 version = libs.versions.navigationComposeExtended.get()
 
 kotlin {
-    androidTarget()
-    jvm("desktop")
+    androidLibrary {
+        namespace = "dev.sergiobelda.navigation.compose.extended"
+        compileSdk = libs.versions.androidCompileSdk.get().toInt()
+        minSdk = libs.versions.androidMinSdk.get().toInt()
+
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
+    }
+    jvm()
     iosX64()
     iosArm64()
     iosSimulatorArm64()
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(libs.jetbrains.navigation.compose)
-            }
+        commonMain.dependencies {
+            implementation(libs.jetbrains.androidx.navigation.compose)
         }
-        val commonTest by getting
-        val androidMain by getting
-        val androidUnitTest by getting
-        val desktopMain by getting
-        val desktopTest by getting
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating
-        val iosTest by creating
 
         all {
             languageSettings.optIn("kotlin.RequiresOptIn")
         }
-    }
-}
-
-android {
-    namespace = "dev.sergiobelda.navigation.compose.extended"
-    compileSdk = libs.versions.androidCompileSdk.get().toInt()
-
-    defaultConfig {
-        minSdk = libs.versions.androidMinSdk.get().toInt()
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    kotlin {
-        jvmToolchain(17)
     }
 }
 

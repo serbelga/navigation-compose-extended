@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SampleApp">
         <activity
-            android:name="dev.sergiobelda.navigation.compose.extended.sample.ui.main.MainActivity"
+            android:name="dev.sergiobelda.navigation.compose.extended.sample.annotations.main.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.SampleApp">
             <intent-filter>
@@ -21,11 +21,24 @@
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="sample" android:host="searchresult" />
+
+                <data
+                    android:scheme="sample"
+                    android:host="home" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="sample"
+                    android:host="home_secondary" />
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

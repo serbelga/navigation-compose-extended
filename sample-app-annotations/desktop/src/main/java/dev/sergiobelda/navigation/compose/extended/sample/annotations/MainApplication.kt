@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Sergio Belda
+ * Copyright 2026 Sergio Belda
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.navigation.compose.extended.sample.ui.main
+package dev.sergiobelda.navigation.compose.extended.sample.annotations
 
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import dev.sergiobelda.navigation.compose.extended.sample.ui.SampleAppNavHost
+import dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.SampleAppNavHost
 
 fun main() =
     application {

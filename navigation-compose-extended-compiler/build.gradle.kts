@@ -1,7 +1,7 @@
 plugins {
     kotlin("multiplatform")
-    alias(libs.plugins.ksp)
     alias(libs.plugins.dokka)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.vanniktechMavenPublish)
     id("dev.sergiobelda.gradle.spotless")
 }
@@ -19,7 +19,6 @@ kotlin {
     }
 
     sourceSets {
-
         val jvmMain by getting {
             dependencies {
                 implementation(libs.ksp.symbolProcessingApi)
