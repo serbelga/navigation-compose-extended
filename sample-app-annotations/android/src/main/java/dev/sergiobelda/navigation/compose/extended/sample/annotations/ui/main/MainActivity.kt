@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.sergiobelda.navigation.compose.extended.sample.annotations.main
+package dev.sergiobelda.navigation.compose.extended.sample.annotations.ui.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
