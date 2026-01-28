@@ -1,10 +1,7 @@
-import com.vanniktech.maven.publish.SonatypeHost
-
 plugins {
-    alias(libs.plugins.androidLibrary)
-    kotlin("android")
-    alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.dokka)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.jetbrains.dokka)
+    alias(libs.plugins.jetbrains.kotlin.composeCompiler)
     alias(libs.plugins.vanniktechMavenPublish)
     id("dev.sergiobelda.gradle.spotless")
 }
@@ -20,9 +17,7 @@ android {
         minSdk = libs.versions.androidWearMinSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
     }
-
     kotlin {
         jvmToolchain(17)
     }
