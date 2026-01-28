@@ -1,7 +1,7 @@
 plugins {
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.dokka)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.jetbrains.dokka)
+    alias(libs.plugins.jetbrains.kotlin.composeCompiler)
     alias(libs.plugins.vanniktechMavenPublish)
     id("dev.sergiobelda.gradle.spotless")
 }

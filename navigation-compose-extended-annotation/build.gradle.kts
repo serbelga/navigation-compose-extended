@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     kotlin("multiplatform")
     alias(libs.plugins.android.kotlinMultiplatformLibrary)
-    alias(libs.plugins.dokka)
+    alias(libs.plugins.jetbrains.dokka)
     alias(libs.plugins.vanniktechMavenPublish)
     id("dev.sergiobelda.gradle.spotless")
 }

@@ -1,13 +1,12 @@
 plugins {
+    alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.kotlinMultiplatformLibrary) apply false
-    alias(libs.plugins.androidApplication) apply false
-    alias(libs.plugins.androidLibrary) apply false
-    alias(libs.plugins.composeCompiler) apply false
-    alias(libs.plugins.dokka)
-    alias(libs.plugins.kotlin) apply false
-    alias(libs.plugins.ksp) apply false
-    alias(libs.plugins.vanniktechMavenPublish) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.google.ksp) apply false
+    alias(libs.plugins.jetbrains.dokka)
+    alias(libs.plugins.jetbrains.kotlin.composeCompiler) apply false
     alias(libs.plugins.jetbrains.kotlin.jvm) apply false
+    alias(libs.plugins.vanniktechMavenPublish) apply false
 }
 
 dependencies {

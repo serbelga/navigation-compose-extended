@@ -3,9 +3,9 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     kotlin("multiplatform")
     alias(libs.plugins.android.kotlinMultiplatformLibrary)
-    alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.ksp)
+    alias(libs.plugins.google.ksp)
+    alias(libs.plugins.jetbrains.compose)
+    alias(libs.plugins.jetbrains.kotlin.composeCompiler)
     id("dev.sergiobelda.gradle.spotless")
 }
 

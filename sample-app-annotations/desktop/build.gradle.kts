@@ -2,9 +2,9 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
     id("java-library")
+    alias(libs.plugins.jetbrains.compose)
+    alias(libs.plugins.jetbrains.kotlin.composeCompiler)
     alias(libs.plugins.jetbrains.kotlin.jvm)
-    alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.composeMultiplatform)
     id("dev.sergiobelda.gradle.spotless")
 }
 
