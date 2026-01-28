@@ -17,7 +17,6 @@ android {
         minSdk = libs.versions.androidWearMinSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
     }
     kotlin {
         jvmToolchain(17)
