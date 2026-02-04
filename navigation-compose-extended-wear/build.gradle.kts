@@ -19,7 +19,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     kotlin {
-        jvmToolchain(17)
+        jvmToolchain(libs.versions.jdk.get().toInt())
     }
     buildFeatures {
         compose = true

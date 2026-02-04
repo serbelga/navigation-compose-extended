@@ -10,12 +10,13 @@ jetbrains-composeMaterial3 = "1.9.0"
 jetbrains-composeMaterialIconsExtended = "1.7.3"
 jetbrains-dokka = "2.1.0"
 jetbrains-navigation = "2.9.1"
+jdk = "17"
 kotlin = "2.3.0"
 kotlinpoet = "2.2.0"
 ktlint = "1.8.0"
-navigationComposeExtended = "1.6.0"
+navigationComposeExtended = "1.6.1"
 spotless = "8.2.1"
-vanniktechMavenPublishPlugin = "0.33.0"
+vanniktechMavenPublishPlugin = "0.36.0"
 wearCompose = "1.5.6"
 
 [libraries]
@@ -47,7 +48,6 @@ android-library = { id = "com.android.library", version.ref = "android-gradlePlu
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "google-ksp" }
 jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "jetbrains-compose" }
 jetbrains-dokka = { id = "org.jetbrains.dokka", version.ref = "jetbrains-dokka" }
-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 jetbrains-kotlin-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 vanniktechMavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktechMavenPublishPlugin" }
