@@ -1,6 +1,6 @@
 [versions]
 activityCompose = "1.13.0"
-android-gradlePlugin = "9.2.0"
+android-gradlePlugin = "9.2.1"
 androidCompileSdk = "36"
 androidMinSdk = "24"
 androidWearMinSdk = "25"
