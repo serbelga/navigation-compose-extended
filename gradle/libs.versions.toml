@@ -17,7 +17,7 @@ ktlint = "1.8.0"
 navigationComposeExtended = "1.6.2"
 spotless = "8.2.1"
 vanniktechMavenPublishPlugin = "0.37.0"
-wearCompose = "1.6.2"
+wearCompose = "1.7.0"
 
 [libraries]
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "android-gradlePlugin" }
