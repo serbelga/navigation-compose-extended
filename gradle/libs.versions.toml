@@ -50,4 +50,5 @@ jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "jetbrains-com
 jetbrains-dokka = { id = "org.jetbrains.dokka", version.ref = "jetbrains-dokka" }
 jetbrains-kotlin-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+spotless = {id = "com.diffplug.spotless", version.ref = "spotless" }
 vanniktechMavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktechMavenPublishPlugin" }

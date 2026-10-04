@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.composeCompiler) apply false
     alias(libs.plugins.jetbrains.kotlin.jvm) apply false
     alias(libs.plugins.vanniktechMavenPublish) apply false
+    alias(libs.plugins.spotless) apply false
 }
 
 dependencies {
