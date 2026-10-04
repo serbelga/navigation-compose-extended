@@ -1,11 +1,11 @@
 [versions]
 activityCompose = "1.13.0"
 android-gradlePlugin = "9.4.1"
-androidCompileSdk = "36"
+androidCompileSdk = "37"
 androidMinSdk = "24"
 androidWearMinSdk = "25"
 google-ksp = "2.3.10"
-jetbrains-compose = "1.11.1"
+jetbrains-compose = "1.12.1"
 jetbrains-composeMaterial3 = "1.9.0"
 jetbrains-composeMaterialIconsExtended = "1.7.3"
 jetbrains-dokka = "2.2.0"
@@ -15,9 +15,9 @@ kotlin = "2.4.20"
 kotlinpoet = "2.4.0"
 ktlint = "1.8.0"
 navigationComposeExtended = "1.6.2"
-spotless = "8.2.1"
+spotless = "8.10.3"
 vanniktechMavenPublishPlugin = "0.37.0"
-wearCompose = "1.6.2"
+wearCompose = "1.7.0"
 
 [libraries]
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "android-gradlePlugin" }
