@@ -1,17 +1,17 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.compose)
-    alias(libs.plugins.jetbrains.kotlin.composeCompiler)
-    id("dev.sergiobelda.gradle.spotless")
+    alias(deps.plugins.android.application)
+    alias(deps.plugins.jetbrains.compose)
+    alias(deps.plugins.jetbrains.kotlin.composeCompiler)
+    alias(deps.plugins.sergiobelda.convention.spotless)
 }
 
 android {
     namespace = "dev.sergiobelda.navigation.compose.extended.sample.annotations.android"
-    compileSdk = libs.versions.androidCompileSdk.get().toInt()
+    compileSdk = deps.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "dev.sergiobelda.navigation.compose.extended.sample.annotations"
-        minSdk = libs.versions.androidMinSdk.get().toInt()
+        minSdk = deps.versions.android.minSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
 
@@ -34,5 +34,5 @@ android {
 
 dependencies {
     implementation(projects.sampleAppAnnotations.shared)
-    implementation(libs.androidx.activity.compose)
+    implementation(deps.androidx.activityCompose)
 }

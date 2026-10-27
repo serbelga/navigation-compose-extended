@@ -1,9 +1,9 @@
 plugins {
     kotlin("multiplatform")
-    alias(libs.plugins.google.ksp)
-    alias(libs.plugins.jetbrains.dokka)
-    alias(libs.plugins.vanniktechMavenPublish)
-    id("dev.sergiobelda.gradle.spotless")
+    alias(deps.plugins.google.ksp)
+    alias(deps.plugins.jetbrains.dokka)
+    alias(deps.plugins.vanniktech.mavenpublish)
+    alias(deps.plugins.sergiobelda.convention.spotless)
 }
 
 group = "dev.sergiobelda.navigation.compose.extended"
