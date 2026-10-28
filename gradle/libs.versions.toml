@@ -1,11 +1,3 @@
 [versions]
-google-ksp = "2.3.10"
 jdk = "17"
-kotlinpoet = "2.4.0"
 navigationComposeExtended = "1.6.2"
-
-[libraries]
-google-ksp-symbolProcessingApi = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "google-ksp" }
-
-squareup-kotlinpoet = { module = "com.squareup:kotlinpoet", version.ref = "kotlinpoet" }
-squareup-kotlinpoetKsp = { module = "com.squareup:kotlinpoet-ksp", version.ref = "kotlinpoet" }

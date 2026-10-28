@@ -19,11 +19,11 @@ kotlin {
     }
 
     sourceSets {
-        val jvmMain by getting {
+        jvmMain {
             dependencies {
-                implementation(libs.google.ksp.symbolProcessingApi)
-                implementation(libs.squareup.kotlinpoet)
-                implementation(libs.squareup.kotlinpoetKsp)
+                implementation(deps.google.ksp.symbolProcessingApi)
+                implementation(deps.squareup.kotlinpoet)
+                implementation(deps.squareup.kotlinpoetKsp)
                 implementation(projects.navigationComposeExtendedAnnotation)
             }
             kotlin.srcDir("src/main/kotlin")
