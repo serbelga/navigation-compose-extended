@@ -1,6 +1,6 @@
 pluginManagement {
-    includeBuild("gradle/build-logic")
     repositories {
+        mavenLocal()
         google()
         mavenCentral()
         gradlePluginPortal()
@@ -9,9 +9,15 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
     repositories {
+        mavenLocal()
         google()
         mavenCentral()
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+    }
+    versionCatalogs {
+        create("deps") {
+            from("dev.sergiobelda.projectconfig.catalog:deps:2026.11.01")
+        }
     }
 }
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

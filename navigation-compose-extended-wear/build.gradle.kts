@@ -1,9 +1,9 @@
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.jetbrains.dokka)
-    alias(libs.plugins.jetbrains.kotlin.composeCompiler)
-    alias(libs.plugins.vanniktechMavenPublish)
-    id("dev.sergiobelda.gradle.spotless")
+    alias(deps.plugins.android.library)
+    alias(deps.plugins.jetbrains.dokka)
+    alias(deps.plugins.jetbrains.kotlin.composeCompiler)
+    alias(deps.plugins.vanniktech.mavenpublish)
+    alias(deps.plugins.sergiobelda.convention.spotless)
 }
 
 group = "dev.sergiobelda.navigation.compose.extended"
@@ -11,10 +11,10 @@ version = libs.versions.navigationComposeExtended.get()
 
 android {
     namespace = "dev.sergiobelda.navigation.compose.extended.wear"
-    compileSdk = libs.versions.androidCompileSdk.get().toInt()
+    compileSdk = deps.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = libs.versions.androidWearMinSdk.get().toInt()
+        minSdk = deps.versions.android.wear.minSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -28,7 +28,7 @@ android {
 
 dependencies {
     implementation(projects.navigationComposeExtended)
-    implementation(libs.androidx.wearCompose.navigation)
+    implementation(deps.androidx.wear.compose.navigation)
 }
 
 mavenPublishing {

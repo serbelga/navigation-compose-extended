@@ -2,20 +2,20 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     kotlin("multiplatform")
-    alias(libs.plugins.android.kotlinMultiplatformLibrary)
-    alias(libs.plugins.jetbrains.dokka)
-    alias(libs.plugins.vanniktechMavenPublish)
-    id("dev.sergiobelda.gradle.spotless")
+    alias(deps.plugins.android.kotlinMultiplatformLibrary)
+    alias(deps.plugins.jetbrains.dokka)
+    alias(deps.plugins.vanniktech.mavenpublish)
+    alias(deps.plugins.sergiobelda.convention.spotless)
 }
 
 group = "dev.sergiobelda.navigation.compose.extended"
 version = libs.versions.navigationComposeExtended.get()
 
 kotlin {
-    androidLibrary {
+    android {
         namespace = "dev.sergiobelda.navigation.compose.extended.annotation"
-        compileSdk = libs.versions.androidCompileSdk.get().toInt()
-        minSdk = libs.versions.androidMinSdk.get().toInt()
+        compileSdk = deps.versions.android.compileSdk.get().toInt()
+        minSdk = deps.versions.android.minSdk.get().toInt()
 
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
